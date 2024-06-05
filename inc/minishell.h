@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/04 17:38:21 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/05 16:59:14 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,17 @@
 
 #include "libs.h"
 
-t_test	*get_tokens(char *line);
-t_test	*lstnew(char *word);
+t_test	*new_token(char *word, bool is_head);
+t_test	*last_token(t_test *lst);
+void	free_tokens(t_test *head);
+void	add_token(t_test **lst, t_test *to_add);
+
+
+
+
+
+t_test	*create_tokens(char *line);
+t_test	*merge_tokens(t_test *head);
 
 
 #endif

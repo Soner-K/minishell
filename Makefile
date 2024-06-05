@@ -1,7 +1,7 @@
 NAME				=	minishell
 
 
-FILES				=	error.c test.c lex_utils.c
+FILES				=	error.c merge_tokens.c lexing_utils.c create_tokens.c
 SRC_DIR				=	src
 SRC					=	$(addprefix $(SRC_DIR)/, $(SRC))
 
