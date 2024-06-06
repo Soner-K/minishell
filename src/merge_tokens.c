@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 17:56:42 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/05 17:36:13 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/06 15:35:53 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ bool	merger(t_test **old, t_test **new, __int8_t type, bool i)
 		if (!str && type != NONE)
 			return (FAILURE);
 		token = new_token(str, i);
+		if (!token)
+			return (FAILURE);
 		token->type = WORD; // ATTENTION avec expand dans "". Si juste "", type = word?
 		add_token(new, token);
 		return (SUCCESS);
@@ -96,21 +98,21 @@ t_test	*merge_tokens(t_test *head)
 	t_test		*first;
 	int			i;
 
-	i = 0;
 	if (!head)
 		return (NULL);
+	i = 0;
 	first = head;
 	new = NULL;
 	while (head)
 	{
-		if (head->type != SPACE_ && head->type != TAB_)
+		if (head->type != SPACE_ && head->type != TAB_ && head->type != NONE)
 		{
-			 if (merger(&head, &new, head->type, i++ == 1) == FAILURE)
-			 {
+			if (merger(&head, &new, head->type, i++ == 1) == FAILURE)
+			{
 				free_tokens(new);
 				free_tokens(first);
-				//do error functon. That kind of error = give back terminal?
-			 }
+				return (NULL);
+			}
 		}
 		else
 			head = head->next;
@@ -118,12 +120,19 @@ t_test	*merge_tokens(t_test *head)
 	free_tokens(first);
 	return (new);
 }
+				//do error functon. That kind of error = give back terminal?
 
 //add one node for a NULL token?
 int	main(void)
 {
 	char *line = readline(">>> ");
+	// char	line[] = "ls -l | wc -c";
 	t_test *tokens = create_tokens(line);
+	if (!tokens)
+	{
+		free(line);
+		exit(EXIT_FAILURE);
+	}
 	t_test *final = NULL;
 	t_test *first = tokens;
 
@@ -135,6 +144,11 @@ int	main(void)
 	}
 	printf("\t\t\tAFTER MERGING\t\t\t\n");
 	final = merge_tokens(first);
+	if (!final)
+	{
+		free(line);
+		exit(EXIT_FAILURE);
+	}
 	first = final;
 	while (final)
 	{
@@ -142,4 +156,5 @@ int	main(void)
 		final = final->next;
 	}
 	free_tokens(first);
+	free(line);
 }

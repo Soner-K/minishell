@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:34:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/05 17:40:34 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/06 15:31:59 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static __int8_t	find_token(char c)
 		return (SINGLE_QUOTE);
 	return (NONE);
 }
+
 /**
  * @brief Stores inside a node everything starting from a character
  * with the token "token", until a character different from it.
@@ -48,7 +49,7 @@ static __int8_t	find_token(char c)
  * @param node A pointer to a node of a tkens' list.
  * @returns void
  */
-static void	copy_until_next_token(char **line, char token, t_test *node)
+static bool	copy_until_next_token(char **line, char token, t_test *node)
 {
 	short int	len;
 	char		*tmp;
@@ -65,9 +66,12 @@ static void	copy_until_next_token(char **line, char token, t_test *node)
 			break ;
 	}
 	node->word = malloc(sizeof(char) * len + 1);
+	if (!node->word)
+		return (FAILURE);
 	node->word[len] = '\0';
 	ft_memcpy(node->word, tmp, len);
 	node->type = token;
+	return (SUCCESS);
 }
 
 /**
@@ -81,6 +85,7 @@ t_test	*create_tokens(char *line)
 	t_test	*tokens;
 	t_test	*head;
 	char	token;
+	bool	success;
 
 	if (!line)
 		return (NULL);
@@ -91,10 +96,12 @@ t_test	*create_tokens(char *line)
 	while (*line)
 	{
 		token = find_token(*line);
-		copy_until_next_token(&line, token, tokens);
+		success = copy_until_next_token(&line, token, tokens);
+		if (success == 0)
+			return (free_tokens(head), exit(EXIT_FAILURE), NULL);
 		tokens->next = new_token(NULL, 0);
 		if (!tokens->next)
-			exit(EXIT_FAILURE);// fonction erreur + free
+			return (free_tokens(head), exit(EXIT_FAILURE), NULL);// fonction erreur + free
 		tokens = tokens->next;
 	}
 	//delete last node which value's is NULL ? keep it cuz split for commands' array?

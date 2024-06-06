@@ -2,3 +2,6 @@ les tabs ?
 commande expr et code de retour (0 si expr != 0 et 1 sinon)
 merge_tokens -> ajouter une protection ds le cas ou head est null apres quotes ?
 trouver u moyer de stocker head dans chaque noeud
+
+
+/!\ Quand echec de malloc ou erreur etc, ne pas ext, mais redonner l'invite de commandes ?

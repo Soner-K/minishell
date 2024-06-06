@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:56:05 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/05 16:56:15 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/06 14:57:26 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  */
 t_test	*new_token(char *word, bool is_head)
 {
-	t_test 			*new;
+	t_test			*new;
 	static t_test	*head = NULL;
 
 	new = malloc(sizeof(t_test));
