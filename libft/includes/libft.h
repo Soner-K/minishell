@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 18:01:44 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/03/21 15:41:36 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/07 14:07:18 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdbool.h>
 
 typedef struct s_list
 {
@@ -42,6 +43,8 @@ int					ft_strcmp(const char *s1, const char *s2);
 int					find_len_strs(char **strs);
 int					count_lines_fd(char *path);
 int					sum_numbers(int n, ...);
+
+bool				is_odd(int n);
 
 char				*ft_strchr(const char *s, int c);
 char				*ft_strrchr(const char *s, int c);

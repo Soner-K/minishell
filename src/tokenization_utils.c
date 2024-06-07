@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexing_utils.c                                     :+:      :+:    :+:   */
+/*   tokenization_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:56:05 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/06 14:57:26 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/07 17:37:46 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,19 @@ void	add_token(t_test **lst, t_test *to_add)
 		return ;
 	last_token(*lst)->next = to_add;
 	to_add->prev = last_token(*lst);
+}
+
+short int	skip_tab_spaces(char *str)
+{
+	short int	count;
+
+	count = 0;
+	if (!str)
+		return (0);
+	while (*str && (*str == ' ' || *str == '\t'))
+	{
+		str++;
+		count++;
+	}
+	return (count);
 }

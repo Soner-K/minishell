@@ -1,41 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   structs.h                                          :+:      :+:    :+:   */
+/*   is_odd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/30 13:48:25 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/07 17:36:55 by sokaraku         ###   ########.fr       */
+/*   Created: 2024/06/07 14:04:40 by sokaraku          #+#    #+#             */
+/*   Updated: 2024/06/07 14:08:34 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCTS_H
-# define STRUCTS_H
+#include "../includes/libft.h"
 
-typedef enum e_tokens
+bool	is_odd(int n)
 {
-	NONE,
-	WORD,
-	INREDIR,
-	OUTREDIR,
-	HEREDOC,
-	APPENDREDIR,
-	SPACE_,
-	TAB_,
-	SINGLE_QUOTE,
-	DOUBLE_QUOTE,
-	OPERATOR,
-	PIPE,
-}				t_tokens;
-
-typedef struct s_test
-{
-	t_tokens		type;
-	char			*word;
-	struct s_test	*next;
-	struct s_test	*prev;
-	struct s_test	*head;
-}				t_test;
-
-#endif
+	if (n == 0)
+		return (false);
+	return (n % 2);
+}

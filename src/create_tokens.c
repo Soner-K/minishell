@@ -6,104 +6,131 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:34:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/06 15:31:59 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/07 17:38:48 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * @brief Returns a character's token type.
- * @param c A character.
- * @returns The token type.
+ * @brief Checks if the tokenization process for one token should be stopped
+ * (i.e one full token was found).
+ * @param str A pointer to a character inside an input string
+ * for which to do the check.
+ * @param s_q Counter for the number of single quotes.
+ * @param d_q Counter for the number of double quotes.
+ * @param end A pointer to the index of the last checked character.
+ * @returns true (1) if the tokenization can be stopped
+ * and false (0) otherwise.
  */
-static __int8_t	find_token(char c)
+static bool	end_copy(char *str, short int s_q, short int d_q, short int *end)
 {
-	if (ft_isalpha(c) || c == '-' || c == '.')
-		return (WORD);
-	else if (c == '$' || c == '?')
-		return (OPERATOR);
-	else if (c == ' ')
-		return (SPACE_);
-	else if (c == '\t')
-		return (TAB_);
-	else if (c == '|')
-		return (PIPE);
-	else if (c == '<')
-		return (INREDIR);
-	else if (c == '>')
-		return (OUTREDIR);
-	else if (c == '"')
-		return (DOUBLE_QUOTE);
-	else if (c == '\'')
-		return (SINGLE_QUOTE);
-	return (NONE);
-}
+	__int8_t	checks;
 
-/**
- * @brief Stores inside a node everything starting from a character
- * with the token "token", until a character different from it.
- * different from the given token type.
- * @param line Adress to the pointer containing the output of readline.
- * @param token Pretty self-explanatory.
- * @param node A pointer to a node of a tkens' list.
- * @returns void
- */
-static bool	copy_until_next_token(char **line, char token, t_test *node)
-{
-	short int	len;
-	char		*tmp;
-
-	// if (!(*line)) //protection needed?
-	// 	return ;
-	len = 0;
-	tmp = *line;
-	while (**line && token == find_token(**line))
+	if (!str)
+		return (true);
+	checks = 0;
+	if (!is_odd(s_q) && !is_odd(d_q))
+		checks++;
+	if (checks == 1 && is_separator(*str) && !is_separator(*(str + 1)))
+		return (*end = 1, true);
+	if (is_separator(*str))
 	{
-		len++;
-		(*line)++;
-		if (token == SINGLE_QUOTE || token == DOUBLE_QUOTE)
-			break ;
+		if (*end != 0)
+		{
+			if (*(str - 1) != *str)
+				checks++;
+		}
 	}
-	node->word = malloc(sizeof(char) * len + 1);
-	if (!node->word)
-		return (FAILURE);
-	node->word[len] = '\0';
-	ft_memcpy(node->word, tmp, len);
-	node->type = token;
-	return (SUCCESS);
+	if (checks == 2)
+		return (true);
+	return (false);
 }
 
 /**
- * @brief Creates a tokens list, where each node contains elements
- * that are of a single token type, including spaces and tabs.
- * @param line The output of the readline function.
- * @returns The tokens list.
+ * @brief Finds one token inside an input line.
+ * @param line A double pointer to the input string. A double pointer is used
+ * to actualize the value pointed by line after each tokenization.
+ * @param end A short int that will store the index of the last character to
+ * tokenize. 
+ * @returns A string composed of the same and adjacent tokens.
+ * Returns NULL if allocation failed.
+ */
+static char	*get_token(char **line, short int end)
+{
+	char		*str;
+	short int	s_quotes;
+	short int	d_quotes;
+
+	s_quotes = 0;
+	d_quotes = 0;
+	str = *line;
+	while (*str)
+	{
+		if (*str == '\'')
+			s_quotes++;
+		if (*str == '"')
+			d_quotes++;
+		if (end_copy(str, s_quotes, d_quotes, &end))
+			break ;
+		str++;
+		end++;
+	}
+	end += skip_tab_spaces(str);
+	str = ft_substr(*line, 0, end);
+	if (!str)
+		return (NULL); //return avant ou apres incr de line?
+	(*line) += end;
+	return (str);
+}
+
+/**
+ * @brief Creates a linked list of tokens, based on an input line read from
+ * the command line.
+ * @param line The input to tokenize.
+ * @returns A list of tokens. Returns NULL if line is null.
  */
 t_test	*create_tokens(char *line)
 {
 	t_test	*tokens;
-	t_test	*head;
-	char	token;
-	bool	success;
+	char	*str;
 
-	if (!line)
+	str = get_token(&line, 0);
+	if (!str)
 		return (NULL);
-	tokens = new_token(NULL, 1);
-	if (!tokens)
-		exit(EXIT_FAILURE); //?
-	head = tokens;
+	tokens = new_token(str, 1);
+	tokens->type = find_token(tokens->word);
 	while (*line)
 	{
-		token = find_token(*line);
-		success = copy_until_next_token(&line, token, tokens);
-		if (success == 0)
-			return (free_tokens(head), exit(EXIT_FAILURE), NULL);
-		tokens->next = new_token(NULL, 0);
+		str = get_token(&line, 0);
+		if (!str)
+		{
+			free_tokens(tokens->head);
+			return (NULL);
+		}
+		tokens->next = new_token(str, 0);
 		if (!tokens->next)
-			return (free_tokens(head), exit(EXIT_FAILURE), NULL);// fonction erreur + free
+		{
+			free_tokens(tokens->head);
+			return (NULL);
+		}
 		tokens = tokens->next;
+		tokens->type = find_token(tokens->word);
 	}
-	//delete last node which value's is NULL ? keep it cuz split for commands' array?
-	return (head);
+	return (tokens->head);
+}
+
+int	main(void)
+{
+	t_test	*tokens;
+
+	while (1)
+	{
+		tokens = create_tokens(readline(">>> "));
+		while (tokens)
+		{
+			printf("[%d] --> %s\n", tokens->type, tokens->word);
+			tokens = tokens->next;
+		}
+	}
 }

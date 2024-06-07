@@ -1,0 +1,68 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokenization_utils2.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/07 17:34:01 by sokaraku          #+#    #+#             */
+/*   Updated: 2024/06/07 17:35:21 by sokaraku         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+/**
+ * @brief Returns a character's token type.
+ * @param c A character.
+ * @returns The token type.
+ */
+__int8_t	find_one_token(char c)
+{
+	if (ft_isalpha(c) || c == '-' || c == '.')
+		return (WORD);
+	else if (c == '$' || c == '?')
+		return (OPERATOR);
+	else if (c == ' ')
+		return (SPACE_);
+	else if (c == '\t')
+		return (TAB_);
+	else if (c == '|')
+		return (PIPE);
+	else if (c == '<')
+		return (INREDIR);
+	else if (c == '>')
+		return (OUTREDIR);
+	else if (c == '"')
+		return (DOUBLE_QUOTE);
+	else if (c == '\'')
+		return (SINGLE_QUOTE);
+	return (NONE);
+}
+
+/**
+ * @brief Finds the precise kind of token for a string.
+ * @param str A string containing tokens of the same type.
+ * @returns The token type.
+ */
+__int8_t	find_token(char *str)
+{
+	if (ft_strlen(str) == 1)
+		return (find_one_token(*str));
+	if (*str == '\'' || *str == '"')
+		return (WORD);
+	return (find_one_token(*str));
+}
+
+/**
+ * @brief Checks if a character is a separator.
+ * @param c A character.
+ * @returns true (1) if the character is a separator (>, <, |, or a space).
+ * Returns false otherwise.
+ */
+bool	is_separator(char c)
+{
+	if (c == '>' || c == '<' || c == '|' || c == ' ')
+		return (true);
+	return (false);
+}
