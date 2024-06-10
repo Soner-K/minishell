@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:34:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/07 17:38:48 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/10 15:44:02 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ static bool	end_copy(char *str, short int s_q, short int d_q, short int *end)
 	checks = 0;
 	if (!is_odd(s_q) && !is_odd(d_q))
 		checks++;
-	if (checks == 1 && is_separator(*str) && !is_separator(*(str + 1)))
-		return (*end = 1, true);
 	if (is_separator(*str))
 	{
 		if (*end != 0)
@@ -48,30 +46,60 @@ static bool	end_copy(char *str, short int s_q, short int d_q, short int *end)
 }
 
 /**
+ * @brief If the first character
+ * @param
+ * @returns
+ */
+static char	*tokenize_one_separator(char **line)
+{
+	short int	end;
+	char		*str;
+	char		sep;
+
+	str = *line;
+	sep = **line;
+	end = 0;
+	while (*str && *str == sep)
+	{
+		end++;
+		str++;
+	}
+	end += skip_tab_spaces(str);
+	str = ft_substr(*line, 0, end);
+	if (!str)
+		return (NULL);
+	(*line) += end;
+	return (str);
+}
+
+/**
  * @brief Finds one token inside an input line.
  * @param line A double pointer to the input string. A double pointer is used
  * to actualize the value pointed by line after each tokenization.
  * @param end A short int that will store the index of the last character to
- * tokenize. 
+ * tokenize (norm issue).
+ * @param s_q  Single quotes counter (norm issue).
+ * @param d_q  Double quotes counter (norm issue).
  * @returns A string composed of the same and adjacent tokens.
  * Returns NULL if allocation failed.
  */
-static char	*get_token(char **line, short int end)
+static char	*get_token(char **line, short int end, short int s_q, short int d_q)
 {
 	char		*str;
-	short int	s_quotes;
-	short int	d_quotes;
 
-	s_quotes = 0;
-	d_quotes = 0;
+	if (is_separator(**line))
+	{
+		str = tokenize_one_separator(line);
+		return (str);
+	}
 	str = *line;
 	while (*str)
 	{
 		if (*str == '\'')
-			s_quotes++;
+			s_q++;
 		if (*str == '"')
-			d_quotes++;
-		if (end_copy(str, s_quotes, d_quotes, &end))
+			d_q++;
+		if (end_copy(str, s_q, d_q, &end))
 			break ;
 		str++;
 		end++;
@@ -79,58 +107,71 @@ static char	*get_token(char **line, short int end)
 	end += skip_tab_spaces(str);
 	str = ft_substr(*line, 0, end);
 	if (!str)
-		return (NULL); //return avant ou apres incr de line?
-	(*line) += end;
-	return (str);
+		return (NULL);
+	return ((*line) += end, str);
 }
 
 /**
  * @brief Creates a linked list of tokens, based on an input line read from
  * the command line.
  * @param line The input to tokenize.
- * @returns A list of tokens. Returns NULL if line is null.
+ * @returns A list of tokens. Returns NULL if line is null.(null si !line?).
  */
 t_test	*create_tokens(char *line)
 {
 	t_test	*tokens;
 	char	*str;
 
-	str = get_token(&line, 0);
+	str = get_token(&line, 0, 0, 0);
 	if (!str)
 		return (NULL);
 	tokens = new_token(str, 1);
-	tokens->type = find_token(tokens->word);
+	tokens->type = find_token_type(tokens->word);
 	while (*line)
 	{
-		str = get_token(&line, 0);
+		str = get_token(&line, 0, 0, 0);
 		if (!str)
-		{
-			free_tokens(tokens->head);
-			return (NULL);
-		}
+			return (free_tokens(tokens->head), NULL);
 		tokens->next = new_token(str, 0);
 		if (!tokens->next)
-		{
-			free_tokens(tokens->head);
-			return (NULL);
-		}
+			return (free_tokens(tokens->head), NULL);
 		tokens = tokens->next;
-		tokens->type = find_token(tokens->word);
+		tokens->type = find_token_type(tokens->word);
 	}
 	return (tokens->head);
 }
 
 int	main(void)
 {
+	t_test	*head;
 	t_test	*tokens;
+	char	*line;
 
-	while (1)
+	line = readline(">>> ");
+	tokens = create_tokens(line);
+	head = tokens;
+	while (tokens)
 	{
-		tokens = create_tokens(readline(">>> "));
-		while (tokens)
-		{
-			printf("[%d] --> %s\n", tokens->type, tokens->word);
-			tokens = tokens->next;
-		}
+		printf("[%d] --> %s\n", tokens->type, tokens->word);
+		tokens = tokens->next;
 	}
+	free(line);
+	free_tokens(head);
 }
+
+// int main(void)
+// {
+// 	t_test	*tokens;
+
+// 	while (1)
+// 	{
+// 		tokens = create_tokens(readline(">>> "));
+// 		while (tokens->next)
+// 		{
+// 			printf("[%d] --> %s\n", tokens->type, tokens->word);
+// 			tokens = tokens->next;
+// 		}
+// 		printf("[%d] --> %s\n", tokens->type, tokens->word);
+// 		free_tokens(tokens->head);
+// 	}
+// }
