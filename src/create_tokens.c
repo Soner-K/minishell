@@ -6,11 +6,54 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:34:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/10 15:44:02 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/17 13:42:50 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	print_list(t_test *tokens)
+{
+	while (tokens->next)
+	{
+		printf("[%d] --> %s\n", tokens->type, tokens->word);
+		tokens = tokens->next;
+	}
+	printf("[%d] --> %s\n", tokens->type, tokens->word);
+	printf("BACK\n");
+	while (tokens->prev)
+	{
+		printf("[%d] --> %s\n", tokens->type, tokens->word);
+		tokens = tokens->prev;
+	}
+	printf("[%d] --> %s\n", tokens->type, tokens->word);
+}
+
+void	delete_whitespaces(t_test *tokens)
+{
+	t_test	*prev;
+	t_test	*next;
+
+	prev = NULL;
+	next = tokens;
+	while (tokens)
+	{
+		if (tokens->type == SPACE_ || tokens->type == TAB_)
+		{
+			prev = tokens->prev;
+			next = tokens->next;
+			prev->next = next;
+			free(tokens->word);
+			free(tokens);
+			if (!next)
+				return ;
+			tokens = next;
+			tokens->prev = prev;
+		}
+		else
+			tokens = tokens->next;
+	}
+}
 
 /**
  * @brief Checks if the tokenization process for one token should be stopped
@@ -34,11 +77,8 @@ static bool	end_copy(char *str, short int s_q, short int d_q, short int *end)
 		checks++;
 	if (is_separator(*str))
 	{
-		if (*end != 0)
-		{
-			if (*(str - 1) != *str)
-				checks++;
-		}
+		if (*end != 0 && *(str - 1) != *str)
+			checks++;
 	}
 	if (checks == 2)
 		return (true);
@@ -46,9 +86,13 @@ static bool	end_copy(char *str, short int s_q, short int d_q, short int *end)
 }
 
 /**
- * @brief If the first character
- * @param
- * @returns
+ * @brief If the first character read in the function get_token is a
+ * separator, copies that separator and only that separator until the
+ * next different character.
+ * @param  line Adress of the pointer to the last read character
+ * from the input.
+ * @returns A string which size is at least one and containing only
+ * one type of separator. If memory allocation fails, returns NULL.
  */
 static char	*tokenize_one_separator(char **line)
 {
@@ -64,7 +108,6 @@ static char	*tokenize_one_separator(char **line)
 		end++;
 		str++;
 	}
-	end += skip_tab_spaces(str);
 	str = ft_substr(*line, 0, end);
 	if (!str)
 		return (NULL);
@@ -85,7 +128,7 @@ static char	*tokenize_one_separator(char **line)
  */
 static char	*get_token(char **line, short int end, short int s_q, short int d_q)
 {
-	char		*str;
+	char	*str;
 
 	if (is_separator(**line))
 	{
@@ -104,11 +147,11 @@ static char	*get_token(char **line, short int end, short int s_q, short int d_q)
 		str++;
 		end++;
 	}
-	end += skip_tab_spaces(str);
 	str = ft_substr(*line, 0, end);
 	if (!str)
 		return (NULL);
-	return ((*line) += end, str);
+	(*line) += end;
+	return (str);
 }
 
 /**
@@ -126,52 +169,84 @@ t_test	*create_tokens(char *line)
 	if (!str)
 		return (NULL);
 	tokens = new_token(str, 1);
+	if (!tokens)
+		return (NULL);
 	tokens->type = find_token_type(tokens->word);
 	while (*line)
 	{
 		str = get_token(&line, 0, 0, 0);
 		if (!str)
-			return (free_tokens(tokens->head), NULL);
-		tokens->next = new_token(str, 0);
-		if (!tokens->next)
-			return (free_tokens(tokens->head), NULL);
-		tokens = tokens->next;
-		tokens->type = find_token_type(tokens->word);
+			return (free_tokens(tokens), NULL);
+		if (add_token(&tokens, (new_token(str, 0))) == -1)
+			free_tokens(tokens);
 	}
-	return (tokens->head);
+	delete_whitespaces(tokens);
+	return (tokens);
 }
 
-int	main(void)
-{
-	t_test	*head;
-	t_test	*tokens;
-	char	*line;
-
-	line = readline(">>> ");
-	tokens = create_tokens(line);
-	head = tokens;
-	while (tokens)
-	{
-		printf("[%d] --> %s\n", tokens->type, tokens->word);
-		tokens = tokens->next;
-	}
-	free(line);
-	free_tokens(head);
-}
-
-// int main(void)
+// int	main(int ac, char **av, char **env)
 // {
-// 	t_test	*tokens;
-
-// 	while (1)
-// 	{
-// 		tokens = create_tokens(readline(">>> "));
-// 		while (tokens->next)
-// 		{
-// 			printf("[%d] --> %s\n", tokens->type, tokens->word);
-// 			tokens = tokens->next;
-// 		}
-// 		printf("[%d] --> %s\n", tokens->type, tokens->word);
-// 		free_tokens(tokens->head);
-// 	}
+// 	(void)ac;
+// 	av++;
+// 	printf("\n%d\n", access("/usr/bin/echo", X_OK));
+// 	execve("/usr/bin/echo", av, env);
 // }
+
+// int	main(void)
+// {
+// 	t_test	*head;
+// 	t_test	*tokens;
+// 	char	*line;
+
+// 	line = readline(">>> ");
+// 	tokens = create_tokens(line);
+// 	head = tokens;
+// 	while (tokens)
+// 	{
+// 		printf("[%d] --> %s\n", tokens->type, tokens->word);
+// 		tokens = tokens->next;
+// 	}
+// 	free(line);
+// 	free_tokens(head);
+// }
+
+int	main(int ac, char **av, char **env)
+{
+	t_test *tokens;
+	(void)ac;
+	(void)av;
+	(void)env;
+
+	while (1)
+	{
+		tokens = create_tokens(readline(">>> "));
+		check_if_cmd(tokens, env);
+		if (!tokens->next)
+		{
+			printf("[%d] --> %s", tokens->type, tokens->word);
+			if (tokens->path)
+				printf(" %s\n", tokens->path);
+			else
+				printf("\n");
+			free_tokens(tokens->head);
+		}
+		else
+		{
+			while (tokens->next)
+			{
+				printf("[%d] --> %s", tokens->type, tokens->word);
+				if (tokens->path)
+					printf(" %s\n", tokens->path);
+				else
+					printf("\n");
+				tokens = tokens->next;
+			}
+			printf("[%d] --> %s\n", tokens->type, tokens->word);
+			if (tokens->path)
+				printf(" %s\n", tokens->path);
+			else
+				printf("\n");
+			free_tokens(tokens->head);
+		}
+	}
+}
