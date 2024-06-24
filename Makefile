@@ -1,7 +1,8 @@
 NAME				=	minishell
 
 
-FILES				=	error.c tokenization_utils.c tokenization_utils2.c create_tokens.c path_finding.c
+FILES				=	error.c tokenization_utils.c tokenization_utils2.c create_tokens.c path_finding.c \
+						exec_utils.c utils.c
 SRC_DIR				=	src
 SRC					=	$(addprefix $(SRC_DIR)/, $(SRC))
 
@@ -26,7 +27,7 @@ $(LIBFT)			:
 $(NAME)				:	$(OBJ_DIR) $(OBJ) $(LIBFT)
 						@echo "\n"
 						@echo "$(GREEN)Compiling...$(COLOR_END)"
-						$(CC) $(CFLAGS) $(INCLUDES) $(READLINE) $(OBJ) $(DEBUGGER) $(LIBFT) -o $(NAME)
+						$(CC) $(CFLAGS) $(INCLUDES) $(OBJ) $(READLINE) $(DEBUGGER) $(LIBFT) -o $(NAME)
 						@echo "$(LGREEN)project compiled !$(COLOR_END)"
 
 $(OBJ_DIR)			:

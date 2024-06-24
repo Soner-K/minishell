@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:34:01 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/17 13:07:16 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/24 14:26:18 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,19 @@ char	is_separator(char c)
 	if (c == ' ')
 		return (' ');
 	return (false);
+}
+
+short int	skip_tab_spaces(char *str)
+{
+	short int	count;
+
+	count = 0;
+	if (!str)
+		return (0);
+	while (*str && (*str == ' ' || *str == '\t'))
+	{
+		str++;
+		count++;
+	}
+	return (count);
 }

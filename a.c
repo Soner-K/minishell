@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 12:27:56 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/04 12:35:11 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/24 14:29:29 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,12 @@ void	print_list(t_list *lst)
 	}
 }
 
+void	move_head(t_list **head, int nb)
+{
+	while (nb--)
+		*head = (*head)->next;
+}
+
 int main(void)
 {
 	t_list	*lst;
@@ -66,6 +72,9 @@ int main(void)
 	add_back(head, lstnew(8));
 	add_back(head, lstnew(9));
 	add_back(head, lstnew(10));
+	printf("\n");
+	print_list(head);
+	move_head(&head, 7);
 	printf("\n");
 	print_list(head);
 }

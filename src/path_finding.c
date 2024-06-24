@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 10:03:46 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/17 15:08:10 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/24 13:57:21 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ char	*find_path(char *cmd, char **env, bool *alloc_fail)
  * @returns -1 if an allocation failure occured, 0 if head is NULL and 1
  * if the list was successfully iterated through.
  */
-__int8_t	check_if_cmd(t_test *head, char **env)
+__int8_t	check_if_cmd(t_tokens *head, char **env)
 {
 	char	*str;
 	bool	allocation_fail;

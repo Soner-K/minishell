@@ -6,33 +6,35 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:34:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/17 13:42:50 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/24 15:13:19 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_list(t_test *tokens)
+void	print_list(t_tokens *tokens)
 {
+	if (!tokens)
+		return ;
 	while (tokens->next)
 	{
 		printf("[%d] --> %s\n", tokens->type, tokens->word);
 		tokens = tokens->next;
 	}
 	printf("[%d] --> %s\n", tokens->type, tokens->word);
-	printf("BACK\n");
-	while (tokens->prev)
-	{
-		printf("[%d] --> %s\n", tokens->type, tokens->word);
-		tokens = tokens->prev;
-	}
-	printf("[%d] --> %s\n", tokens->type, tokens->word);
+	// printf("BACK\n");
+	// while (tokens->prev)
+	// {
+	// 	printf("[%d] --> %s\n", tokens->type, tokens->word);
+	// 	tokens = tokens->prev;
+	// }
+	// printf("[%d] --> %s\n", tokens->type, tokens->word);
 }
 
-void	delete_whitespaces(t_test *tokens)
+void	delete_whitespaces(t_tokens *tokens)
 {
-	t_test	*prev;
-	t_test	*next;
+	t_tokens	*prev;
+	t_tokens	*next;
 
 	prev = NULL;
 	next = tokens;
@@ -160,9 +162,9 @@ static char	*get_token(char **line, short int end, short int s_q, short int d_q)
  * @param line The input to tokenize.
  * @returns A list of tokens. Returns NULL if line is null.(null si !line?).
  */
-t_test	*create_tokens(char *line)
+t_tokens	*create_tokens(char *line)
 {
-	t_test	*tokens;
+	t_tokens	*tokens;
 	char	*str;
 
 	str = get_token(&line, 0, 0, 0);
@@ -184,69 +186,71 @@ t_test	*create_tokens(char *line)
 	return (tokens);
 }
 
+int	main(void)
+{
+	t_tokens	*head;
+	t_tokens	*tokens;
+	char	*line;
+	char	**cmd;
+	short int	array_size;
+
+	line = readline(">>> ");
+	tokens = create_tokens(line);
+	head = tokens;
+	array_size = get_array_size(head);
+	while (tokens)
+	{
+		printf("[%d] --> %s\n", tokens->type, tokens->word);
+		tokens = tokens->next;
+	}
+	tokens = head;
+	printf("\n");
+	cmd = get_cmd_array(&head);
+	for (int i = 0; i < array_size; i++)
+		printf("cmd[%d] = %s\n", i, cmd[i]);
+	print_list(head);
+	free(line);
+	free_tokens(head);
+	free_cmd_array(cmd, array_size);
+}
+
 // int	main(int ac, char **av, char **env)
 // {
+// 	t_tokens *tokens;
 // 	(void)ac;
-// 	av++;
-// 	printf("\n%d\n", access("/usr/bin/echo", X_OK));
-// 	execve("/usr/bin/echo", av, env);
-// }
+// 	(void)av;
+// 	(void)env;
 
-// int	main(void)
-// {
-// 	t_test	*head;
-// 	t_test	*tokens;
-// 	char	*line;
-
-// 	line = readline(">>> ");
-// 	tokens = create_tokens(line);
-// 	head = tokens;
-// 	while (tokens)
+// 	while (1)
 // 	{
-// 		printf("[%d] --> %s\n", tokens->type, tokens->word);
-// 		tokens = tokens->next;
+// 		tokens = create_tokens(readline(">>> "));
+// 		check_if_cmd(tokens, env);
+// 		if (!tokens->next)
+// 		{
+// 			printf("[%d] --> %s", tokens->type, tokens->word);
+// 			if (tokens->path)
+// 				printf(" %s\n", tokens->path);
+// 			else
+// 				printf("\n");
+// 			free_tokens(tokens->head);
+// 		}
+// 		else
+// 		{
+// 			while (tokens->next)
+// 			{
+// 				printf("[%d] --> %s", tokens->type, tokens->word);
+// 				if (tokens->path)
+// 					printf(" %s\n", tokens->path);
+// 				else
+// 					printf("\n");
+// 				tokens = tokens->next;
+// 			}
+// 			printf("[%d] --> %s\n", tokens->type, tokens->word);
+// 			if (tokens->path)
+// 				printf(" %s\n", tokens->path);
+// 			else
+// 				printf("\n");
+// 			free_tokens(tokens->head);
+// 		}
 // 	}
-// 	free(line);
-// 	free_tokens(head);
 // }
-
-int	main(int ac, char **av, char **env)
-{
-	t_test *tokens;
-	(void)ac;
-	(void)av;
-	(void)env;
-
-	while (1)
-	{
-		tokens = create_tokens(readline(">>> "));
-		check_if_cmd(tokens, env);
-		if (!tokens->next)
-		{
-			printf("[%d] --> %s", tokens->type, tokens->word);
-			if (tokens->path)
-				printf(" %s\n", tokens->path);
-			else
-				printf("\n");
-			free_tokens(tokens->head);
-		}
-		else
-		{
-			while (tokens->next)
-			{
-				printf("[%d] --> %s", tokens->type, tokens->word);
-				if (tokens->path)
-					printf(" %s\n", tokens->path);
-				else
-					printf("\n");
-				tokens = tokens->next;
-			}
-			printf("[%d] --> %s\n", tokens->type, tokens->word);
-			if (tokens->path)
-				printf(" %s\n", tokens->path);
-			else
-				printf("\n");
-			free_tokens(tokens->head);
-		}
-	}
-}

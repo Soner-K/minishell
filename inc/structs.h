@@ -6,14 +6,16 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:25 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/17 10:56:23 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/24 14:18:49 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-typedef enum e_tokens
+# include "libs.h"
+
+typedef enum e_type
 {
 	NONE,
 	WORD,
@@ -28,22 +30,31 @@ typedef enum e_tokens
 	DOUBLE_QUOTE,
 	OPERATOR,
 	PIPE,
-}					t_tokens;
+}					t_type;
 
-typedef struct s_test
+typedef struct t_tokens
 {
-	t_tokens		type;
+	t_type			type;
 	char			*word;
 	char			*path;
-	struct s_test	*next;
-	struct s_test	*prev;
-	struct s_test	*head;
-}					t_test;
+	struct t_tokens	*next;
+	struct t_tokens	*prev;
+	struct t_tokens	*head;
+}					t_tokens;
+
+typedef struct s_cmds
+{
+	char			**cmd;
+	bool			redirection;
+	char			*file_redir;
+	struct s_cmds	*next;
+	struct s_cmds	*head;
+}					t_cmds;
 
 typedef struct s_args
 {
 	char			**env;
-	t_test			*tokens;
+	t_tokens		*tokens;
 	struct s_args	*next;
 }					t_args;
 
