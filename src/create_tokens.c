@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:34:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/25 15:58:20 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:38:43 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,27 +31,26 @@ void	print_list(t_tokens *tokens)
 	// printf("[%d] --> %s\n", tokens->type, tokens->word);
 }
 
-void	delete_whitespaces(t_tokens *tokens)
+t_tokens	*delete_whitespaces(t_tokens *tokens)
 {
 	t_tokens	*new;
 	t_tokens	*tmp;
 	short int	i;
 
 	i = 0;
+	new = NULL;
 	while (tokens)
 	{
 		if (tokens->type != SPACE_ && tokens->type != TAB_)
 		{
-			new = new_node_token(tokens->word, (++i == 1));
-			if (!new)
-			new->type = tokens->type;
-			new->word = tokens->word;
-			new = new->next;
+			if (add_token(&new, new_node_token(tokens->word, ++i == 1)) == -1)
+				return (free_tokens(new->head), NULL);
 		}
 		tmp = tokens;
 		tokens = tokens->next;
 		free(tmp);
 	}
+	return (new->head);
 	
 }
 
@@ -190,7 +189,7 @@ static char	*get_token(char **line, short int end, short int s_q, short int d_q)
  * @param line The input to tokenize.
  * @returns A list of tokens. Returns NULL if line is null.(null si !line?).
  */
-/*big issue with handling white spaces, how to keep hand of list mainly*/
+/*big issue with handling white spaces, how to keep head of list mainly*/
 t_tokens	*create_tokens(char *line)
 {
 	t_tokens	*tokens;
@@ -211,7 +210,7 @@ t_tokens	*create_tokens(char *line)
 		if (add_token(&tokens, (new_node_token(str, 0))) == -1)
 			return (free_tokens(tokens), NULL);
 	}
-	delete_whitespaces(&tokens);
+	tokens = delete_whitespaces(tokens);
 	if (!tokens)
 		return (NULL);
 	return (tokens);

@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 09:51:59 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/25 14:11:15 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:55:00 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,22 @@ void	free_cmd_array(char **strs, short int size)
 	}
 	free(strs);
 }
+/*
+						/////	CAREFUL	\\\\\\\
+Need to work on keeping information on what was
+the separator (redir, pipe, here_doc...)*/
 void	ignore_separator(t_tokens **head)
 {
+	t_tokens	*tmp;
+
 	if (!(*head) || !head)
 		return ;
-	while (is_valid_separator((*head)->word))
+	while (*head && is_valid_separator((*head)->word))
+	{
+		tmp = *head;
 		*head = (*head)->next;
+		free_one_token(tmp);
+	}
 }
 /* - do error function if malloc failure. Check in the calling function
  why cmd array returned NULL (can be malloc failure but also
