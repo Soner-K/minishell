@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 09:51:59 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/24 15:48:18 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/24 18:41:46 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,23 +69,24 @@ void	free_cmd_array(char **strs, short int size)
  - better to point to the already existing string instead of strdup?
  But memory handling might become more tedious.
 */
-char	**get_cmd_array(t_tokens **head)
+char	**get_cmd_array(t_tokens **head_tokens, t_cmds *cmds)
 {
 	char		**cmd;
 	short int	array_size;
 	short int	i;
 	t_tokens	*tmp;
 
-	array_size = get_array_size(*head);
+	array_size = get_array_size(*head_tokens);
 	cmd = malloc(sizeof(char *) * (array_size + 1));
 	if (!cmd)
 		return (NULL);
 	cmd[array_size] = NULL;
 	i = 0;
+	cmds->size = array_size;
 	while (array_size)
 	{
-		tmp = *head;
-		*head = (*head)->next;
+		tmp = *head_tokens;
+		*head_tokens = (*head_tokens)->next;
 		cmd[i] = ft_strdup(tmp->word);
 		if (!cmd[i])
 			free_cmd_array(cmd, array_size + i);
@@ -102,12 +103,16 @@ t_cmds	*get_cmds_list(t_tokens **head)
 
 	if (!(*head))
 		return (NULL);
-	cmds = new_cmd(1);
+	cmds = new_node_cmd(1);
 	while (*head)
 	{
-		cmds->cmd = get_cmd_array(head);
+		cmds->cmd = get_cmd_array(head, cmds);
 		// if (!cmds->cmd)
 		// 	free_cmds()
-		
+		cmds->next = new_node_cmd(0);
+		// if (!cmds->next)
+			// free_cmds
+		cmds = cmds->next;
 	}
+	return (cmds->head);
 }

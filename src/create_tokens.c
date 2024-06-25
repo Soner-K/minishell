@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:34:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/24 15:13:19 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/24 18:32:28 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ t_tokens	*create_tokens(char *line)
 	str = get_token(&line, 0, 0, 0);
 	if (!str)
 		return (NULL);
-	tokens = new_token(str, 1);
+	tokens = new_node_token(str, 1);
 	if (!tokens)
 		return (NULL);
 	tokens->type = find_token_type(tokens->word);
@@ -179,11 +179,26 @@ t_tokens	*create_tokens(char *line)
 		str = get_token(&line, 0, 0, 0);
 		if (!str)
 			return (free_tokens(tokens), NULL);
-		if (add_token(&tokens, (new_token(str, 0))) == -1)
+		if (add_token(&tokens, (new_node_token(str, 0))) == -1)
 			free_tokens(tokens);
 	}
 	delete_whitespaces(tokens);
 	return (tokens);
+}
+
+void	free_cmds(t_cmds *cmds)
+{
+	t_cmds	*tmp;
+
+	if (!cmds)
+		return ;
+	while (cmds)
+	{
+		tmp = cmds;
+		free_cmd_array(tmp->cmd, tmp->size);
+		free(tmp);
+		cmds = cmds->next;
+	}
 }
 
 int	main(void)
@@ -191,27 +206,31 @@ int	main(void)
 	t_tokens	*head;
 	t_tokens	*tokens;
 	char	*line;
-	char	**cmd;
-	short int	array_size;
+	t_cmds		*cmds;
+	t_cmds		*first;
 
 	line = readline(">>> ");
 	tokens = create_tokens(line);
 	head = tokens;
-	array_size = get_array_size(head);
 	while (tokens)
 	{
 		printf("[%d] --> %s\n", tokens->type, tokens->word);
 		tokens = tokens->next;
 	}
 	tokens = head;
-	printf("\n");
-	cmd = get_cmd_array(&head);
-	for (int i = 0; i < array_size; i++)
-		printf("cmd[%d] = %s\n", i, cmd[i]);
-	print_list(head);
+	cmds = get_cmds_list(&head);
+	if (!cmds)
+		return (free_tokens(head), 1);
+	first = cmds;
+	while (cmds)
+	{
+		print_strs(cmds->cmd);
+		printf("\n");
+		cmds = cmds->next;
+	}
+	free_cmds(first);
 	free(line);
-	free_tokens(head);
-	free_cmd_array(cmd, array_size);
+	// free_tokens(head);
 }
 
 // int	main(int ac, char **av, char **env)

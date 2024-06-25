@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:25 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/24 14:18:49 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/24 18:16:38 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct t_tokens
 
 typedef struct s_cmds
 {
+	short int		size;
 	char			**cmd;
 	bool			redirection;
 	char			*file_redir;

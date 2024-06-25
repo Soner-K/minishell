@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_strs.c                                       :+:      :+:    :+:   */
+/*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 14:02:19 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/24 18:31:05 by sokaraku         ###   ########.fr       */
+/*   Created: 2024/06/20 17:58:12 by sokaraku          #+#    #+#             */
+/*   Updated: 2024/06/24 17:19:23 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "minishell.h"
 
-void	print_strs(char **strs)
+bool	is_builtin(char *cmd)
 {
-	int	i;
+	static char	*builtins[] = {"echo", "cd", "pwd", "export", "unset", "env", "exit"};
+	__int8_t	i;
 
-	i = -1;
-	if (!strs || !(*strs))
-		return ;
-	while (strs[++i])
-		ft_putendl_fd(strs[i], STDOUT_FILENO);
+	i = 0;
+	while (i < 7)
+	{
+		if (!ft_strcmp(cmd, builtins[i]))
+			return (true);
+		i++;
+	}
+	return (false);
 }

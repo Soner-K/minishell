@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/24 15:29:37 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/24 18:24:58 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # include "libs.h"
 
-t_tokens	*new_token(char *word, bool is_head);
-t_cmds		*new_cmd(bool is_head);
+t_tokens	*new_node_token(char *word, bool is_head);
+t_cmds		*new_node_cmd(bool is_head);
 
 __int8_t	add_token(t_tokens **lst, t_tokens *to_add);
 void		free_one_token(t_tokens *node);
@@ -36,6 +36,6 @@ __int8_t	check_if_cmd(t_tokens *head, char **env);
 
 void		free_cmd_array(char **strs, short int size);
 short int	get_array_size(t_tokens *head);
-char		**get_cmd_array(t_tokens **head);
-
+char		**get_cmd_array(t_tokens **head_tokens, t_cmds *cmds_head);
+t_cmds		*get_cmds_list(t_tokens **head);
 #endif

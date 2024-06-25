@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:56:05 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/24 15:26:03 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/24 18:26:48 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	free_tokens(t_tokens *head)
 {
 	t_tokens	*tmp;
 
+	if (!head)
+		return ;
 	while (head)
 	{
 		tmp = head;

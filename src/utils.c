@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:25:38 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/24 15:28:58 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/24 18:26:51 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * head of a list, and false (0) otherwise.
  * @returns The created node.
  */
-t_tokens	*new_token(char *word, bool is_head)
+t_tokens	*new_node_token(char *word, bool is_head)
 {
 	t_tokens			*new;
 	static t_tokens	*head = NULL;
@@ -38,7 +38,7 @@ t_tokens	*new_token(char *word, bool is_head)
 	return (new);
 }
 
-t_cmds	*new_cmd(bool is_head)
+t_cmds	*new_node_cmd(bool is_head)
 {
 	t_cmds			*new;
 	static t_cmds	*head = NULL;
