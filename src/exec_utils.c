@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 09:51:59 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/24 18:41:46 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/25 14:11:15 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ short int	get_array_size(t_tokens *head)
 	while (head)
 	{
 		if (is_valid_separator(head->word))
-			return (printf("%d\n", size), size);
+		{
+			return (size);
+		}
 		size++;
 		head = head->next;
 	}
@@ -60,7 +62,13 @@ void	free_cmd_array(char **strs, short int size)
 	}
 	free(strs);
 }
-
+void	ignore_separator(t_tokens **head)
+{
+	if (!(*head) || !head)
+		return ;
+	while (is_valid_separator((*head)->word))
+		*head = (*head)->next;
+}
 /* - do error function if malloc failure. Check in the calling function
  why cmd array returned NULL (can be malloc failure but also
  end of list).
@@ -76,7 +84,10 @@ char	**get_cmd_array(t_tokens **head_tokens, t_cmds *cmds)
 	short int	i;
 	t_tokens	*tmp;
 
+	ignore_separator(head_tokens);
 	array_size = get_array_size(*head_tokens);
+	if (array_size == 0)
+		return (NULL);
 	cmd = malloc(sizeof(char *) * (array_size + 1));
 	if (!cmd)
 		return (NULL);
@@ -109,7 +120,10 @@ t_cmds	*get_cmds_list(t_tokens **head)
 		cmds->cmd = get_cmd_array(head, cmds);
 		// if (!cmds->cmd)
 		// 	free_cmds()
-		cmds->next = new_node_cmd(0);
+		if (*head)
+			cmds->next = new_node_cmd(0);
+		else
+			break ;
 		// if (!cmds->next)
 			// free_cmds
 		cmds = cmds->next;

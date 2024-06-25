@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:34:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/24 18:32:28 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:58:20 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,29 +33,57 @@ void	print_list(t_tokens *tokens)
 
 void	delete_whitespaces(t_tokens *tokens)
 {
-	t_tokens	*prev;
-	t_tokens	*next;
+	t_tokens	*new;
+	t_tokens	*tmp;
+	short int	i;
 
-	prev = NULL;
-	next = tokens;
+	i = 0;
 	while (tokens)
 	{
-		if (tokens->type == SPACE_ || tokens->type == TAB_)
+		if (tokens->type != SPACE_ && tokens->type != TAB_)
 		{
-			prev = tokens->prev;
-			next = tokens->next;
-			prev->next = next;
-			free(tokens->word);
-			free(tokens);
-			if (!next)
-				return ;
-			tokens = next;
-			tokens->prev = prev;
+			new = new_node_token(tokens->word, (++i == 1));
+			if (!new)
+			new->type = tokens->type;
+			new->word = tokens->word;
+			new = new->next;
 		}
-		else
-			tokens = tokens->next;
+		tmp = tokens;
+		tokens = tokens->next;
+		free(tmp);
 	}
+	
 }
+
+
+// void	delete_whitespaces(t_tokens **tokens)
+// {
+// 	t_tokens	*prev;
+// 	t_tokens	*next;
+	
+// 	prev = NULL;
+// 	next = *tokens;
+// 	while (*tokens)
+// 	{
+// 		if ((*tokens)->type == SPACE_ || (*tokens)->type == TAB_)
+// 		{
+// 			if ((*tokens)->prev)
+// 				prev =(*tokens)->prev;
+// 			next = (*tokens)->next;
+// 			if (prev)
+// 				prev->next = next;
+// 			free((*tokens)->word);
+// 			free((*tokens));
+// 			// if (!next)
+// 			// 	return ;
+// 			*tokens = next;
+// 			if (*tokens)
+// 				(*tokens)->prev = prev;
+// 		}
+// 		else
+// 			*tokens = (*tokens)->next;
+// 	}
+// }
 
 /**
  * @brief Checks if the tokenization process for one token should be stopped
@@ -162,14 +190,15 @@ static char	*get_token(char **line, short int end, short int s_q, short int d_q)
  * @param line The input to tokenize.
  * @returns A list of tokens. Returns NULL if line is null.(null si !line?).
  */
+/*big issue with handling white spaces, how to keep hand of list mainly*/
 t_tokens	*create_tokens(char *line)
 {
 	t_tokens	*tokens;
 	char	*str;
 
 	str = get_token(&line, 0, 0, 0);
-	if (!str)
-		return (NULL);
+	// if (!str)
+	// 	return (NULL);
 	tokens = new_node_token(str, 1);
 	if (!tokens)
 		return (NULL);
@@ -180,9 +209,11 @@ t_tokens	*create_tokens(char *line)
 		if (!str)
 			return (free_tokens(tokens), NULL);
 		if (add_token(&tokens, (new_node_token(str, 0))) == -1)
-			free_tokens(tokens);
+			return (free_tokens(tokens), NULL);
 	}
-	delete_whitespaces(tokens);
+	delete_whitespaces(&tokens);
+	if (!tokens)
+		return (NULL);
 	return (tokens);
 }
 
@@ -205,12 +236,16 @@ int	main(void)
 {
 	t_tokens	*head;
 	t_tokens	*tokens;
-	char	*line;
+	char		*line;
+	char		*tmp;
 	t_cmds		*cmds;
 	t_cmds		*first;
 
 	line = readline(">>> ");
+	tmp = line;
 	tokens = create_tokens(line);
+	// if (!tokens)
+	// 	return (0);
 	head = tokens;
 	while (tokens)
 	{
@@ -229,8 +264,8 @@ int	main(void)
 		cmds = cmds->next;
 	}
 	free_cmds(first);
-	free(line);
-	// free_tokens(head);
+	free(tmp);
+	free_tokens(head);
 }
 
 // int	main(int ac, char **av, char **env)
