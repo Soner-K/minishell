@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:34:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/25 17:38:43 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/26 12:30:27 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	print_list(t_tokens *tokens)
 	// }
 	// printf("[%d] --> %s\n", tokens->type, tokens->word);
 }
-
+/*o need protection in if, cuz add_token checks for null*/
 t_tokens	*delete_whitespaces(t_tokens *tokens)
 {
 	t_tokens	*new;
@@ -43,14 +43,19 @@ t_tokens	*delete_whitespaces(t_tokens *tokens)
 	{
 		if (tokens->type != SPACE_ && tokens->type != TAB_)
 		{
-			if (add_token(&new, new_node_token(tokens->word, ++i == 1)) == -1)
+			tmp = new_node_token(tokens->word, ++i == 1);
+			if (add_token(&new, tmp) == -1)
 				return (free_tokens(new->head), NULL);
 		}
 		tmp = tokens;
 		tokens = tokens->next;
+		if (tmp->type == SPACE_ || tmp->type == TAB_)
+			free(tmp->word);
 		free(tmp);
 	}
-	return (new->head);
+	if (new)
+		return (new->head);
+	return (NULL);
 	
 }
 
@@ -237,8 +242,9 @@ int	main(void)
 	t_tokens	*tokens;
 	char		*line;
 	char		*tmp;
-	t_cmds		*cmds;
-	t_cmds		*first;
+	char		**cmd;
+	// t_cmds		*cmds;
+	// t_cmds		*first;
 
 	line = readline(">>> ");
 	tmp = line;
@@ -252,19 +258,30 @@ int	main(void)
 		tokens = tokens->next;
 	}
 	tokens = head;
-	cmds = get_cmds_list(&head);
-	if (!cmds)
-		return (free_tokens(head), 1);
-	first = cmds;
-	while (cmds)
+	cmd = get_cmd(&head);
+	// for (int i = 0; cmd[i]; i++)
+	int i = 0;
+	while (cmd && cmd[i])
 	{
-		print_strs(cmds->cmd);
-		printf("\n");
-		cmds = cmds->next;
+		printf("[%d] = %s\n", i, cmd[i]);
+		i++;
 	}
-	free_cmds(first);
+	// cmds = get_cmds_list(&head);
+	// if (!cmds)
+	// 	return (free_tokens(head), 1);
+	// first = cmds;
+	// while (cmds)
+	// {
+	// 	print_strs(cmds->cmd);
+	// 	printf("\n");
+	// 	// printf("array size is %d\n", cmds->size);
+	// 	cmds = cmds->next;
+	// }
+	// free_cmds(first);
 	free(tmp);
+	// if (head)
 	free_tokens(head);
+	free_arrs((void **)cmd);
 }
 
 // int	main(int ac, char **av, char **env)

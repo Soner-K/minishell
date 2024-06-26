@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:56:05 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/25 15:05:07 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/26 09:41:25 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ __int8_t	add_token(t_tokens **lst, t_tokens *to_add)
 	if (!(*lst))
 	{
 		*lst = to_add;
+		to_add->type = find_token_type(to_add->word);
 		return (1);
 	}
 	if (!to_add)

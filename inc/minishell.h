@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/24 18:24:58 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/26 12:23:40 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,6 @@ void		free_cmd_array(char **strs, short int size);
 short int	get_array_size(t_tokens *head);
 char		**get_cmd_array(t_tokens **head_tokens, t_cmds *cmds_head);
 t_cmds		*get_cmds_list(t_tokens **head);
+
+char		**get_cmd(t_tokens **head);
 #endif

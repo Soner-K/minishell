@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:25 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/24 18:16:38 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/26 13:08:37 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,9 @@ typedef struct s_cmds
 {
 	short int		size;
 	char			**cmd;
-	bool			redirection;
+	t_type			type;
 	char			*file_redir;
+	char			*here_doc_sep;
 	struct s_cmds	*next;
 	struct s_cmds	*head;
 }					t_cmds;
