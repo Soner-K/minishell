@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:34:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/26 12:30:27 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:03:05 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	print_list(t_tokens *tokens)
 	// printf("[%d] --> %s\n", tokens->type, tokens->word);
 }
 /*o need protection in if, cuz add_token checks for null*/
+/*redo the function by just creating a new pointer instead of malloc ?*/
 t_tokens	*delete_whitespaces(t_tokens *tokens)
 {
 	t_tokens	*new;
@@ -56,38 +57,7 @@ t_tokens	*delete_whitespaces(t_tokens *tokens)
 	if (new)
 		return (new->head);
 	return (NULL);
-	
 }
-
-
-// void	delete_whitespaces(t_tokens **tokens)
-// {
-// 	t_tokens	*prev;
-// 	t_tokens	*next;
-	
-// 	prev = NULL;
-// 	next = *tokens;
-// 	while (*tokens)
-// 	{
-// 		if ((*tokens)->type == SPACE_ || (*tokens)->type == TAB_)
-// 		{
-// 			if ((*tokens)->prev)
-// 				prev =(*tokens)->prev;
-// 			next = (*tokens)->next;
-// 			if (prev)
-// 				prev->next = next;
-// 			free((*tokens)->word);
-// 			free((*tokens));
-// 			// if (!next)
-// 			// 	return ;
-// 			*tokens = next;
-// 			if (*tokens)
-// 				(*tokens)->prev = prev;
-// 		}
-// 		else
-// 			*tokens = (*tokens)->next;
-// 	}
-// }
 
 /**
  * @brief Checks if the tokenization process for one token should be stopped
@@ -198,7 +168,7 @@ static char	*get_token(char **line, short int end, short int s_q, short int d_q)
 t_tokens	*create_tokens(char *line)
 {
 	t_tokens	*tokens;
-	char	*str;
+	char		*str;
 
 	str = get_token(&line, 0, 0, 0);
 	// if (!str)
@@ -221,21 +191,6 @@ t_tokens	*create_tokens(char *line)
 	return (tokens);
 }
 
-void	free_cmds(t_cmds *cmds)
-{
-	t_cmds	*tmp;
-
-	if (!cmds)
-		return ;
-	while (cmds)
-	{
-		tmp = cmds;
-		free_cmd_array(tmp->cmd, tmp->size);
-		free(tmp);
-		cmds = cmds->next;
-	}
-}
-
 int	main(void)
 {
 	t_tokens	*head;
@@ -249,8 +204,6 @@ int	main(void)
 	line = readline(">>> ");
 	tmp = line;
 	tokens = create_tokens(line);
-	// if (!tokens)
-	// 	return (0);
 	head = tokens;
 	while (tokens)
 	{
@@ -259,29 +212,10 @@ int	main(void)
 	}
 	tokens = head;
 	cmd = get_cmd(&head);
-	// for (int i = 0; cmd[i]; i++)
-	int i = 0;
-	while (cmd && cmd[i])
-	{
-		printf("[%d] = %s\n", i, cmd[i]);
-		i++;
-	}
-	// cmds = get_cmds_list(&head);
-	// if (!cmds)
-	// 	return (free_tokens(head), 1);
-	// first = cmds;
-	// while (cmds)
-	// {
-	// 	print_strs(cmds->cmd);
-	// 	printf("\n");
-	// 	// printf("array size is %d\n", cmds->size);
-	// 	cmds = cmds->next;
-	// }
-	// free_cmds(first);
+	print_strs(cmd);
 	free(tmp);
-	// if (head)
 	free_tokens(head);
-	free_arrs((void **)cmd);
+	// free_all_cmds(first);
 }
 
 // int	main(int ac, char **av, char **env)

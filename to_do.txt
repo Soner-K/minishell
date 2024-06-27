@@ -1,0 +1,5 @@
+27/06/24
+1. Redo the delete_whitespace function, so that instead of creating a whole new list
+I can just point to the already existing list and delete the whitespaces.
+
+2. Get done with the t_cmds list creation.

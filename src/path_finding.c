@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 10:03:46 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/24 13:57:21 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/27 13:42:24 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static char	**split_path(char **env)
  * @param env The environment variable.
  * @param alloc_fail A pointer to a boolean taking the value 1 if
  * an allocation error occured, and 0 otherwise.
- * @returns The path of a given command if it exists, and 0 otherwise.
+ * @returns The path of a given command if it exists, and NULL otherwise.
  */
 char	*find_path(char *cmd, char **env, bool *alloc_fail)
 {

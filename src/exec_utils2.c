@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 10:11:25 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/26 13:56:11 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:18:30 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,76 +21,6 @@
 I can just point to that content and only free the list (not its word's component).			
 					
 */
-static bool	is_valid_separator(char *sep)
-{
-	short int	sep_len;
-
-	sep_len = ft_strlen(sep);
-	if (!ft_strncmp(">>", sep, sep_len))
-		return (true);
-	if (!ft_strncmp("<<", sep, sep_len))
-		return (true);
-	if (!ft_strncmp(">", sep, sep_len))
-		return (true);
-	if (!ft_strncmp("<", sep, sep_len))
-		return (true);
-	if (!ft_strncmp("|", sep, sep_len))
-		return (true);
-	return (false);
-}
-
-/*
-						/////	CAREFUL	\\\\\\\
-Need to work on keeping information on what was
-the separator (redir, pipe, here_doc...)*/
-short int	nodes_until_separator(t_tokens *head)
-{
-	short int	n;
-
-	if (!head)
-		return (0);
-	n = 0;
-	while (head && !is_valid_separator(head->word))
-	{
-		n++;
-		head = head->next;
-	}
-	return (n);
-}
-/**
- * @brief A simple strjoin, but it also puts a space between the two strings,
- to facilitate the split afterwards.
- * @param s1 A pointer to the first string to copy.
- * @param s2 a pointer to the second string to copy.
- * @returns The merged strings, with a space in the middle.
- * Returns NULL if the allocation failed.
- */
-char	*merge_strings(char *s1, char *s2)
-{
-	size_t	i;
-	size_t	j;
-	char	*new;
-
-	i = 0;
-	j = 0;
-	if (!s1 && !s2)
-		return (NULL);
-	new = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)) + 2);
-	if (!new)
-		return (NULL);
-	while (s1 && s1[i])
-	{
-		new[i] = s1[i];
-		i++;
-	}
-	if (s1)
-		new[i++] = ' ';
-	while (s2 && s2[j])
-		new[i++] = s2[j++];
-	new[i] = 0;
-	free(s1);
-	return (new);
-}
 
 /**
  * @brief Iterate through a list of tokens, and store the components inside
@@ -103,16 +33,14 @@ char	*merge_strings(char *s1, char *s2)
  * 
  */
 /*free tokens here in caseof malloc failure ?*/
-char	**get_cmd(t_tokens **head)
+char	**get_cmd(t_tokens **head, t_cmds *node)
 {
 	t_tokens	*tmp;
 	char		*str;
 	char		**cmd;
-	short int	n;
 
 	str = NULL;
-	n = nodes_until_separator(*head);
-	while (n--)
+	while (*head && (*head)->type == WORD)
 	{
 		tmp = *head;
 		str = merge_strings(str, tmp->word);
@@ -125,20 +53,25 @@ char	**get_cmd(t_tokens **head)
 	cmd = ft_split(str, ' ');
 	if (!cmd)
 		return (free(str), NULL);
+	if (*head && (*head)->type != NONE)
+	{
+		
+		node->type = (*head)->type;
+	}
 	free(str);
 	return (cmd);
 }
 
 /**
  * @brief Frees all the malloc'd componend of a list of type t_cmds.
- * @param head A pointer to the head of the list.
+ * @param head A double pointer to the head of the list.
  * @returns void.
  */
-void	free_cmds(t_cmds *head)
+void	free_all_cmds(t_cmds *head)
 {
 	t_cmds	*tmp;
 
-	if (!head)
+	if (head)
 		return ;
 	while (head)
 	{
@@ -163,6 +96,8 @@ bool	check_redir_and_heredoc(t_tokens **head, t_cmds *node)
 {
 	t_tokens	*tmp;
 
+	if (node->type < INREDIR || node->type > APPENDREDIR)
+		return (true);
 	tmp = *head;
 	(*head) = (*head)->next;
 	if (node->type == HEREDOC)
@@ -184,24 +119,57 @@ bool	check_redir_and_heredoc(t_tokens **head, t_cmds *node)
 	free(tmp);
 	return (true);
 }
+
+__int8_t	find_operator(t_tokens *head, t_cmds *node)
+{
+	if (!head)
+		return (false);
+	while (head)
+	{
+		if (is_valid_separator(head->word))
+		{
+			if (head->type == HEREDOC)
+			{
+				node->here_doc_sep = ft_strdup(head->word);
+				if (!node->here_doc_sep)
+					return (-1);
+			}
+			else if (head->type != PIPE)
+			{
+				node->file_redir = ft_strdup(head->word);
+				if (!node->file_redir)
+					return (-1);
+			}
+			node->type = head->type;
+			return (true);
+		}
+		head = head->next;
+	}
+	return (false);
+}
+
 /*In progress*/
+//adding a variable to precise what the error is?
 t_cmds	*get_cmds_list(t_tokens **head)
 {
 	t_cmds *lst;
 	t_cmds *cmds_head;
 
+	if (!(*head))
+		return (NULL);
 	lst = new_node_cmd(1);
 	if (!lst)
 		return (NULL);
 	cmds_head = lst;
-	while (*head)
+	while (head)
 	{
-		// if (is_valid_separator((*head)->word))
-		lst->type = (*head)->type;
-		if (lst->type == HEREDOC)
-
-			lst->cmd = get_cmd(head);
-		if (!lst->cmd)
-			return (free_cmds(cmds_head), NULL);
+		if (find_operator(*head, lst) == -1)
+			return (free_tokens(*head), free_all_cmds(cmds_head), NULL);
+		if (is_valid_separator((*head)->word))
+			*head = (*head)->next;
+		if (!(*head))
+			break ;
+		
 	}
+	return (cmds_head);
 }

@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/26 12:23:40 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:00:24 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 t_tokens	*new_node_token(char *word, bool is_head);
 t_cmds		*new_node_cmd(bool is_head);
+bool		is_valid_separator(char *sep);
 
 __int8_t	add_token(t_tokens **lst, t_tokens *to_add);
 void		free_one_token(t_tokens *node);
@@ -40,4 +41,7 @@ char		**get_cmd_array(t_tokens **head_tokens, t_cmds *cmds_head);
 t_cmds		*get_cmds_list(t_tokens **head);
 
 char		**get_cmd(t_tokens **head);
+t_cmds		*get_cmds_list(t_tokens **head);
+void		free_all_cmds(t_cmds *head);
+char		*merge_strings(char *s1, char *s2);
 #endif
