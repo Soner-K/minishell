@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:34:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/27 15:03:05 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/29 17:03:34 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,8 +171,8 @@ t_tokens	*create_tokens(char *line)
 	char		*str;
 
 	str = get_token(&line, 0, 0, 0);
-	// if (!str)
-	// 	return (NULL);
+	if (!str)
+		return (NULL);
 	tokens = new_node_token(str, 1);
 	if (!tokens)
 		return (NULL);
@@ -197,9 +197,6 @@ int	main(void)
 	t_tokens	*tokens;
 	char		*line;
 	char		*tmp;
-	char		**cmd;
-	// t_cmds		*cmds;
-	// t_cmds		*first;
 
 	line = readline(">>> ");
 	tmp = line;
@@ -211,8 +208,7 @@ int	main(void)
 		tokens = tokens->next;
 	}
 	tokens = head;
-	cmd = get_cmd(&head);
-	print_strs(cmd);
+	prep_execution(&head);
 	free(tmp);
 	free_tokens(head);
 	// free_all_cmds(first);

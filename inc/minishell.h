@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/27 15:00:24 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/29 16:48:25 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,7 @@ char		**get_cmd(t_tokens **head);
 t_cmds		*get_cmds_list(t_tokens **head);
 void		free_all_cmds(t_cmds *head);
 char		*merge_strings(char *s1, char *s2);
+
+void		prep_execution(t_tokens **head);
+
 #endif

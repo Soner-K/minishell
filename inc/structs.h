@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:25 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/27 14:42:48 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/29 16:52:05 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,10 @@ typedef enum e_type
 	OUTREDIR,
 	HEREDOC,
 	APPENDREDIR,
-	SPACE_,
-	TAB_,
-	SINGLE_QUOTE,
-	DOUBLE_QUOTE,
 	OPERATOR,
 	PIPE,
+	SPACE_,
+	TAB_,
 }					t_type;
 
 typedef struct t_tokens

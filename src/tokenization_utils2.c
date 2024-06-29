@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:34:01 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/26 09:42:42 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/29 16:51:07 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,6 @@ __int8_t	find_one_token(char c)
 		return (INREDIR);
 	else if (c == '>')
 		return (OUTREDIR);
-	else if (c == '"')
-		return (DOUBLE_QUOTE);
-	else if (c == '\'')
-		return (SINGLE_QUOTE);
 	return (NONE);
 }
 

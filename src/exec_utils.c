@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 09:51:59 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/26 13:05:36 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/29 16:52:53 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@
 // 	free(strs);
 // }
 // /*
-// 						/////	CAREFUL	\\\\\\\
+ 						/////	CAREFUL	\\\\\\\ */
 // Need to work on keeping information on what was
 // the separator (redir, pipe, here_doc...)*/
 // void	ignore_separator(t_tokens **head)

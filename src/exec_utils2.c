@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 10:11:25 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/27 15:18:30 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/29 16:53:26 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,46 +21,6 @@
 I can just point to that content and only free the list (not its word's component).			
 					
 */
-
-/**
- * @brief Iterate through a list of tokens, and store the components inside
- * an array of strings, until the next delimitor (>, <, >>, << |) or the
- * end of the list.
- * @param head Double pointer to the head of the tokens list. A double
- * pointer is used to free the memory of the copied nodes and move the
- * head of the list accordingly.
- * @returns An array of strings, more precisely an array of commands.
- * 
- */
-/*free tokens here in caseof malloc failure ?*/
-char	**get_cmd(t_tokens **head, t_cmds *node)
-{
-	t_tokens	*tmp;
-	char		*str;
-	char		**cmd;
-
-	str = NULL;
-	while (*head && (*head)->type == WORD)
-	{
-		tmp = *head;
-		str = merge_strings(str, tmp->word);
-		if (!str)
-			return (NULL);
-		*head = (*head)->next;
-		free(tmp->word);
-		free(tmp);
-	}
-	cmd = ft_split(str, ' ');
-	if (!cmd)
-		return (free(str), NULL);
-	if (*head && (*head)->type != NONE)
-	{
-		
-		node->type = (*head)->type;
-	}
-	free(str);
-	return (cmd);
-}
 
 /**
  * @brief Frees all the malloc'd componend of a list of type t_cmds.
