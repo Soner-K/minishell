@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:34:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/29 17:03:34 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/30 22:08:46 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,7 +211,6 @@ int	main(void)
 	prep_execution(&head);
 	free(tmp);
 	free_tokens(head);
-	// free_all_cmds(first);
 }
 
 // int	main(int ac, char **av, char **env)

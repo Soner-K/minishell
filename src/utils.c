@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:25:38 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/27 13:37:41 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/06/30 22:12:08 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,6 @@ t_tokens	*new_node_token(char *word, bool is_head)
 	new->next = NULL;
 	new->prev = NULL;
 	new->type = NONE;
-	if (is_head)
-		head = new;
-	new->head = head;
-	return (new);
-}
-
-t_cmds	*new_node_cmd(bool is_head)
-{
-	t_cmds			*new;
-	static t_cmds	*head = NULL;
-
-	new = malloc(sizeof(t_cmds));
-	if (!new)
-		return (NULL);
-	new->next = NULL;
-	new->cmd = NULL;
-	new->file_redir = NULL;
-	new->type = 0;
-	new->here_doc_sep = NULL;
 	if (is_head)
 		head = new;
 	new->head = head;

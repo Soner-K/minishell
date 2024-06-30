@@ -5,144 +5,113 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/17 09:51:59 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/29 16:52:53 by sokaraku         ###   ########.fr       */
+/*   Created: 2024/06/29 16:04:42 by sokaraku          #+#    #+#             */
+/*   Updated: 2024/06/30 22:32:35 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*										IGNORE ALL
-									NEED TO REDO THIS PART
+/**
+ * @brief Iterate through a list of tokens, and store the components inside
+ * an array of strings, until the next delimitor (>, <, >>, << |) or the
+ * end of the list.
+ * @param head Double pointer to the head of the tokens list. A double
+ * pointer is used to free the memory of the copied nodes and move the
+ * head of the list accordingly.
+ * @returns An array of strings, more precisely an array of commands.
+ *
+ */
+/*free tokens here in caseof malloc failure ?
+ATTENTION : Need to handle the case where the first
+node is a separator.
+
 */
+char	**get_cmd(t_tokens **head)
+{
+	t_tokens	*tmp;
+	char		*str;
+	char		**cmd;
 
-// static bool	is_valid_separator(char *sep)
-// {
-// 	short int	sep_len;
+	str = NULL;
+	while (*head && (*head)->type == WORD)
+	{
+		tmp = *head;
+		str = merge_strings(str, tmp->word);
+		if (!str)
+			return (NULL);
+		*head = (*head)->next;
+		free(tmp->word);
+		free(tmp);
+	}
+	cmd = ft_split(str, ' ');
+	if (!cmd)
+		return (free(str), NULL);
+	free(str);
+	return (cmd);
+}
 
-// 	sep_len = ft_strlen(sep);
-// 	if (!ft_strncmp(">>", sep, sep_len))
-// 		return (true);
-// 	if (!ft_strncmp("<<", sep, sep_len))
-// 		return (true);
-// 	if (!ft_strncmp(">", sep, sep_len))
-// 		return (true);
-// 	if (!ft_strncmp("<", sep, sep_len))
-// 		return (true);
-// 	if (!ft_strncmp("|", sep, sep_len))
-// 		return (true);
-// 	return (false);
-// }
+/*
+Possible error cases :
+1. If there is no word after the operator (except for $?)
+2. What about the type none? When does it occur?
+Looks like it never occurs, so might get rid of it.
 
-// short int	get_array_size(t_tokens *head)
-// {
-// 	short int	size;
+Note : we're after the parsing, so if there is any syntax error,
+the  execution isnt done.
+*/
+__int8_t	get_operator(t_tokens **head, char **op_str)
+{
+	t_tokens 	*tmp;
+	__int8_t	type;
 
-// 	if (!head)
-// 		return (0);
-// 	size = 0;
-// 	while (head)
-// 	{
-// 		if (is_valid_separator(head->word))
-// 		{
-// 			return (size);
-// 		}
-// 		size++;
-// 		head = head->next;
-// 	}
-// 	printf("%d\n", size);
-// 	return (size);
-// }
+	if (!(*head))
+		return (-1);
+	tmp = *head;
+	type = -1;
+	*head = (*head)->next;
+	if (tmp->type >= INREDIR && tmp->type <= PIPE)
+		type = tmp->type;
+	if (type != -1)
+	{
+		if (tmp->next)
+			*op_str = tmp->next->word;
+		else if (type == OPERATOR)
+			return (free(tmp->word), free(tmp), type);
+		else
+			return(free(tmp->word), free(tmp), -1);
+		free(tmp->word);
+		free(tmp);
+		tmp = *head;
+		*head = (*head)->next;
+		free(tmp);
+		return (type);
+	}
+	return (free_tokens(tmp), -1); //probably never gets to here
+}
 
-// void	free_cmd_array(char **strs, short int size)
-// {
-// 	short int	i;
+void	prep_execution(t_tokens **head)
+{
+	char		**cmd_array;
+	char		*op_str;
+	__int8_t	type;
 
-// 	i = 0;
-// 	while (size--)
-// 	{
-// 		free(strs[i]);
-// 		i++;
-// 	}
-// 	free(strs);
-// }
-// /*
- 						/////	CAREFUL	\\\\\\\ */
-// Need to work on keeping information on what was
-// the separator (redir, pipe, here_doc...)*/
-// void	ignore_separator(t_tokens **head)
-// {
-// 	t_tokens	*tmp;
-
-// 	if (!(*head) || !head)
-// 		return ;
-// 	while (*head && is_valid_separator((*head)->word))
-// 	{
-// 		tmp = *head;
-// 		*head = (*head)->next;
-// 		free_one_token(tmp);
-// 	}
-// }
-// /* - do error function if malloc failure. Check in the calling function
-//  why cmd array returned NULL (can be malloc failure but also
-//  end of list).
-//  - dont forget to store the token type.
-//  - check if strs is well freed in case of malloc failure
-//  - better to point to the already existing string instead of strdup?
-//  But memory handling might become more tedious.
-//  Do the assignation of strs inside that function?
-// */
-// char	**get_cmd_array(t_tokens **head_tokens, t_cmds *cmds)
-// {
-// 	char		**cmd;
-// 	short int	array_size;
-// 	short int	i;
-// 	t_tokens	*tmp;
-
-// 	ignore_separator(head_tokens);
-// 	array_size = get_array_size(*head_tokens);
-// 	if (array_size == 0)
-// 		return (NULL);
-// 	cmd = malloc(sizeof(char *) * (array_size + 1));
-// 	if (!cmd)
-// 		return (NULL);
-// 	cmd[array_size] = NULL;
-// 	i = 0;
-// 	cmds->size = array_size;
-// 	while (array_size)
-// 	{
-// 		tmp = *head_tokens;
-// 		*head_tokens = (*head_tokens)->next;
-// 		cmd[i] = ft_strdup(tmp->word);
-// 		if (!cmd[i])
-// 			free_cmd_array(cmd, array_size + i);
-// 		i++;
-// 		array_size--;
-// 		free_one_token(tmp);
-// 	}
-// 	return (cmd);
-// }
-
-// t_cmds	*get_cmds_list(t_tokens **head)
-// {
-// 	t_cmds	*cmds;
-
-// 	if (!(*head))
-// 		return (NULL);
-// 	cmds = new_node_cmd(1);
-// 	while (*head)
-// 	{
-// 		cmds->cmd = get_cmd_array(head, cmds);
-// 		// if (!cmds->cmd)
-// 		// 	free_cmds()
-// 		ignore_separator(head);
-// 		if (head)
-// 			cmds->next = new_node_cmd(0);
-// 		else
-// 			break ;
-// 		// if (!cmds->next)
-// 			// free_cmds
-// 		cmds = cmds->next;
-// 	}
-// 	return (cmds->head);
-// }
+	cmd_array = get_cmd(head);
+	if (!cmd_array)
+		return (free_tokens(*head));
+	op_str = NULL;
+	type = get_operator(head, &op_str);
+	if (!op_str)
+		return(free_tokens(*head), free_arrs((void **)cmd_array));
+	/*
+		pipe function
+		here_doc
+		builtins
+		where to do the redirections ?
+	*/
+	print_strs(cmd_array);
+	printf("\n");
+	printf("type of op_str is %d and str is = %s\n", type, op_str);
+	free_arrs((void **)cmd_array);
+	free(op_str);
+}
