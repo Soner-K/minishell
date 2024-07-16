@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:34:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/30 22:08:46 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/07/12 18:13:34 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,13 +191,16 @@ t_tokens	*create_tokens(char *line)
 	return (tokens);
 }
 
-int	main(void)
+int	main(int ac, char **av, char **env)
 {
 	t_tokens	*head;
 	t_tokens	*tokens;
 	char		*line;
 	char		*tmp;
 
+	(void)ac;
+	(void)av;
+	(void)env;
 	line = readline(">>> ");
 	tmp = line;
 	tokens = create_tokens(line);
@@ -208,9 +211,20 @@ int	main(void)
 		tokens = tokens->next;
 	}
 	tokens = head;
-	prep_execution(&head);
+	// get_cmd(&head);
+	// if (head)
+	// 	printf("%s\n", head->word);
+	// get_cmd(&head);
+	// if (head)
+	// 	printf("%s\n", head->word);
+	// get_cmd(&head);
+	// if (head)
+	// 	printf("%s\n", head->word);
+	do_pipe(&tokens, env);
 	free(tmp);
 	free_tokens(head);
+	while (wait(NULL) > 0)
+		;
 }
 
 // int	main(int ac, char **av, char **env)

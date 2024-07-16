@@ -2,4 +2,10 @@
 1. Redo the delete_whitespace function, so that instead of creating a whole new list
 I can just point to the already existing list and delete the whitespaces.
 
-2. Get done with the t_cmds list creation.
+2. Handle cases where first node is a separator in get_cmd function
+
+3. Implement simple redirections (infile, outfile) in the do_pipe function
+
+4. Move the head of the token's list after each turn in the main process but cleaner
+
+5. Check for leaks

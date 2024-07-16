@@ -29,3 +29,6 @@ Lance le heredoc, mais ne lance pas la commande car infile n'existe pas
 < infile << end cat > outfile
 Pareil, heredoc, et reprend les ouvertures de gauche a droite.
 
+ls -l > t | < t wc -c
+ne lis pas dans t, peut etre parce que l'exec est simultanée ?
+

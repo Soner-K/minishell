@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:25:38 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/30 22:12:08 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/07/10 18:42:59 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,3 +90,4 @@ char	*merge_strings(char *s1, char *s2)
 	free(s1);
 	return (new);
 }
+
