@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:34:01 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/29 16:51:07 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/07/16 20:40:08 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,15 @@ __int8_t	find_one_token(char c)
  */
 __int8_t	find_token_type(char *str)
 {
+	short int	len;
+
+	len = ft_strlen(str);
 	if (*str == '"' || *str == '\'')
 		return (WORD);
+	if (len > 1 && *str == '>')
+		return (APPENDREDIR);
+	else if (len > 1 && *str == '<')
+		return (HEREDOC);
 	return (find_one_token(*str));
 }
 

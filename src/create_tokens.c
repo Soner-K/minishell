@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:34:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/07/12 18:13:34 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/07/16 21:24:38 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,7 @@ t_tokens	*create_tokens(char *line)
 		str = get_token(&line, 0, 0, 0);
 		if (!str)
 			return (free_tokens(tokens), NULL);
+		
 		if (add_token(&tokens, (new_node_token(str, 0))) == -1)
 			return (free_tokens(tokens), NULL);
 	}
@@ -207,20 +208,20 @@ int	main(int ac, char **av, char **env)
 	head = tokens;
 	while (tokens)
 	{
-		printf("[%d] --> %s\n", tokens->type, tokens->word);
+		printf("[%d] --> %s", tokens->type, tokens->word);
+		if (tokens->type >= INREDIR && tokens->type <= PIPE)
+		{
+			if (is_valid_operator(tokens))
+				printf(" VALID\n");
+			else
+				printf("parse error near '%c'\n", *tokens->word);
+		}
+		else
+			printf("\n");
 		tokens = tokens->next;
 	}
 	tokens = head;
-	// get_cmd(&head);
-	// if (head)
-	// 	printf("%s\n", head->word);
-	// get_cmd(&head);
-	// if (head)
-	// 	printf("%s\n", head->word);
-	// get_cmd(&head);
-	// if (head)
-	// 	printf("%s\n", head->word);
-	do_pipe(&tokens, env);
+	// do_pipe(&tokens, env);
 	free(tmp);
 	free_tokens(head);
 	while (wait(NULL) > 0)

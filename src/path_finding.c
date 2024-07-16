@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 10:03:46 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/27 13:42:24 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/07/16 21:19:39 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ __int8_t	check_if_cmd(t_tokens *head, char **env)
 			if (!access(str, F_OK | X_OK))
 			{
 				head->path = str;
-				head->type = CMD;
+				// head->type = CMD;
 			}
 			else
 				free(str);

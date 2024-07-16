@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/07/11 14:56:11 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/07/16 21:16:36 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,8 @@ __int8_t	check_if_cmd(t_tokens *head, char **env);
 char		**get_cmd(t_tokens **head);
 void		prep_execution(t_tokens **head);
 int			do_pipe(t_tokens **head, char **env);
+
+//				-->parsing.c
+bool		is_valid_operator(t_tokens *node);
 
 #endif
