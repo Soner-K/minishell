@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:25 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/07/16 21:08:10 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/07/18 14:03:35 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef enum e_type
 	HEREDOC,
 	APPENDREDIR,
 	PIPE,
-	OPERATOR,
+	EXPAND,
 	WORD,
 	SPACE_,
 	TAB_,

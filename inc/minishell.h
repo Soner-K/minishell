@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/07/16 21:16:36 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/07/18 14:58:01 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void		prep_execution(t_tokens **head);
 int			do_pipe(t_tokens **head, char **env);
 
 //				-->parsing.c
-bool		is_valid_operator(t_tokens *node);
+bool		check_operators(t_tokens *node);
+void		set_redirections(t_tokens **head);
 
 #endif

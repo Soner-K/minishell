@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 10:03:46 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/07/16 21:19:39 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/07/18 14:35:28 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ __int8_t	check_if_cmd(t_tokens *head, char **env)
 	{
 		str = find_path(head->word, env, &allocation_fail);
 		if (!str && allocation_fail)
-			return (-1);
+			return (-1); //proteger pour malloc
 		if (str)
 		{
 			if (!access(str, F_OK | X_OK))

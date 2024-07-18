@@ -11,3 +11,9 @@ I can just point to the already existing list and delete the whitespaces.
 5. Check for leaks
 
 6. Error message for is_valid_operator
+
+7. Think about $? (new type?)
+
+8. Check_if_cmd : gerer malloc failure (fct d'erreur)
+
+9. Add an error code variable in the structure ?

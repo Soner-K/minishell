@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:34:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/07/16 21:24:38 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/07/18 15:17:29 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,6 @@ static char	*get_token(char **line, short int end, short int s_q, short int d_q)
  * @param line The input to tokenize.
  * @returns A list of tokens. Returns NULL if line is null.(null si !line?).
  */
-/*big issue with handling white spaces, how to keep head of list mainly*/
 t_tokens	*create_tokens(char *line)
 {
 	t_tokens	*tokens;
@@ -208,19 +207,27 @@ int	main(int ac, char **av, char **env)
 	head = tokens;
 	while (tokens)
 	{
-		printf("[%d] --> %s", tokens->type, tokens->word);
-		if (tokens->type >= INREDIR && tokens->type <= PIPE)
-		{
-			if (is_valid_operator(tokens))
-				printf(" VALID\n");
-			else
-				printf("parse error near '%c'\n", *tokens->word);
-		}
-		else
-			printf("\n");
+		printf("[%d] --> %s\n", tokens->type, tokens->word);
+		// if (tokens->type >= INREDIR && tokens->type <= PIPE)
+		// {
+		// 	if (is_valid_operator(tokens))
+		// 		printf(" VALID\n");
+		// 	else
+		// 		printf("parse error near '%c'\n", *tokens->word);
+		// }
+		// else
+		// 	printf("\n");
 		tokens = tokens->next;
 	}
 	tokens = head;
+	set_redirections(&tokens);
+	printf("\nAFTER REDIRECTIONS\n");
+	head = tokens;
+	while (tokens)
+	{
+		printf("[%d] --> %s\n", tokens->type, tokens->word);
+		tokens = tokens->next;
+	}
 	// do_pipe(&tokens, env);
 	free(tmp);
 	free_tokens(head);
