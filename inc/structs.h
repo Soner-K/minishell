@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:25 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/07/18 14:03:35 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/07/18 17:28:57 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,6 @@ typedef struct t_tokens
 	struct t_tokens	*prev;
 	struct t_tokens	*head;
 }					t_tokens;
-
-typedef struct s_args
-{
-	char			**env;
-	t_tokens		*tokens;
-	struct s_args	*next;
-}					t_args;
 
 typedef struct s_files
 {

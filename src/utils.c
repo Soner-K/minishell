@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:25:38 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/07/10 18:42:59 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/07/18 18:07:30 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,6 @@ t_tokens	*new_node_token(char *word, bool is_head)
 		head = new;
 	new->head = head;
 	return (new);
-}
-
-bool	is_valid_separator(char *sep)
-{
-	short int	sep_len;
-
-	sep_len = ft_strlen(sep);
-	if (!ft_strncmp(">>", sep, sep_len))
-		return (true);
-	if (!ft_strncmp("<<", sep, sep_len))
-		return (true);
-	if (!ft_strncmp(">", sep, sep_len))
-		return (true);
-	if (!ft_strncmp("<", sep, sep_len))
-		return (true);
-	if (!ft_strncmp("|", sep, sep_len))
-		return (true);
-	return (false);
 }
 
 /**

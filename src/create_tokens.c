@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:34:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/07/18 15:17:29 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/07/18 19:14:07 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,6 @@ t_tokens	*create_tokens(char *line)
 		str = get_token(&line, 0, 0, 0);
 		if (!str)
 			return (free_tokens(tokens), NULL);
-		
 		if (add_token(&tokens, (new_node_token(str, 0))) == -1)
 			return (free_tokens(tokens), NULL);
 	}
@@ -208,31 +207,20 @@ int	main(int ac, char **av, char **env)
 	while (tokens)
 	{
 		printf("[%d] --> %s\n", tokens->type, tokens->word);
-		// if (tokens->type >= INREDIR && tokens->type <= PIPE)
-		// {
-		// 	if (is_valid_operator(tokens))
-		// 		printf(" VALID\n");
-		// 	else
-		// 		printf("parse error near '%c'\n", *tokens->word);
-		// }
-		// else
-		// 	printf("\n");
 		tokens = tokens->next;
 	}
-	tokens = head;
-	set_redirections(&tokens);
-	printf("\nAFTER REDIRECTIONS\n");
-	head = tokens;
-	while (tokens)
+	printf("\n\n\n\n");
+	if (check_all_redirections(&head) == 1)
 	{
-		printf("[%d] --> %s\n", tokens->type, tokens->word);
-		tokens = tokens->next;
+		tokens = head;
+		while (tokens)
+		{
+			printf("[%d] --> %s\n", tokens->type, tokens->word);
+			tokens = tokens->next;
+		}
 	}
-	// do_pipe(&tokens, env);
-	free(tmp);
-	free_tokens(head);
-	while (wait(NULL) > 0)
-		;
+	else
+		return (free(tmp), 1);
 }
 
 // int	main(int ac, char **av, char **env)
