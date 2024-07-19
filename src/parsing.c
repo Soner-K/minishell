@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:00:31 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/07/18 19:28:00 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/07/19 16:09:46 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * @returns true (1) if there is no operators or
  * if the operators syntax is valid and false (0) otherwise.
  */
-static bool	check_all_operators(t_tokens *head)
+static bool	check_all_operators(t_tokens *head) //error code is 2?
 {
 	static char	*operators[6] = {"<", ">", "<<", ">>", "|"};
 
@@ -45,7 +45,7 @@ static bool	check_all_operators(t_tokens *head)
  * @param curr A double pointer to the current node that is processed.
  * A double pointer is used to move curr's address in the calling function.
  * @param next A double pointer to the node following the one that's processed.
- * A double pointer is used to move its address in the calling function.
+ * A double pointer is used to move next's address in the calling function.
  * @returns void.
  */
 static void	redir_helper(t_tokens **head, t_tokens **curr, t_tokens **next)
@@ -105,19 +105,22 @@ static void	set_redirections(t_tokens **head)
 
 /**
  * @brief Checks the syntax error. A syntax error happens when
- * the token following a redirection is different than a word.
+ * the token following a redirection is different than a word or
+ * if a pipe if there is no token after a pipe.
  * @param head A pointer to the head of the list.
  * @returns True (1) if the syntax is correct, and false (0) otherwise.
  */
-static bool	check_redirection_syntax(t_tokens *head)
+static bool	check_syntax(t_tokens *head)
 {
 	while (head)
 	{
 		if (head->type >= INREDIR && head->type < PIPE)
 		{
-			if (head->next && head->next->type != WORD)
+			if (!head->next || head->next->type != WORD)
 				return (false);
 		}
+		else if (head->type == PIPE && !head->next)
+			return (false);
 		head = head->next;
 	}
 	return (true);
@@ -137,7 +140,7 @@ bool	check_all_redirections(t_tokens **head)
 	if (!check_all_operators(*head))
 		return (free_tokens(*head), false);
 	printf("Operators are valid \n");
-	if (!check_redirection_syntax(*head))
+	if (!check_syntax(*head))
 		return (free_tokens(*head), printf("Syntax not valid\n"), false);
 	set_redirections(head);
 	printf("Redirections set\n");

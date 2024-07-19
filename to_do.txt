@@ -17,3 +17,7 @@ I can just point to the already existing list and delete the whitespaces.
 8. Check_if_cmd : gerer malloc failure (fct d'erreur)
 
 9. Add an error code variable in the structure ?
+
+10 Do a map of all the function called, to check where to protect for NULL and where it isnt needed.
+
+11. First do the expand, and then the redirections.
