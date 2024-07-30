@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:34:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/07/18 19:14:07 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/07/24 18:37:18 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,7 +206,8 @@ int	main(int ac, char **av, char **env)
 	head = tokens;
 	while (tokens)
 	{
-		printf("[%d] --> %s\n", tokens->type, tokens->word);
+		printf("[%d] --> %s", tokens->type, tokens->word);
+		printf(" %d\n", is_inside_single_quotes(tokens->word));
 		tokens = tokens->next;
 	}
 	printf("\n\n\n\n");

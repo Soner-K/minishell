@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/07/18 19:13:43 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/07/24 18:35:19 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,8 @@ int			do_pipe(t_tokens **head, char **env);
 // bool		check_redirections(t_tokens **head);
 // bool		check_redirection_syntax(t_tokens *head);
 bool		check_all_redirections(t_tokens **head);
+
+//				-->expand.c
+
+bool		is_inside_single_quotes(char *str);
 #endif

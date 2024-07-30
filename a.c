@@ -6,13 +6,13 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 12:27:56 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/24 14:29:29 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/07/24 18:07:41 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <unistd.h>
 /*pas besoin de pointeur sur pointeur ici, car on accede a une adresse
 depuis la structure, contrairement a des add front.*/
 
@@ -54,27 +54,29 @@ void	move_head(t_list **head, int nb)
 		*head = (*head)->next;
 }
 
-int main(void)
+int main(int ac, char **av, char **env)
 {
-	t_list	*lst;
-	t_list	*head;
+	char	*cmds[3] = {"ls", "'-l'"};
+	// t_list	*lst;
+	// t_list	*head;
 
-	lst = lstnew(0);
-	head = lst;
-	for (int i = 1; i < 5; i++)
-	{
-		add_back(head, lstnew(i));
-	}
-	print_list(head);
-	add_back(head, lstnew(5));
-	add_back(head, lstnew(6));
-	add_back(head, lstnew(7));
-	add_back(head, lstnew(8));
-	add_back(head, lstnew(9));
-	add_back(head, lstnew(10));
-	printf("\n");
-	print_list(head);
-	move_head(&head, 7);
-	printf("\n");
-	print_list(head);
+	// lst = lstnew(0);
+	// head = lst;
+	// for (int i = 1; i < 5; i++)
+	// {
+	// 	add_back(head, lstnew(i));
+	// }
+	// print_list(head);
+	// add_back(head, lstnew(5));
+	// add_back(head, lstnew(6));
+	// add_back(head, lstnew(7));
+	// add_back(head, lstnew(8));
+	// add_back(head, lstnew(9));
+	// add_back(head, lstnew(10));
+	// printf("\n");
+	// print_list(head);
+	// move_head(&head, 7);
+	// printf("\n");
+	// print_list(head);
+	execve("/usr/bin/ls", cmds, env);
 }
