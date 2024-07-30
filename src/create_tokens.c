@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:34:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/07/30 18:54:39 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/07/30 19:06:54 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,7 +235,7 @@ int	main(int ac, char **av, char **env)
 		printf("[%d] --> %s\n", tokens->type, tokens->word);
 		if (check(tokens->word))
 		{
-			if (check_expand_validity(tokens->word, &start, &end))
+			if (check_expand_syntax(tokens->word, &start, &end))
 			{
 				printf("start %d et end %d\n", start, end);
 				ft_putstr_fd("Expand valid var is = ", 1);

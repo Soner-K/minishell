@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 16:20:21 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/07/30 18:53:30 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/07/30 19:04:34 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,19 +121,6 @@ __int8_t	extract_variable(t_tokens *node)
 	return (true);
 }
 
-
-
-// char	*extract_var_name(t_tokens *node, short int start, short int end)
-// {
-// 	short int	start;
-// 	short int	end;
-// 	char		*str;
-
-// 	start = 0;
-// 	while (node->word[start])
-// 	{
-		
-// 	}
 /*
 The protection in the beginning of the functions is_inside_singles_quotes
 and valid_expand_syntax won't be necessary in the final version

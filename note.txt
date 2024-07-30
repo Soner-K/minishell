@@ -36,3 +36,8 @@ ne lis pas dans t, peut etre parce que l'exec est simultanée ?
 quand le premier node est supprimé, reset head dans tous les autres nodes ?
 
 ls '-l' marche sur bash mais pas minishell
+
+export arg=salut ca va
+arg =salut
+ca =''
+va =''
