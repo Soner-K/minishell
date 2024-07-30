@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:34:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/07/18 19:14:07 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/07/30 18:29:07 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,12 +190,37 @@ t_tokens	*create_tokens(char *line)
 	return (tokens);
 }
 
+bool	check(char *str)
+{
+	short int i = 0;
+
+	while (str[i])
+	{
+		if (str[i] == '$')
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
+void	print_var(char *str, int start, int end)
+{
+	while (start <= end)
+	{
+		ft_putchar_fd(str[start], 1);
+		start++;
+	}
+	printf("\n");
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_tokens	*head;
 	t_tokens	*tokens;
 	char		*line;
 	char		*tmp;
+	short int	start;
+	short int	end;
 
 	(void)ac;
 	(void)av;
@@ -207,6 +232,19 @@ int	main(int ac, char **av, char **env)
 	while (tokens)
 	{
 		printf("[%d] --> %s\n", tokens->type, tokens->word);
+		if (check(tokens->word))
+		{
+			if (check_expand_validity(tokens->word, &start, &end))
+			{
+				printf("start %d et end %d\n", start, end);
+				ft_putstr_fd("Expand valid var is = ", 1);
+				print_var(tokens->word, start, end);
+				extract_variable(tokens);
+				printf("%s\n", tokens->word);
+			}
+			else
+				printf("Expand not valid\n");
+		}
 		tokens = tokens->next;
 	}
 	printf("\n\n\n\n");
@@ -221,6 +259,7 @@ int	main(int ac, char **av, char **env)
 	}
 	else
 		return (free(tmp), 1);
+	
 }
 
 // int	main(int ac, char **av, char **env)

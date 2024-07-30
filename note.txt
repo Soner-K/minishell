@@ -32,3 +32,7 @@ Pareil, heredoc, et reprend les ouvertures de gauche a droite.
 ls -l > t | < t wc -c
 ne lis pas dans t, peut etre parce que l'exec est simultanée ?
 
+export VAR=salut ca va
+VAR =salut
+ca =''
+va =''
