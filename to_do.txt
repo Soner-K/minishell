@@ -21,3 +21,5 @@ I can just point to the already existing list and delete the whitespaces.
 10 Do a map of all the function called, to check where to protect for NULL and where it isnt needed.
 
 11. First do the expand, and then the redirections.
+
+12. Handle unclosed quotes errors

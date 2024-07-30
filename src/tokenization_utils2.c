@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:34:01 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/07/18 14:11:56 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:59:38 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ char	is_separator(char c)
 		return ('|');
 	if (c == ' ')
 		return (' ');
+	if (c == '$')
+		return ('$');
 	return (false);
 }
 

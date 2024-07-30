@@ -6,9 +6,10 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 16:20:21 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/07/30 18:41:18 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/07/30 18:53:30 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -52,7 +53,7 @@ bool	check_if_edge_characters(char c, bool first_char)
 When this function is called, there must be a $ in str (i.e. no need to check
 outside of the first loop if a dollar sign is found).
 */
-bool	check_expand_validity(char *str, short int *start, short int *end)
+bool	check_expand_syntax(char *str, short int *start, short int *end)
 {
 	short int	i;
 
@@ -103,7 +104,7 @@ __int8_t	extract_variable(t_tokens *node)
 	char		*var;
 	char		*str;
 
-	if (!check_expand_validity(node->word, &start, &end))
+	if (!check_expand_syntax(node->word, &start, &end))
 		return (EXPAND_NAME_NOT_VALID);
 	str = ft_substr(node->word, start, (end - start + 1));
 	if (!str)
@@ -133,4 +134,27 @@ __int8_t	extract_variable(t_tokens *node)
 // 	{
 		
 // 	}
-// }
+/*
+The protection in the beginning of the functions is_inside_singles_quotes
+and valid_expand_syntax won't be necessary in the final version
+*/
+
+bool	is_inside_single_quotes(char *str)
+{
+	short int	quotes_count;
+	short int	i;
+
+	if (!str)
+		return (true);
+	quotes_count = 0;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '$' && quotes_count % 2 == 0)
+			return (false);
+		if (str[i] == '\'')
+			quotes_count++;
+		i++;
+	}
+	return (true);
+}

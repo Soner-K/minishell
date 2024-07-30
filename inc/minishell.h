@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/07/30 18:28:01 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/07/30 18:56:12 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,4 @@ int			do_pipe(t_tokens **head, char **env);
 // bool		check_redirections(t_tokens **head);
 // bool		check_redirection_syntax(t_tokens *head);
 bool		check_all_redirections(t_tokens **head);
-
-//				-->expand.c
-
-bool		check_expand_validity(char *str, short int *start, short int *end);
-__int8_t	extract_variable(t_tokens *node);
 #endif
