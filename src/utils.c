@@ -6,11 +6,27 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:25:38 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/07/18 18:07:30 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/08/01 18:14:52 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+short int	count_char(char *str, char c)
+{
+	short int	n;
+
+	if (!str)
+		return (0);
+	n = 0;
+	while (*str)
+	{
+		if (*str == c)
+			n++;
+		str++;
+	}
+	return (n);
+}
 
 /**
  * @brief Create a new node tailored for a list of tokens.
@@ -27,6 +43,7 @@ t_tokens	*new_node_token(char *word, bool is_head)
 	new = malloc(sizeof(t_tokens));
 	if (!new)
 		return (NULL);
+	new->contain_quotes = false;
 	new->word = word;
 	new->path = NULL;
 	new->next = NULL;

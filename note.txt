@@ -41,3 +41,5 @@ export arg=salut ca va
 arg =salut
 ca =''
 va =''
+
+careful with the placement of the short int type

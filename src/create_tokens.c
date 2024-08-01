@@ -6,10 +6,9 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:34:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/07/30 19:06:54 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/08/01 18:08:44 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -193,8 +192,9 @@ t_tokens	*create_tokens(char *line)
 
 bool	check(char *str)
 {
-	short int i = 0;
+	short int	i;
 
+	i = 0;
 	while (str[i])
 	{
 		if (str[i] == '$')
@@ -213,93 +213,41 @@ void	print_var(char *str, int start, int end)
 	}
 	printf("\n");
 }
-
-int	main(int ac, char **av, char **env)
+void	print_tokens(t_tokens *tokens)
 {
-	t_tokens	*head;
-	t_tokens	*tokens;
-	char		*line;
-	char		*tmp;
-	short int	start;
-	short int	end;
-
-	(void)ac;
-	(void)av;
-	(void)env;
-	line = readline(">>> ");
-	tmp = line;
-	tokens = create_tokens(line);
-	head = tokens;
+	if (!tokens)
+		return ;
 	while (tokens)
 	{
 		printf("[%d] --> %s\n", tokens->type, tokens->word);
-		if (check(tokens->word))
-		{
-			if (check_expand_syntax(tokens->word, &start, &end))
-			{
-				printf("start %d et end %d\n", start, end);
-				ft_putstr_fd("Expand valid var is = ", 1);
-				print_var(tokens->word, start, end);
-				extract_variable(tokens);
-				printf("%s\n", tokens->word);
-			}
-			else
-				printf("Expand not valid\n");
-		}
 		tokens = tokens->next;
 	}
-	printf("\n\n\n\n");
-	if (check_all_redirections(&head) == 1)
-	{
-		tokens = head;
-		while (tokens)
-		{
-			printf("[%d] --> %s\n", tokens->type, tokens->word);
-			tokens = tokens->next;
-		}
-	}
-	else
-		return (free(tmp), 1);
-	
 }
+int	main(void)
+{
+	char		*line;
+	char		*tmp;
+	t_tokens	*head;
 
-// int	main(int ac, char **av, char **env)
-// {
-// 	t_tokens *tokens;
-// 	(void)ac;
-// 	(void)av;
-// 	(void)env;
+	line = readline(">>> ");
+	tmp = line;
+	head = create_tokens(line);
 
-// 	while (1)
-// 	{
-// 		tokens = create_tokens(readline(">>> "));
-// 		check_if_cmd(tokens, env);
-// 		if (!tokens->next)
-// 		{
-// 			printf("[%d] --> %s", tokens->type, tokens->word);
-// 			if (tokens->path)
-// 				printf(" %s\n", tokens->path);
-// 			else
-// 				printf("\n");
-// 			free_tokens(tokens->head);
-// 		}
-// 		else
-// 		{
-// 			while (tokens->next)
-// 			{
-// 				printf("[%d] --> %s", tokens->type, tokens->word);
-// 				if (tokens->path)
-// 					printf(" %s\n", tokens->path);
-// 				else
-// 					printf("\n");
-// 				tokens = tokens->next;
-// 			}
-// 			printf("[%d] --> %s\n", tokens->type, tokens->word);
-// 			if (tokens->path)
-// 				printf(" %s\n", tokens->path);
-// 			else
-// 				printf("\n");
-// 			free_tokens(tokens->head);
-// 		}
-// 	}
-// }
+	printf("Tokens are : \n");
+	print_tokens(head);
+
+	printf("\nChecking redirection syntax : \n");
+	check_all_redirections(&head);
+	printf("\nTokens now are : \n");
+	print_tokens(head);
+
+	printf("\nRemoving quotes, tokens are : \n");
+	quotes_remover(head);
+	print_tokens(head);
+
+	printf("\nExpand, tokens are : \n");
+	extract_all(head);
+	print_tokens(head);
+	free(tmp);
+	free_tokens(head);
+}

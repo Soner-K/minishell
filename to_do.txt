@@ -1,4 +1,7 @@
-27/06/24
+
+
+HANDLE MULTIPLE EXPAND INSIDE ONE WORD + IF A $ IS INSIDE AN EXPANSION
+
 1. Redo the delete_whitespace function, so that instead of creating a whole new list
 I can just point to the already existing list and delete the whitespaces.
 
@@ -23,3 +26,8 @@ I can just point to the already existing list and delete the whitespaces.
 11. First do the expand, and then the redirections.
 
 12. Handle unclosed quotes errors
+
+13. Check if head parameters of tokens list is adjusted after head is moved.
+Is there a need to keep the head parameter ?
+
+14. Which order (quotes removal, redirection syntax and grammar, expand) ?

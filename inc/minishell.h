@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/07/30 19:05:44 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/08/01 18:05:02 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 //				-->utils.c
 
+short int	count_char(char *str, char c);
 t_tokens	*new_node_token(char *word, bool is_head);
 bool		is_valid_separator(char *sep);
 char		*merge_strings(char *s1, char *s2);
@@ -60,6 +61,14 @@ bool		check_all_redirections(t_tokens **head);
 
 //				-->expand.c
 __int8_t	extract_variable(t_tokens *node);
+__int8_t	extract_all(t_tokens *head);
+
+//				-->expand_utils.c
+bool		check_if_edge_characters(char c, bool first_char);
 bool		check_expand_syntax(char *str, short int *start, short int *end);
+bool		expand_inside_single_quotes(char *str);
+
+//				-->quotes.c
+__int8_t	quotes_remover(t_tokens *head);
 
 #endif
