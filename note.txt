@@ -43,3 +43,17 @@ ca =''
 va =''
 
 careful with the placement of the short int type
+
+
+						IMPORTANT EN SAH
+avec echo, les espaces sont conserves donc ce ne sont plus des separateurs (i.e faut les ecrire)
+--> rajouter un pointeur vers line input dans la structure pour comptabiliser les espaces ?
+
+ordre a suivre : tokenization, redirections, quotes_marking, expand, quotes removing
+Important de suivre cet ordre, et de ne pas faire quotes remove avant l'expand, parce que sinon 
+$""USER affiche sokaraku, au lieu de $USER (ou USER).
+
+start > a end dans check_expad_syntax si la premiere lettre de l'exapand n'est pas valide
+ (start a ete calculee, mais pas end et on return avant)
+
+ 

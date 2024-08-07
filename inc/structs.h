@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:25 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/08/01 14:57:14 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/08/07 15:16:49 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef enum e_type
 
 typedef struct t_tokens
 {
-	bool			contain_quotes;
+	__int8_t		quotes;
 	t_type			type;
 	char			*word;
 	char			*path;

@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/08/01 18:05:02 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/08/07 15:54:02 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,6 @@ bool		expand_inside_single_quotes(char *str);
 
 //				-->quotes.c
 __int8_t	quotes_remover(t_tokens *head);
+void		mark_quotes(t_tokens *head);
 
 #endif

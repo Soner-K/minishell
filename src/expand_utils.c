@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:03:00 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/08/01 13:56:28 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:18:47 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ bool	check_if_edge_characters(char c, bool first_char)
 	return (false);
 }
 
-
 /*
 When this function is called, there must be a $ in str (i.e. no need to check
 outside of the first loop if a dollar sign is found).
@@ -99,8 +98,6 @@ bool	check_expand_syntax(char *str, short int *start, short int *end)
 	*start = ++i;
 	if (!check_if_edge_characters(str[i], true))
 		return (false);
-	// if (str[i] != '?' && str[i] != '_' && ft_strlen(str + 1) str[++i] == '\0')
-	// 	return (false);
 	while (str[++i])
 	{
 		if (check_if_edge_characters(str[i], false))

@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:34:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/08/01 18:08:44 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:09:48 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,10 +244,13 @@ int	main(void)
 	printf("\nRemoving quotes, tokens are : \n");
 	quotes_remover(head);
 	print_tokens(head);
-
+	
 	printf("\nExpand, tokens are : \n");
+	// mark_quotes(head);
 	extract_all(head);
 	print_tokens(head);
+
+
 	free(tmp);
 	free_tokens(head);
 }

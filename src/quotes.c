@@ -6,13 +6,13 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:40:26 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/08/01 17:42:23 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:09:58 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	mark_quotes(t_tokens *head)
+void	mark_quotes(t_tokens *head)
 {
 	char	*str;
 	char	quote_to_mark;
@@ -28,7 +28,7 @@ static void	mark_quotes(t_tokens *head)
 		if (quote_to_mark && *str == quote_to_mark)
 		{
 			*str = -(*str);
-			head->contain_quotes = true;
+			head->quotes = quote_to_mark;
 		}
 		str++;
 	}
@@ -73,7 +73,7 @@ __int8_t	quotes_remover(t_tokens *head)
 	mark_quotes(head);
 	while (head)
 	{
-		if (head->contain_quotes == false)
+		if (head->quotes == false)
 		{
 			head = head->next;
 			continue ;
