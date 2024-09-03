@@ -7,7 +7,7 @@ merge_tokens -> ajouter une protection ds le cas ou head est null apres quotes ?
 ATTENTION DANS :
 - find_operator --> identifier la cause de l'echec d'un malloc quand une copie est faite ?
 
-
+Check d'autres erreurs de syntaxe dans check_syntax (notamment pour les pipes)
 
 
 

@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:34:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/08/07 19:09:48 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/03 20:19:29 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,6 +223,10 @@ void	print_tokens(t_tokens *tokens)
 		tokens = tokens->next;
 	}
 }
+/*Will segfault if one of the function sends an error code
+because the tokens will be freed, nothing to be alarmed of,
+a simple reorganization of the main will handle that.
+*/
 int	main(void)
 {
 	char		*line;
@@ -240,16 +244,15 @@ int	main(void)
 	check_all_redirections(&head);
 	printf("\nTokens now are : \n");
 	print_tokens(head);
+	
+	printf("\nExpand, tokens are : \n");
+	mark_quotes(head);
+	extract_all(head);
+	print_tokens(head);
 
 	printf("\nRemoving quotes, tokens are : \n");
 	quotes_remover(head);
 	print_tokens(head);
-	
-	printf("\nExpand, tokens are : \n");
-	// mark_quotes(head);
-	extract_all(head);
-	print_tokens(head);
-
 
 	free(tmp);
 	free_tokens(head);

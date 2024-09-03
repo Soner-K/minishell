@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:03:00 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/08/07 19:18:47 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/03 19:22:29 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ bool	check_expand_syntax(char *str, short int *start, short int *end)
 	short int	i;
 
 	i = -1;
+	*start = 0;
+	*end = 0;
 	while (str[++i])
 	{
 		if (str[i] == '$')

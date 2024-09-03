@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:40:26 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/08/07 19:09:58 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/03 20:20:57 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	mark_quotes(t_tokens *head)
 	quote_to_mark = 0;
 	while (*str)
 	{
-		if (!quote_to_mark && (*str == '\'' || *str == '"'))
+		if (quote_to_mark == 0 && (*str == '\'' || *str == '"'))
 			quote_to_mark = *str;
-		if (quote_to_mark && *str == quote_to_mark)
+		if (quote_to_mark != 0 && *str == quote_to_mark)
 		{
 			*str = -(*str);
 			head->quotes = quote_to_mark;
@@ -35,7 +35,7 @@ void	mark_quotes(t_tokens *head)
 	mark_quotes(head->next);
 }
 
-// is there a need to null terminate the string if calloc was used ?
+// is there a need to null terminate the string if ft_calloc was used ?
 static __int8_t	quotes_remover_helper(t_tokens *node, short int quotes_count)
 {
 	char		*new;
@@ -43,13 +43,14 @@ static __int8_t	quotes_remover_helper(t_tokens *node, short int quotes_count)
 	short int	i;
 	short int	j;
 
+	printf ("quotes count is %hd, size is %ld\n", quotes_count, ft_strlen(node->word));
 	size = ft_strlen(node->word) - quotes_count + 1;
 	new = ft_calloc(size, sizeof(char));
 	if (!new)
 		return (ALLOCATION_FAILURE);
 	i = 0;
 	j = 0;
-	while (i < size)
+	while (i < size && node->word[j])
 	{
 		if (node->word[j] != -39 && node->word[j] != -34)
 		{
@@ -70,7 +71,7 @@ __int8_t	quotes_remover(t_tokens *head)
 
 	if (!head)
 		return (false);
-	mark_quotes(head);
+	// mark_quotes(head);
 	while (head)
 	{
 		if (head->quotes == false)
