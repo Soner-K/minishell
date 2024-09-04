@@ -2,7 +2,7 @@ NAME				=	minishell
 
 
 FILES				=	error.c tokenization_utils.c tokenization_utils2.c create_tokens.c path_finding.c \
-						utils.c exec_utils.c parsing.c expand.c expand_utils.c quotes.c
+						utils.c parsing.c expand.c expand_utils.c quotes.c parsing_test.c
 SRC_DIR				=	src
 SRC					=	$(addprefix $(SRC_DIR)/, $(SRC))
 

@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 16:20:21 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/03 21:00:00 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/04 15:47:46 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,13 @@ Check thoroughly where to free
 s = start
 */
 /**
- * @brief
+ * @brief Stores inside the node's word the string var, replacing the
+ * expand variable's name.
  * @param node Pointer to a node of the tokens' list.
  * @param var The expand's variable content.
- * @param s
- * @param end
- * @returns
+ * @param s The starting index at which to place var.
+ * @param end The end index at which var should end.
+ * @returns The new string with the expand's variable content.
  */
 char	*get_new_word(t_tokens *node, char *var, short int s, short int end)
 {
@@ -73,8 +74,6 @@ __int8_t	extract_variable(t_tokens *node)
 	if (!str)
 		return (ALLOCATION_FAILURE);
 	var_content = getenv(str);
-	// if (!var_content)
-	// 	return (free(str), VAR_NOT_FOUND); //no need, get_new_word will get rid of the variable in the final result
 	free(str);
 	str = get_new_word(node, var_content, start, end);
 	if (!str)
@@ -84,25 +83,11 @@ __int8_t	extract_variable(t_tokens *node)
 	return (SUCCESS);
 }
 
-// __int8_t	extract_all(t_tokens *head)
-// {
-// 	char	*str;
-
-// 	if (!head)
-// 		return (0);
-// 	while (head)
-// 	{
-// 		str = head->word;
-// 		while (count_char(head->word, '$'))
-// 		{
-// 			if (extract_variable(head) < 0)
-// 				break ;
-// 		}
-// 		head = head->next;
-// 	}
-// 	return (SUCCESS);
-// }
-
+/**
+ * @brief Count the number of expand(s) inside one token.
+ * @param str The token.
+ * @returns The number of expand(s) inside one token.
+ */
 short int	count_expands(char *str)
 {
 	short int	i;
@@ -126,9 +111,16 @@ short int	count_expands(char *str)
 	return (n);
 }
 
+/**
+ * @brief Iterates through all the tokenized list's nodes, and
+ * replace the expands when found.
+ * @param head A pointer to the head of the tokenized list.
+ * @returns -1 (ALLOCATION_FAILURE) if a memory allocation failed, and
+ * 1 (SUCCESS) if the list was iterated through fully.
+ */
 __int8_t	extract_all(t_tokens *head)
 {
-	char *str;
+	// char *str;
 	__int8_t ret;
 	short int n_expand;
 
@@ -138,7 +130,7 @@ __int8_t	extract_all(t_tokens *head)
 	printf("n expand %d\n", n_expand);
 	while (head)
 	{
-		str = head->word;
+		// str = head->word;
 		while (n_expand > 0)
 		{
 			ret = extract_variable(head);
