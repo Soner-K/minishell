@@ -6,12 +6,17 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:56:05 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/27 14:24:32 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/05 14:50:06 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief Frees one token node.
+ * @param node A pointer to a node of the tokens' list.
+ * @returns void.
+ */
 void	free_one_token(t_tokens *node)
 {
 	free(node->word);

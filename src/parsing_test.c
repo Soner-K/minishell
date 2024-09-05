@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/04 15:35:44 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/05 16:00:00 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	main(void)
 	print_tokens(head);
 
 	printf("\nChecking redirection syntax : \n");
-	check_all_redirections(&head);
+	full_check(&head);
 	printf("\nTokens now are : \n");
 	print_tokens(head);
 	

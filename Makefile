@@ -1,17 +1,25 @@
 NAME				=	minishell
 
-
-FILES				=	error.c tokenization_utils.c tokenization_utils2.c create_tokens.c path_finding.c \
-						utils.c parsing.c expand.c expand_utils.c quotes.c parsing_test.c
 SRC_DIR				=	src
-SRC					=	$(addprefix $(SRC_DIR)/, $(SRC))
+OBJ_DIR				=	obj
+OBJ_DIRS			=	$(OBJ_DIR)/expand $(OBJ_DIR)/parsing $(OBJ_DIR)/utils
+
+FILES				=	expand_utils.c expand.c quotes.c \
+						create_tokens.c syntax_checker.c tokenization_utils.c tokenization_utils2.c \
+						builtins.c error.c path_finding.c utils.c 
+
+SRC_FILES			=	expand/expand_utils.c expand/expand.c expand/quotes.c \
+						parsing/create_tokens.c parsing/syntax_checker.c parsing/tokenization_utils.c parsing/tokenization_utils2.c \
+						utils/builtins.c utils/error.c utils/path_finding.c utils/utils.c \
+						parsing_test.c
+SRC					=	$(addprefix $(SRC_DIR)/, $(SRC_FILES))
+
 
 LIBFT_PATH			=	libft
 LIBFT_EXEC			=	libft.a
 LIBFT				=	$(addprefix $(LIBFT_PATH)/, $(LIBFT_EXEC))
 
-OBJ_DIR				=	obj
-OBJ					=	$(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))
+OBJ					=	$(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 
 CC					=	cc
 CFLAGS				=	-Wall -Wextra -Werror
@@ -33,7 +41,10 @@ $(NAME)				:	$(OBJ_DIR) $(OBJ) $(LIBFT)
 $(OBJ_DIR)			:
 						mkdir -p $@
 
-$(OBJ_DIR)/%.o		:	$(SRC_DIR)/%.c
+$(OBJ_DIRS)			:
+						mkdir -p $(OBJ_DIRS)
+
+$(OBJ_DIR)/%.o		:	$(SRC_DIR)/%.c | $(OBJ_DIRS)
 						$(CC) $(CFLAGS) $(INCLUDES) $(DEBUGGER) -c $< -o $@
 						@printf "$(YELLOW)%s created $(FACE_ESCUZME)$(COLOR_END)\n" $@
 

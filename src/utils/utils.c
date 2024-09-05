@@ -6,12 +6,18 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:25:38 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/08/07 19:07:48 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/05 14:46:27 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief Counts the number of a given char c inside a string str.
+ * @param str A pointer to a string.
+ * @param c The character to count.
+ * @returns The number of times a character appeared inside the string.
+ */
 short int	count_char(char *str, char c)
 {
 	short int	n;

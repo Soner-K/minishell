@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   syntax_checker.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:00:31 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/03 20:13:07 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/05 15:05:44 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * @returns true (1) if there is no operators or
  * if the operators syntax is valid and false (0) otherwise.
  */
-static bool	check_all_operators(t_tokens *head) //error code is 2?
+static bool	check_operators_validity(t_tokens *head) //error code is 2?
 {
 	static char	*operators[6] = {"<", ">", "<<", ">>", "|"};
 
@@ -137,12 +137,12 @@ static bool	check_syntax(t_tokens *head)
  * @param head A double pointer to the head of the list.
  * A double pointer is needed to adjust the head of the list
  * (see set_redirections).
- * @returns True (1) if the operators are correct and the syntax is valid,
- * and false (0) otherwise.
+ * @returns True (1) if the operators are correct, the syntax and semantics
+ *  are valid and false (0) otherwise.
  */
-bool	check_all_redirections(t_tokens **head)
+bool	full_check(t_tokens **head)
 {
-	if (!check_all_operators(*head))
+	if (!check_operators_validity(*head))
 		return (free_tokens(*head), false);
 	printf("Operators are valid \n");
 	if (!check_syntax(*head))
