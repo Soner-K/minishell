@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:40:26 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/03 20:20:57 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/07 17:15:12 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,17 @@ static __int8_t	quotes_remover_helper(t_tokens *node, short int quotes_count)
 	short int	i;
 	short int	j;
 
-	printf ("quotes count is %hd, size is %ld\n", quotes_count, ft_strlen(node->word));
+	// printf ("word is %s quotes count is %hd, size is %ld\n", node->word, quotes_count, ft_strlen(node->word));
 	size = ft_strlen(node->word) - quotes_count + 1;
+	printf("adjusted size for quotes %hd\n", size);
 	new = ft_calloc(size, sizeof(char));
 	if (!new)
 		return (ALLOCATION_FAILURE);
 	i = 0;
 	j = 0;
-	while (i < size && node->word[j])
+	while (i < size - 1)
 	{
+		printf(" i = %hd j = %hd\n", i, j);
 		if (node->word[j] != -39 && node->word[j] != -34)
 		{
 			new[i] = node->word[j];
@@ -59,6 +61,7 @@ static __int8_t	quotes_remover_helper(t_tokens *node, short int quotes_count)
 		}
 		j++;
 	}
+	new[i] = '\0';
 	free(node->word);
 	node->word = new;
 	return (SUCCESS);

@@ -6,14 +6,20 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:34:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/04 15:35:02 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/06 10:59:58 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*o need protection in if, cuz add_token checks for null*/
 /*redo the function by just creating a new pointer instead of malloc ?*/
+/**
+ * @brief Receives the tokenized list with whitespaces, and creares another
+ * one without whitespaces.
+ * @param tokens The tokenized list with whitespaces.
+ * @returns The new list or NULL if the first tokens were only whitespaces,
+ * or if an allocation failure occured.
+ */
 t_tokens	*delete_whitespaces(t_tokens *tokens)
 {
 	t_tokens	*new;

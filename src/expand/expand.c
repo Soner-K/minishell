@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 16:20:21 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/04 15:47:46 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/08 18:05:38 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 
 /*
 Check thoroughly where to free
-s = start
 */
 /**
  * @brief Stores inside the node's word the string var, replacing the
@@ -30,12 +29,14 @@ s = start
  */
 char	*get_new_word(t_tokens *node, char *var, short int s, short int end)
 {
-	char	*str;
-	int		size;
+	char		*str;
+	int			size;
+	short int	quotes_count;
 
-	printf("var is %s, start is %hd end is %hd\n", var, s, end);
-	size = ft_strlen(var) + (end - s - 2) + 1;
-	printf("size in get_new_word %d\n", size); /// why 10 with "   $USER  "
+	printf("start = %hd end = %hd (gnw)\n", s, end);
+	quotes_count = count_char(node->word, -34) + count_char(node->word, -39);
+	size = ft_strlen(var) + (end - s - 2) + quotes_count; // + quotes_count, because quotes arent removed here
+	printf("size var = %ld size gnw = %d\n", ft_strlen(var), size);
 	str = ft_calloc(size, sizeof(char));
 	if (!str)
 		return (NULL);
@@ -48,10 +49,10 @@ char	*get_new_word(t_tokens *node, char *var, short int s, short int end)
 }
 
 /**
- * @brief Retrieve a variable name from ENV, stores its content
- * and puts it inside node's word. 
- * N-B : Quotes aren't removed here, but after all the expands variables
- * are replaced.
+ * @brief Retrieves a variable name from ENV, stores its content
+ * and puts it inside node's word.
+ * N-B : Quotes are marked but aren't removed here.
+ * Happens after all the expands variables are replaced.
  * @param node Pointer to a node of the tokens' list.
  * @returns -3 if the expand is inside single quotes, -2 if the expand's
  * syntax isn't valid, -1 if there is an allocation failure and 1 (SUCESS)
@@ -64,16 +65,17 @@ __int8_t	extract_variable(t_tokens *node)
 	char		*var_content;
 	char		*str;
 
-	printf("node word is %s\n", node->word);
 	if (node->quotes == SINGLE_QUOTE)
 		return (EXPAND_INSIDE_SINGLE_QUOTES);
 	if (!check_expand_syntax(node->word, &start, &end))
-		return (printf("\n start is %d & end is %d\n", start, end),
-			EXPAND_SYNTAX_NOT_VALID);
+		return (EXPAND_SYNTAX_NOT_VALID);
+	printf("start ev %hd end %hd\n", start, end);
 	str = ft_substr(node->word, start, (end - start + 1));
+	printf("str ev %s\n", str);
 	if (!str)
 		return (ALLOCATION_FAILURE);
 	var_content = getenv(str);
+	printf("var content %s ev \n", var_content);
 	free(str);
 	str = get_new_word(node, var_content, start, end);
 	if (!str)
@@ -81,6 +83,8 @@ __int8_t	extract_variable(t_tokens *node)
 	free(node->word);
 	node->word = str;
 	return (SUCCESS);
+	printf("str after get new wprd %s ev\n", str);
+	return (1);
 }
 
 /**
@@ -120,9 +124,8 @@ short int	count_expands(char *str)
  */
 __int8_t	extract_all(t_tokens *head)
 {
-	// char *str;
-	__int8_t ret;
-	short int n_expand;
+	__int8_t	ret;
+	short int	n_expand;
 
 	if (!head)
 		return (0);
@@ -130,7 +133,6 @@ __int8_t	extract_all(t_tokens *head)
 	printf("n expand %d\n", n_expand);
 	while (head)
 	{
-		// str = head->word;
 		while (n_expand > 0)
 		{
 			ret = extract_variable(head);

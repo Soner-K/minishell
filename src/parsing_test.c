@@ -6,23 +6,11 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/05 16:00:00 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/06 16:17:55 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	print_list(t_tokens *tokens)
-{
-	if (!tokens)
-		return ;
-	while (tokens->next)
-	{
-		printf("[%d] --> %s\n", tokens->type, tokens->word);
-		tokens = tokens->next;
-	}
-	printf("[%d] --> %s\n", tokens->type, tokens->word);
-}
 
 // bool	check(char *str)
 // {
@@ -54,6 +42,7 @@ void	print_tokens(t_tokens *tokens)
 	while (tokens)
 	{
 		printf("[%d] --> %s\n", tokens->type, tokens->word);
+		// printf(" ss m%ld\n", ft_strlen(tokens->word));
 		tokens = tokens->next;
 	}
 }

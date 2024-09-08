@@ -56,4 +56,5 @@ $""USER affiche sokaraku, au lieu de $USER (ou USER).
 start > a end dans check_expad_syntax si la premiere lettre de l'exapand n'est pas valide
  (start a ete calculee, mais pas end et on return avant)
 
- 
+ check execution des builtin dans les process enfant (si builtin se lance dans process parent)
+ --> solution possible : lancer builtin dans process enfant

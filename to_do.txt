@@ -1,33 +1,25 @@
 
 
 HANDLE MULTIPLE EXPAND INSIDE ONE WORD + IF A $ IS INSIDE AN EXPANSION
+example : $var$USER
+with $var being $
 
-1. Redo the delete_whitespace function, so that instead of creating a whole new list
-I can just point to the already existing list and delete the whitespaces.
+1. Issue when a single string contains multiple glued expands, and one of them doesn't exist
+$vr$USER
+Issue (valgrind) when $var$USER with var being "$".
+last_expand_index causes issue with multiple expands in one word.
+When $vr$USER because last expand is at 0, and $USER expand is at 0 too.
+$vr$USER$vr$vr$vr$USER
 
-2. Handle cases where first node is a separator in get_cmd function
+2. Error message for is_valid_operator
 
-3. Implement simple redirections (infile, outfile) in the do_pipe function
+3. Add an error code variable in the structure ?
 
-4. Move the head of the token's list after each turn in the main process but cleaner
+4. Do a map of all the function called, to check where to protect for NULL and where it isnt needed.
 
-5. Check for leaks
+5. Handle unclosed quotes errors
 
-6. Error message for is_valid_operator
-
-7. Think about $? (new type?)
-
-8. Check_if_cmd : gerer malloc failure (fct d'erreur)
-
-9. Add an error code variable in the structure ?
-
-10 Do a map of all the function called, to check where to protect for NULL and where it isnt needed.
-
-11. First do the expand, and then the redirections.
-
-12. Handle unclosed quotes errors
-
-13. Check if head parameters of tokens list is adjusted after head is moved.
+6. Check if head parameters of tokens list is adjusted after head is moved.
 Is there a need to keep the head parameter ?
 
-14. Which order (quotes removal, redirection syntax and grammar, expand) ?
+7. Which order (quotes removal, redirection syntax and grammar, expand) ?

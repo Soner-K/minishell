@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:03:00 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/03 19:22:29 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/08 17:33:05 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,15 +87,19 @@ outside of the first loop if a dollar sign is found).
  */
 bool	check_expand_syntax(char *str, short int *start, short int *end)
 {
-	short int	i;
+	int			i;
+	static int	last_expand_index = -1;
 
-	i = -1;
+	i = last_expand_index; // can last_Expand_index be > to strlen ?
 	*start = 0;
 	*end = 0;
 	while (str[++i])
 	{
 		if (str[i] == '$')
+		{
+			last_expand_index = i;
 			break ;
+		}
 	}
 	*start = ++i;
 	if (!check_if_edge_characters(str[i], true))
