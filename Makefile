@@ -5,12 +5,12 @@ OBJ_DIR				=	obj
 OBJ_DIRS			=	$(OBJ_DIR)/expand $(OBJ_DIR)/parsing $(OBJ_DIR)/utils
 
 FILES				=	expand_utils.c expand.c quotes.c \
-						create_tokens.c syntax_checker.c tokenization_utils.c tokenization_utils2.c \
-						builtins.c error.c path_finding.c utils.c 
+						create_tokens.c redirections_setting.c syntax_checker.c tokenization_utils.c tokenization_utils2.c \
+						builtins.c error.c cmd_finding.c utils.c 
 
 SRC_FILES			=	expand/expand_utils.c expand/expand.c expand/quotes.c \
-						parsing/create_tokens.c parsing/syntax_checker.c parsing/tokenization_utils.c parsing/tokenization_utils2.c \
-						utils/builtins.c utils/error.c utils/path_finding.c utils/utils.c \
+						parsing/create_tokens.c parsing/redirections_setting.c parsing/syntax_checker.c parsing/tokenization_utils.c parsing/tokenization_utils2.c \
+						utils/builtins.c utils/error.c utils/cmd_finding.c utils/utils.c \
 						parsing_test.c
 SRC					=	$(addprefix $(SRC_DIR)/, $(SRC_FILES))
 

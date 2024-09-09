@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   path_finding.c                                     :+:      :+:    :+:   */
+/*   cmd_finding.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/17 10:03:46 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/07/18 14:35:28 by sokaraku         ###   ########.fr       */
+/*   Created: 2024/09/09 14:24:41 by sokaraku          #+#    #+#             */
+/*   Updated: 2024/09/09 15:16:20 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,10 +129,10 @@ __int8_t	check_if_cmd(t_tokens *head, char **env)
 			return (-1); //proteger pour malloc
 		if (str)
 		{
-			if (!access(str, F_OK | X_OK))
+			if (!access(str, F_OK | X_OK) && head->type == WORD)
 			{
 				head->path = str;
-				// head->type = CMD;
+				head->type = CMD;
 			}
 			else
 				free(str);

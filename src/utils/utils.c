@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:25:38 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/05 14:46:27 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/09 13:46:07 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ t_tokens	*new_node_token(char *word, bool is_head)
 	if (!new)
 		return (NULL);
 	new->quotes = false;
+	new->n_quotes = 0;
 	new->word = word;
 	new->path = NULL;
 	new->next = NULL;

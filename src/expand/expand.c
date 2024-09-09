@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 16:20:21 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/08 18:05:38 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/09 11:42:20 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,25 +29,24 @@ Check thoroughly where to free
  */
 char	*get_new_word(t_tokens *node, char *var, short int s, short int end)
 {
-	char		*str;
-	int			size;
-	short int	quotes_count;
+	char	*str;
+	bool	alloc_fail;
 
-	printf("start = %hd end = %hd (gnw)\n", s, end);
-	quotes_count = count_char(node->word, -34) + count_char(node->word, -39);
-	size = ft_strlen(var) + (end - s - 2) + quotes_count; // + quotes_count, because quotes arent removed here
-	printf("size var = %ld size gnw = %d\n", ft_strlen(var), size);
-	str = ft_calloc(size, sizeof(char));
+	alloc_fail = false;
+	if (!node->word || s > ft_strlen(node->word) || end > ft_strlen(node->word)
+		|| end < 0 || s < 0)
+		if (ft_strlen(var) == 0)
+		{
+			str = ft_strslice(node->word, s - (s != 0), end, &alloc_fail);
+			if (alloc_fail == true)
+				return (NULL); //how handle in calling function?
+			return (str);
+		}
+	str = ft_strreplace(node->word, var, s - (s != 0), end);
 	if (!str)
 		return (NULL);
-	ft_memcpy(str, node->word, s - 1);
-	size = ft_strlen(var);
-	ft_memcpy(str + s - 1, var, size);
-	size = ft_strlen(node->word) - end;
-	ft_memcpy(str + s - 1 + ft_strlen(var), node->word + end + 1, size);
 	return (str);
 }
-
 /**
  * @brief Retrieves a variable name from ENV, stores its content
  * and puts it inside node's word.
@@ -69,13 +68,10 @@ __int8_t	extract_variable(t_tokens *node)
 		return (EXPAND_INSIDE_SINGLE_QUOTES);
 	if (!check_expand_syntax(node->word, &start, &end))
 		return (EXPAND_SYNTAX_NOT_VALID);
-	printf("start ev %hd end %hd\n", start, end);
 	str = ft_substr(node->word, start, (end - start + 1));
-	printf("str ev %s\n", str);
 	if (!str)
 		return (ALLOCATION_FAILURE);
 	var_content = getenv(str);
-	printf("var content %s ev \n", var_content);
 	free(str);
 	str = get_new_word(node, var_content, start, end);
 	if (!str)
@@ -83,8 +79,6 @@ __int8_t	extract_variable(t_tokens *node)
 	free(node->word);
 	node->word = str;
 	return (SUCCESS);
-	printf("str after get new wprd %s ev\n", str);
-	return (1);
 }
 
 /**
@@ -92,7 +86,7 @@ __int8_t	extract_variable(t_tokens *node)
  * @param str The token.
  * @returns The number of expand(s) inside one token.
  */
-short int	count_expands(char *str)
+static short int	count_expands(char *str)
 {
 	short int	i;
 	short int	n;
@@ -115,6 +109,24 @@ short int	count_expands(char *str)
 	return (n);
 }
 
+void	reset(t_tokens *head)
+{
+	char	*str;
+	int		i;
+
+	while (head)
+	{
+		i = -1;
+		str = head->word;
+		while (str[++i])
+		{
+			if (str[i] < 0 && str[i] != -34 && str[i] != -39)
+				str[i] *= -1;
+		}
+		head = head->next;
+	}
+}
+
 /**
  * @brief Iterates through all the tokenized list's nodes, and
  * replace the expands when found.
@@ -125,12 +137,13 @@ short int	count_expands(char *str)
 __int8_t	extract_all(t_tokens *head)
 {
 	__int8_t	ret;
+	t_tokens	*first;
 	short int	n_expand;
 
 	if (!head)
 		return (0);
 	n_expand = count_expands(head->word);
-	printf("n expand %d\n", n_expand);
+	first = head;
 	while (head)
 	{
 		while (n_expand > 0)
@@ -144,5 +157,6 @@ __int8_t	extract_all(t_tokens *head)
 		if (head)
 			n_expand = count_expands(head->word);
 	}
+	reset(first);
 	return (SUCCESS);
 }

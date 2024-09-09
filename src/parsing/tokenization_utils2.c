@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:34:01 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/05 14:49:24 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/09 15:23:46 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,8 @@
  */
 __int8_t	find_one_token(char c)
 {
-	if (ft_isalnum(c) || (!is_separator(c) && c != ' ' && c != '\t'
-			&& c != '$'))
+	if (ft_isalnum(c) || (!is_separator(c) && c != ' ' && c != '\t'))
 		return (WORD);
-	else if (c == '$') //$? ?
-		return (EXPAND);
 	else if (c == ' ')
 		return (SPACE_);
 	else if (c == '\t')

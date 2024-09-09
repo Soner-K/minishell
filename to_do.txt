@@ -11,6 +11,9 @@ last_expand_index causes issue with multiple expands in one word.
 When $vr$USER because last expand is at 0, and $USER expand is at 0 too.
 $vr$USER$vr$vr$vr$USER
 
+Unclosed quotes error message
+Error when a redirection happens inside an expand that doesnt exist
+
 2. Error message for is_valid_operator
 
 3. Add an error code variable in the structure ?
