@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/05 15:27:02 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/09 11:59:54 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ char		*merge_strings(char *s1, char *s2);
 char		*find_path(char *cmd, char **env, bool *alloc_fail);
 __int8_t	check_if_cmd(t_tokens *head, char **env);
 
-
-//							PARSING	
+//							PARSING
 //				-->create_tokens.c
 
 t_tokens	*create_tokens(char *line);
@@ -36,7 +35,6 @@ t_tokens	*create_tokens(char *line);
 //				-->syntax_checker.c
 
 bool		full_check(t_tokens **head);
-
 
 //				-->tokenization_utils.c
 
@@ -51,7 +49,6 @@ __int8_t	find_one_token(char c);
 __int8_t	find_token_type(char *str);
 char		is_separator(char c);
 short int	skip_tab_spaces(char *str);
-
 
 //							EXPAND
 //				-->expand_utils.c
@@ -70,4 +67,8 @@ __int8_t	extract_all(t_tokens *head);
 __int8_t	quotes_remover(t_tokens *head);
 void		mark_quotes(t_tokens *head);
 
+// built-in functions
+int			is_unset(char *str);
+// void		func_unset(t_parse **cmds, t_env **env, t_data *data);
+int			is_cd(char *str);
 #endif
