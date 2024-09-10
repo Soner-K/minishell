@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/10 12:46:25 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/10 12:47:10 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@ int	main(int argc, char **argv, char **envp)
 		line = readline(">>> ");
 		tmp = line;
 		head = create_tokens(line);
-		(void)env_list;
-		(void)envp;
 		store_env_list(envp, &env_list);
 		// display_env_list(env_list);
 		// printf("Tokens are : \n");

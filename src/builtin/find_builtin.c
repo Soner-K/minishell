@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:41:15 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/10 10:24:37 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/10 12:50:17 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return (*(unsigned char *)s1 - *(unsigned char *)s2);
 }
 
-int	is_builtin(t_tokens *cmds)
+int	which_builtin(t_tokens *cmds)
 {
 	if (is_echo(cmds->cmd_array[0]) == 1)
 		return (1);

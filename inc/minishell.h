@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/10 11:08:50 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/10 12:50:30 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void		mark_quotes(t_tokens *head);
 
 // built-in BUILTIN
 int			ft_strcmp(const char *s1, const char *s2);
-int			is_builtin(t_tokens *cmds);
+int			which_builtin(t_tokens *cmds);
 void		exec_builtin(int func, t_tokens **cmds, t_env **env);
 
 // built-in UNSET

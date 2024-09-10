@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:25 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/10 10:26:59 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/10 12:49:28 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ typedef enum e_type
 	HEREDOC,
 	APPENDREDIR,
 	PIPE,
-	EXPAND,
+	BUILTIN,
+	CMD,
 	WORD,
 	SPACE_,
 	TAB_,
