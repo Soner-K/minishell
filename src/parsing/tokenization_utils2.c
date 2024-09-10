@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:34:01 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/09 15:23:46 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/10 13:04:16 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	is_separator(char c)
 /**
  * @brief Checks the number of spaces and/or tabs starting from one character
  * in a string. The function stops if a different character is found.
- * @param str A pointer to a character inside a string. 
+ * @param str A pointer to a character inside a string.
  * @returns The number of spaces and/or tabs found.
  */
 short int	skip_tab_spaces(char *str)

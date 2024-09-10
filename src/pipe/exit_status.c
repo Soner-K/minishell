@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libs.h                                             :+:      :+:    :+:   */
+/*   exit_status.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/30 13:45:28 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/09 12:11:52 by sumseo           ###   ########.fr       */
+/*   Created: 2024/06/27 17:27:37 by ftanon            #+#    #+#             */
+/*   Updated: 2024/09/09 12:22:05 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBS_H
-# define LIBS_H
+#include "minishell.h"
 
-# include "libft.h"
-# include "macros.h"
-# include "structs.h"
-# include <dirent.h>
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <stdbool.h>
-# include <stddef.h>
-# include <sys/wait.h>
+void	init_pid_array(t_pipe *pipe_info)
+{
+	pipe_info->counter = 0;
+	pipe_info->pids = ft_calloc(pipe_info->total_cmds + 1, sizeof(pid_t));
+}
 
-#endif
+void	store_pid(t_pipe *pipe_info, pid_t fork_id)
+{
+	pipe_info->pids[pipe_info->counter] = fork_id;
+	pipe_info->counter++;
+}
