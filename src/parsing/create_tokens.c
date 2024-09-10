@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:34:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/06 10:59:58 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/09 15:00:45 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*redo the function by just creating a new pointer instead of malloc ?*/
 /**
- * @brief Receives the tokenized list with whitespaces, and creares another
+ * @brief Receives the tokenized list with whitespaces, and creates another
  * one without whitespaces.
  * @param tokens The tokenized list with whitespaces.
  * @returns The new list or NULL if the first tokens were only whitespaces,

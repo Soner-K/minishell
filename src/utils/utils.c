@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:25:38 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/05 14:46:27 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/10 12:40:02 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,11 @@ t_tokens	*new_node_token(char *word, bool is_head)
 	if (!new)
 		return (NULL);
 	new->quotes = false;
+	new->n_quotes = 0;
+	new->id_cmd = -1;
 	new->word = word;
 	new->path = NULL;
+	new->cmd_array = NULL;
 	new->next = NULL;
 	new->prev = NULL;
 	new->type = NONE;
@@ -66,10 +69,11 @@ t_tokens	*new_node_token(char *word, bool is_head)
  to facilitate the split afterwards.
  * @param s1 A pointer to the first string to copy.
  * @param s2 a pointer to the second string to copy.
- * @returns The merged strings, with a space in the middle.
+ * @param c The char to put in the middle of s1 and s2.
+ * @returns The merged strings, with a char c in the middle.
  * Returns NULL if the allocation failed or if the two strings are NULL.
  */
-char	*merge_strings(char *s1, char *s2)
+char	*merge_strings(char *s1, char *s2, char c)
 {
 	size_t	i;
 	size_t	j;
@@ -88,7 +92,7 @@ char	*merge_strings(char *s1, char *s2)
 		i++;
 	}
 	if (s1)
-		new[i++] = ' ';
+		new[i++] = c;
 	while (s2 && s2[j])
 		new[i++] = s2[j++];
 	new[i] = 0;

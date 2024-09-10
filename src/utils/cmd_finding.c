@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   path_finding.c                                     :+:      :+:    :+:   */
+/*   cmd_finding.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/17 10:03:46 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/07/18 14:35:28 by sokaraku         ###   ########.fr       */
+/*   Created: 2024/09/09 14:24:41 by sokaraku          #+#    #+#             */
+/*   Updated: 2024/09/10 12:47:47 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static char	*full_path(char *dir, char *cmd)
 static char	**split_path(char **env)
 {
 	short int	i;
-	char		**path;
+	char		**all_paths;
 
 	i = 0;
 	while (env[i])
@@ -65,11 +65,11 @@ static char	**split_path(char **env)
 	}
 	if (!env[i])
 		return (NULL);
-	// necessary if split returns "" instead of NULL if command not found?
-	path = ft_split(env[i], ':');
-	if (!path)
+	// necessary if split returns "" instead of NULL if command not found? COME BACK
+	all_paths = ft_split(env[i], ':');
+	if (!all_paths)
 		return (NULL);
-	return (path);
+	return (all_paths);
 }
 
 /**
@@ -100,6 +100,7 @@ char	*find_path(char *cmd, char **env, bool *alloc_fail)
 		if (!access(cmd_path, F_OK | X_OK))
 			return (free_arrs((void **)all_paths), *alloc_fail = 0, cmd_path);
 		i++;
+		free(cmd_path);
 	}
 	free_arrs((void **)all_paths);
 	*alloc_fail = 0;
@@ -129,10 +130,10 @@ __int8_t	check_if_cmd(t_tokens *head, char **env)
 			return (-1); //proteger pour malloc
 		if (str)
 		{
-			if (!access(str, F_OK | X_OK))
+			if (!access(str, F_OK | X_OK) && head->type == WORD)
 			{
 				head->path = str;
-				// head->type = CMD;
+				head->type = CMD;
 			}
 			else
 				free(str);

@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:47:58 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/08/07 15:20:19 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/10 10:08:01 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,7 @@
 # define FAILURE 0
 # define SINGLE_QUOTE '\''
 # define DOUBLE_QUOTE '"'
+# define RW 6
+
+
 #endif

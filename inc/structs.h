@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:25 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/10 12:49:28 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/10 12:59:56 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@
  * @param HEREDOC
  * @param APPENDREDIR
  * @param PIPE
- * @param EXPAND
  * @param WORD
+ * @param EXPAND
+ * @param BUILTIN
+ * @param CMD
  * @param SPACE_
  * @param TAB_
  * @param NONE
@@ -34,17 +36,19 @@ typedef enum e_type
 	HEREDOC,
 	APPENDREDIR,
 	PIPE,
+	WORD,
 	BUILTIN,
 	CMD,
-	WORD,
 	SPACE_,
 	TAB_,
 	NONE,
 }					t_type;
 
 /**
- * @param quotes Signed char acting as a boolean. Takes the value 1 if
- * there is quotes inside a node, and 0 otherwise.
+ * @param quotes Signed char acting taking the ASCII code of the quote that
+ * enclose a word, if there is one.
+ * @param n_quotes The number of quotes enclosing a word. Allows to check
+ * if quotes are closed.
  * @param type The type of token (see t_type).
  * @param word The word (or content) of the node.
  * @param path If a variable is a command, the path to the executable.
@@ -59,9 +63,12 @@ typedef enum e_type
 typedef struct t_tokens
 {
 	__int8_t		quotes;
+	short int		n_quotes;
+	int				id_cmd;
 	t_type			type;
 	char			*word;
 	char			*path;
+	char			**cmd_array;
 	struct t_tokens	*next;
 	struct t_tokens	*prev;
 	struct t_tokens	*head;
