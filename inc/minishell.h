@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/10 10:55:40 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/10 11:08:50 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,4 +123,6 @@ void		delete_one_env(t_env **env_list, char *new_var);
 void		replace_one_env(t_env **env_list, char *env_val, char *variable,
 				char *value);
 
+// error_handler
+void		exit_program(char *s);
 #endif
