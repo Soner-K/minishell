@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization_utils2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:34:01 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/05 14:49:24 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/10 12:51:11 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,8 @@
  */
 __int8_t	find_one_token(char c)
 {
-	if (ft_isalnum(c) || (!is_separator(c) && c != ' ' && c != '\t'
-			&& c != '$'))
+	if (ft_isalnum(c) || (!is_separator(c) && c != ' ' && c != '\t'))
 		return (WORD);
-	else if (c == '$') //$? ?
-		return (EXPAND);
 	else if (c == ' ')
 		return (SPACE_);
 	else if (c == '\t')
@@ -78,7 +75,7 @@ char	is_separator(char c)
 /**
  * @brief Checks the number of spaces and/or tabs starting from one character
  * in a string. The function stops if a different character is found.
- * @param str A pointer to a character inside a string. 
+ * @param str A pointer to a character inside a string.
  * @returns The number of spaces and/or tabs found.
  */
 short int	skip_tab_spaces(char *str)

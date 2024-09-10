@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:26:29 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/06 13:03:34 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/10 11:08:37 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ void	free_lists(t_tokens *first)
 		tmp = first;
 		first = first->next;
 		free(tmp->word);
-		free (tmp);
+		free(tmp);
 	}
+}
+
+void	exit_program(char *s)
+{
+	printf("%s\n", s);
+	exit(EXIT_FAILURE);
 }
