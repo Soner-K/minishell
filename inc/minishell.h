@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/10 13:13:56 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/10 14:24:21 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@
 # include "libs.h"
 
 //							UTILS
+
 //				-->utils.c
 
+bool		is_builtin(char *cmd);
 short int	count_char(char *str, char c);
 t_tokens	*new_node_token(char *word, bool is_head);
 char		*merge_strings(char *s1, char *s2, char c);
@@ -25,7 +27,7 @@ char		*merge_strings(char *s1, char *s2, char c);
 //				-->cmd_finding.c
 
 char		*find_path(char *cmd, char **env, bool *alloc_fail);
-__int8_t	check_if_cmd(t_tokens *head, char **env);
+__int8_t	find_cmd_type(t_tokens *head, char **env);
 
 //							PARSING
 //				-->create_tokens.c
@@ -41,6 +43,7 @@ void		set_redirections_type(t_tokens **head);
 
 //				-->get_cmd_array.c
 void		set_id(t_tokens *head);
+void		set_cmds_arrays(t_tokens **head);
 
 //				-->syntax_checker.c
 

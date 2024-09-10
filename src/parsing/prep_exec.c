@@ -1,25 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   macros.h                                           :+:      :+:    :+:   */
+/*   prep_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/30 13:47:58 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/10 15:23:42 by sokaraku         ###   ########.fr       */
+/*   Created: 2024/09/10 15:34:03 by sokaraku          #+#    #+#             */
+/*   Updated: 2024/09/10 15:34:10 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MACROS_H
-# define MACROS_H
+#include "minishell.h"
 
-# define MKO "Allocation issue\n"
-# define ALLOCATION_FAILURE -1
-# define SUCCESS 1
-# define FAILURE 0
-# define SINGLE_QUOTE '\''
-# define DOUBLE_QUOTE '"'
-# define READ_WRITE 6
-
-
-#endif

@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:00:31 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/10 12:47:33 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/10 14:04:57 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static bool	check_syntax(t_tokens *head)
 	{
 		if (head->type >= INREDIR && head->type < PIPE)
 		{
-			if (!head->next || head->next->type < WORD || head->next->type > CMD)
+			if (!head->next || (head->next->type < WORD || head->next->type > CMD))
 				return (false);
 		}
 		else if (head->type == PIPE && !head->next)

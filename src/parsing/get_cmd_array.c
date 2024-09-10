@@ -6,11 +6,13 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:22:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/10 12:46:29 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/10 14:56:38 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+# define TOKEN_IS_OPERATOR -2
 
 void	set_id(t_tokens *head)
 {
@@ -42,6 +44,8 @@ __int8_t	get_cmd_array(t_tokens **node, int id)
 
 	tmp = *node;
 	joined_cmds = NULL;
+	if ((tmp->type >= INREDIR && tmp->type <= PIPE))
+		return (TOKEN_IS_OPERATOR);
 	while (tmp && (tmp->id_cmd != -1 && tmp->id_cmd == id))
 	{
 		joined_cmds = merge_strings(joined_cmds, tmp->word, -32);
@@ -55,7 +59,7 @@ __int8_t	get_cmd_array(t_tokens **node, int id)
 	while (*node != tmp)
 	{
 		(*node)->cmd_array = cmd_array;
-		(*node) = (*node)->next;
+		*node = (*node)->next;
 	}
 	free(joined_cmds);
 	return (SUCCESS);
@@ -68,10 +72,13 @@ void	set_cmds_arrays(t_tokens **head)
 
 	first = *head;
 	ret = SUCCESS;
+	set_id(*head);
 	while (*head)
 	{
 		ret = get_cmd_array(head, (*head)->id_cmd);
-		if (ret != SUCCESS)
+		if (ret == TOKEN_IS_OPERATOR)
+			*head = (*head)->next;
+		else if (ret == ALLOCATION_FAILURE)
 			return ; //COME BACK
 	}
 	*head = first;

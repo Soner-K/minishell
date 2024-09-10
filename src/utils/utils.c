@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:25:38 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/10 13:12:30 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/10 13:39:53 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,4 +101,23 @@ char	*merge_strings(char *s1, char *s2, char c)
 	free(s1);
 	return (new);
 }
+/**
+ * @brief Checks if a command is a builtin or not.
+ * @param cmd The string to check.
+ * @returns True (1) if the command is a builtin and false (0) otherwise.
+ */
+bool	is_builtin(char *cmd)
+{
+	static char	*builtins[] = {"echo", "cd", "pwd", "export", "unset", "env",
+			"exit"};
+	__int8_t	i;
 
+	i = 0;
+	while (i < 7)
+	{
+		if (!ft_strcmp(cmd, builtins[i]))
+			return (true);
+		i++;
+	}
+	return (false);
+}
