@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:11:15 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/09 11:58:41 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/10 10:34:28 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	is_unset(char *str)
 	return (0);
 }
 
-void	func_unset(t_parse **cmds, t_env **env, t_data *data)
+void	func_unset(t_tokens **cmds, t_env **env)
 {
 	int		i;
 	char	*found_value;
@@ -40,17 +40,17 @@ void	func_unset(t_parse **cmds, t_env **env, t_data *data)
 	current = *env;
 	if (!(*cmds)->cmd_array[1])
 		return ;
-	else if (!ft_strcmp((*cmds)->cmd_array[1], "PATH"))
-	{
-		data->all_paths = NULL;
-		delete_one_env(env, (*cmds)->cmd_array[1]);
-	}
+	// else if (!ft_strcmp((*cmds)->cmd_array[1], "PATH"))
+	// {
+	// 	data->all_paths = NULL;
+	// 	delete_one_env(env, (*cmds)->cmd_array[1]);
+	// }
 	while (current)
 	{
 		i = 0;
 		while ((*cmds)->cmd_array[i])
 		{
-			found_value = ft_strnstr(current->env_var, (*cmds)->cmd_array[i],
+			found_value = ft_strnstr(current->variable, (*cmds)->cmd_array[i],
 					ft_strlen((*cmds)->cmd_array[i]));
 			if (found_value != NULL)
 				delete_one_env(env, (*cmds)->cmd_array[i]);

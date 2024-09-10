@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:25 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/05 16:33:34 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/10 10:26:59 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 /**
  * @param INREDIR
  * @param OUTREDIR
- * @param HEREDOC 
+ * @param HEREDOC
  * @param APPENDREDIR
  * @param PIPE
  * @param EXPAND
@@ -50,9 +50,10 @@ typedef enum e_type
  * (not used for now).
  * @param next Pointer to the next node.
  * @param prev Pointer to the previous node.
- * @param head Pointer to the head of the list. (Need to check if the adress pointed
+
+	* @param head Pointer to the head of the list. (Need to check if the adress pointed
  * is valid throughout all the program, since the head of the list moves a lot.)
- * 
+ *
  */
 typedef struct t_tokens
 {
@@ -63,6 +64,18 @@ typedef struct t_tokens
 	struct t_tokens	*next;
 	struct t_tokens	*prev;
 	struct t_tokens	*head;
+	// just for blocking the error
+	char			**cmd_array;
+	int				old_stdin;
+	int				old_stdout;
 }					t_tokens;
+
+typedef struct t_env
+{
+	char			*variable;
+	struct t_env	*next;
+	struct t_env	*prev;
+
+}					t_env;
 
 #endif

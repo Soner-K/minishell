@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:11:21 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/09 11:58:23 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/10 10:44:35 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,18 @@ int	is_env(char *str)
 	return (0);
 }
 
-void	func_env(t_parse *cmds, t_env **env)
+void	func_env(t_tokens *cmds, t_env **env)
 {
 	if (cmds->cmd_array[1])
 		printf("env: ‘%s’: No such file or directory\n", cmds->cmd_array[1]);
 	else
 		display_env_list(*env);
+}
+void	display_env_list(t_env *env_list)
+{
+	while (env_list)
+	{
+		printf("%s\n", env_list->variable);
+		env_list = env_list->next;
+	}
 }

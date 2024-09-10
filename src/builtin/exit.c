@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:11:30 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/09 11:58:26 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/10 10:26:50 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	is_exit(char *str)
 	return (0);
 }
 
-void	control_alpha(char *s, t_parse *cmds_list)
+void	control_alpha(char *s, t_tokens *cmds_list)
 {
 	printf("exit : %s: numeric argument required\n", s);
 	if (cmds_list->old_stdin != -1)
@@ -41,7 +41,7 @@ void	control_alpha(char *s, t_parse *cmds_list)
 	exit(1);
 }
 
-void	control_many_args(t_parse *cmds_list)
+void	control_many_args(t_tokens *cmds_list)
 {
 	printf("exit : too many arugments\n");
 	if (cmds_list->old_stdin != -1)
@@ -51,7 +51,7 @@ void	control_many_args(t_parse *cmds_list)
 	exit(1);
 }
 
-void	normal_exit(t_parse *cmds_list)
+void	normal_exit(t_tokens *cmds_list)
 {
 	printf("exit\n");
 	if (cmds_list->old_stdin != -1)
@@ -61,7 +61,7 @@ void	normal_exit(t_parse *cmds_list)
 	exit(1);
 }
 
-void	func_exit(t_parse **cmds)
+void	func_exit(t_tokens **cmds)
 {
 	int	i;
 

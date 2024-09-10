@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:11:01 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/09 11:58:20 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/10 10:24:46 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	is_cd(char *str)
 	return (0);
 }
 
-void	func_cd(t_parse *cmds)
+void	func_cd(t_tokens *cmds)
 {
 	char	*rel_paths[2];
 	int		path_int;

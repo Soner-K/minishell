@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:41:15 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/09 11:58:36 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/10 10:24:37 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return (*(unsigned char *)s1 - *(unsigned char *)s2);
 }
 
-int	is_builtin(t_parse *cmds)
+int	is_builtin(t_tokens *cmds)
 {
 	if (is_echo(cmds->cmd_array[0]) == 1)
 		return (1);
@@ -42,7 +42,7 @@ int	is_builtin(t_parse *cmds)
 		return (0);
 }
 
-void	exec_builtin(int func, t_parse **cmds, t_env **env, t_data *data)
+void	exec_builtin(int func, t_tokens **cmds, t_env **env)
 {
 	if (func == 1)
 		func_echo(*cmds);
@@ -55,7 +55,7 @@ void	exec_builtin(int func, t_parse **cmds, t_env **env, t_data *data)
 	else if (func == 5)
 		func_exit(cmds);
 	else if (func == 6)
-		func_unset(cmds, env, data);
+		func_unset(cmds, env);
 	else if (func == 7)
 		func_export(cmds, env);
 }

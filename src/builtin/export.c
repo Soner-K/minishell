@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:11:10 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/09 11:58:33 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/10 10:28:29 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ t_env	*sort_env(t_env *env_copy, t_env *current)
 		current = env_copy;
 		while (current && current->next != NULL)
 		{
-			if (ft_strncmp(current->env_var, current->next->env_var, 1) > 0)
+			if (ft_strncmp(current->variable, current->next->variable, 1) > 0)
 			{
-				tmp = current->env_var;
-				current->env_var = current->next->env_var;
-				current->next->env_var = tmp;
+				tmp = current->variable;
+				current->variable = current->next->variable;
+				current->next->variable = tmp;
 				swapped = 1;
 			}
 			current = current->next;
@@ -66,18 +66,19 @@ void	export_without_args(t_env **env)
 	env_copy = NULL;
 	while (current)
 	{
-		push_env_list(&env_copy, current->env_var, ft_strlen(current->env_var));
+		push_env_list(&env_copy, current->variable,
+			ft_strlen(current->variable));
 		current = current->next;
 	}
 	current = sort_env(env_copy, current);
 	while (current)
 	{
-		printf("export %s\n", current->env_var);
+		printf("export %s\n", current->variable);
 		current = current->next;
 	}
 }
 
-int	check_variable(t_env **env, char *variable, char *value)
+int	check_variable(t_env **env, char *new_var, char *value)
 {
 	char	*found_value;
 	int		result;
@@ -87,12 +88,12 @@ int	check_variable(t_env **env, char *variable, char *value)
 	current = *env;
 	while (current != NULL)
 	{
-		found_value = ft_strnstr(current->env_var, variable,
-				strlen(current->env_var));
+		found_value = ft_strnstr(current->variable, new_var,
+				strlen(current->variable));
 		if (found_value != NULL)
 		{
 			result = 1;
-			replace_one_env(env, current->env_var, variable, value);
+			replace_one_env(env, current->variable, new_var, value);
 			break ;
 		}
 		current = current->next;
@@ -100,7 +101,7 @@ int	check_variable(t_env **env, char *variable, char *value)
 	return (result);
 }
 
-void	func_export(t_parse **cmds, t_env **env)
+void	func_export(t_tokens **cmds, t_env **env)
 {
 	int		i;
 	char	*value;
