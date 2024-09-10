@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 14:24:41 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/09 21:17:49 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/10 12:47:47 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static char	**split_path(char **env)
 	}
 	if (!env[i])
 		return (NULL);
-	// necessary if split returns "" instead of NULL if command not found?
+	// necessary if split returns "" instead of NULL if command not found? COME BACK
 	all_paths = ft_split(env[i], ':');
 	if (!all_paths)
 		return (NULL);

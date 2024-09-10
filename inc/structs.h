@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:25 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/09 15:26:28 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/10 12:49:05 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ typedef enum e_type
 	APPENDREDIR,
 	PIPE,
 	WORD,
-	EXPAND,
 	BUILTIN,
 	CMD,
 	SPACE_,
@@ -64,9 +63,11 @@ typedef struct t_tokens
 {
 	__int8_t		quotes;
 	short int		n_quotes;
+	int				id_cmd;
 	t_type			type;
 	char			*word;
 	char			*path;
+	char			**cmd_array;
 	struct t_tokens	*next;
 	struct t_tokens	*prev;
 	struct t_tokens	*head;

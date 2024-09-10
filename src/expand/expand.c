@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 16:20:21 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/09 11:42:20 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/10 12:47:08 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*get_new_word(t_tokens *node, char *var, short int s, short int end)
 		{
 			str = ft_strslice(node->word, s - (s != 0), end, &alloc_fail);
 			if (alloc_fail == true)
-				return (NULL); //how handle in calling function?
+				return (NULL); //how handle in calling function? COME BACK
 			return (str);
 		}
 	str = ft_strreplace(node->word, var, s - (s != 0), end);

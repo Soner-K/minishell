@@ -6,11 +6,20 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 15:31:20 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/09 15:31:51 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/10 10:49:59 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static __int8_t	check_if_redir(char *word, __int8_t type)
+{
+	static char	*redirections[5] = {"<", ">", "<<", ">>"};
+
+	if (ft_strcmp(word, redirections[type]))
+		return (-1);
+	return (type);
+}
 
 /**
  * @brief Helper function for set_redirections.
@@ -69,12 +78,15 @@ void	set_redirections_type(t_tokens **head)
 {
 	t_tokens	*curr;
 	t_tokens	*next;
+	__int8_t	type;
 
 	curr = *head;
 	next = curr->next;
 	while (next)
 	{
-		if (curr->type >= INREDIR && curr->type < PIPE && next->type == WORD)
+		type = check_if_redir(curr->word, curr->type);
+		if (type >= INREDIR && type < PIPE && next->type >= WORD
+			&& next->type <= CMD)
 			redir_helper(head, &curr, &next);
 		else
 			curr = curr->next;

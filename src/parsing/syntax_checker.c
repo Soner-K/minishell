@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:00:31 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/09 15:36:59 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/10 12:47:33 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * @returns true (1) if there is no operators or
  * if the operators syntax is valid and false (0) otherwise.
  */
-static bool	check_operators_validity(t_tokens *head) // error code is 2?
+static bool	check_operators_validity(t_tokens *head)
 {
 	static char *operators[6] = {"<", ">", "<<", ">>", "|"};
 
@@ -48,7 +48,7 @@ static bool	check_syntax(t_tokens *head)
 	{
 		if (head->type >= INREDIR && head->type < PIPE)
 		{
-			if (!head->next || head->next->type != WORD)
+			if (!head->next || head->next->type < WORD || head->next->type > CMD)
 				return (false);
 		}
 		else if (head->type == PIPE && !head->next)
@@ -58,7 +58,6 @@ static bool	check_syntax(t_tokens *head)
 	return (true);
 }
 
-// find better name accounting for pipes too.
 /**
  * @brief Checks the operators validity and the redirections' syntax.
  * @param head A double pointer to the head of the list.
@@ -70,10 +69,10 @@ static bool	check_syntax(t_tokens *head)
 bool	full_check(t_tokens **head)
 {
 	if (!check_operators_validity(*head))
-		return (free_tokens(*head), false);
+		return (false);
 	printf("Operators are valid \n");
 	if (!check_syntax(*head))
-		return (free_tokens(*head), printf("Syntax not valid\n"), false);
+		return (printf("Syntax not valid\n"), false);
 	set_redirections_type(head);
 	return (true);
 }

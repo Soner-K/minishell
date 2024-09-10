@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/09 15:53:07 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/10 12:45:28 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,11 @@ void	print_tokens(t_tokens *tokens)
 		return ;
 	while (tokens)
 	{
-		printf("[%d] --> %s\n", tokens->type, tokens->word);
-		// printf(" ss m%ld\n", ft_strlen(tokens->word));
+		printf("[%d] --> %s ", tokens->type, tokens->word);
+		if (tokens->id_cmd != - 1)
+			printf("ID : %d\n", tokens->id_cmd);
+		else
+			printf("\n");
 		tokens = tokens->next;
 	}
 }
@@ -95,10 +98,13 @@ int main(int ac, char **av, char **env)
 	ret = check_if_cmd(head, env);
 	if (ret <= 0)
 		return(printf("Error during command checking\n"), free_tokens(head), free(tmp), FAILURE);
-	printf("Checking syntax\n");
+	print_tokens(head);
+	printf("Checking syntax and setting IDs\n");
 	ret = full_check(&head);
 	if (ret <= 0)
 		return (printf("Syntax error\n"), free_tokens(head), free(tmp), FAILURE);
+	printf("Creating commands arrays...\n")
+		
 	printf("Tokens are : \n");
 	print_tokens(head);
 	free_tokens(head);

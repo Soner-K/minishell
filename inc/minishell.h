@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/09 15:32:13 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/10 12:54:20 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 short int	count_char(char *str, char c);
 t_tokens	*new_node_token(char *word, bool is_head);
-char		*merge_strings(char *s1, char *s2);
+char		*merge_strings(char *s1, char *s2, char c);
 
 //				-->cmd_finding.c
 
@@ -32,9 +32,15 @@ __int8_t	check_if_cmd(t_tokens *head, char **env);
 
 t_tokens	*create_tokens(char *line);
 
+//				-->get_cmd_array.c
+void		set_cmds_arrays(t_tokens **head);
+
 //				-->redirections_setting.c
 
 void		set_redirections_type(t_tokens **head);
+
+//				-->get_cmd_array.c
+void		set_id(t_tokens *head);
 
 //				-->syntax_checker.c
 
