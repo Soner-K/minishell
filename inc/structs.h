@@ -6,7 +6,11 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:25 by sokaraku          #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2024/09/10 13:11:07 by sumseo           ###   ########.fr       */
+=======
+/*   Updated: 2024/09/10 13:12:01 by sokaraku         ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +69,8 @@ typedef struct t_tokens
 	__int8_t		quotes;
 	short int		n_quotes;
 	int				id_cmd;
+	int				old_stdin;
+	int				old_stdout;
 	t_type			type;
 	char			*word;
 	char			*path;
@@ -72,8 +78,11 @@ typedef struct t_tokens
 	struct t_tokens	*next;
 	struct t_tokens	*prev;
 	struct t_tokens	*head;
+<<<<<<< Updated upstream
 	int				old_stdin;
 	int				old_stdout;
+=======
+>>>>>>> Stashed changes
 }					t_tokens;
 
 typedef struct t_env
