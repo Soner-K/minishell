@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:25 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/10 12:59:56 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/10 13:11:07 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ typedef struct t_tokens
 	struct t_tokens	*next;
 	struct t_tokens	*prev;
 	struct t_tokens	*head;
-	// just for blocking the error
-	char			**cmd_array;
 	int				old_stdin;
 	int				old_stdout;
 }					t_tokens;
