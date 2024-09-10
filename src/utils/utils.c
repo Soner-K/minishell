@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:25:38 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/10 12:40:02 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/10 13:12:30 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ t_tokens	*new_node_token(char *word, bool is_head)
 	new->quotes = false;
 	new->n_quotes = 0;
 	new->id_cmd = -1;
+	new->old_stdin = -1;
+	new->old_stdout = -1;
 	new->word = word;
 	new->path = NULL;
 	new->cmd_array = NULL;
