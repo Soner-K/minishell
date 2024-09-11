@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/11 14:08:11 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/11 14:59:05 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ int	main(int argc, char **argv, char **envp)
 		tmp = line;
 		head = create_tokens(line);
 		store_env_list(envp, &env_list);
-		display_env_list(env_list);
-		printf("Tokens are : \n");
+		// display_env_list(env_list);
+		// printf("Tokens are : \n");
 		// print_tokens(head);
 		// printf("\nChecking redirection syntax : \n");
 		full_check(&head);
@@ -88,14 +88,14 @@ int	main(int argc, char **argv, char **envp)
 		// print_tokens(head);
 		// printf("\nRemoving quotes, tokens are : \n");
 		quotes_remover(head);
-		printf("Last CHECK \n");
-		print_tokens(head);
-		printf("Last CHECK \n");
+		// printf("Last CHECK \n");
+		// print_tokens(head);
+		// printf("Last CHECK \n");
 		// just for testing multi command and pipe
 		if (head->type > 0)
 		{
 			exec_shell(&head, &env_list, envp);
-			printf("It is a normal command\n");
+			// printf("It is a normal command\n");
 		}
 		// It is only one command -> built-in check
 		// it if is multiple commands -> built-in check

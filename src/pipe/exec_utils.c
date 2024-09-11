@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:30:11 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/10 13:55:16 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/11 14:12:47 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	exec_shell(t_tokens **cmds_list, t_env **env_list, char **env_copy)
 	}
 	else
 	{
-		printf("HERE??\n");
+		// printf("HERE??\n");
 		fork_id = fork();
 		if (fork_id == 0)
 		{

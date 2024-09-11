@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:45:28 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/10 15:34:45 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/11 14:36:22 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@
 # include <signal.h>
 # include <stdbool.h>
 # include <stddef.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
 # include <sys/wait.h>
+# include <termios.h>
+# include <unistd.h>
 
 #endif
