@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/10 13:13:56 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/11 11:23:41 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,5 +138,18 @@ void		replace_one_env(t_env **env_list, char *env_val, char *variable,
 
 // error_handler
 void		exit_program(char *s);
+
+// execution
+int			parse_path(char **cmds, char *path);
+int			parse_path(char **cmds, char *path);
+int			init_child(t_tokens **cmds_list, char **env_copy);
+void		exec_shell_builtin(t_tokens **cmds_list, int builtin_check,
+				t_env **env_list);
+void		exec_shell(t_tokens **cmds_list, t_env **env_list, char **env_copy);
+void		only_redirection(t_tokens **cmds_list);
+int			getfile(t_tokens **cmds_list);
+
+// prompt
+char		*read_prompt(void);
 
 #endif

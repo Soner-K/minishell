@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 17:15:01 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/09 12:22:08 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/10 13:41:21 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ void	write_heredoc(char *str, int tmp)
 	ft_putstr_fd("\n", tmp);
 }
 
-void	init_heredoc(t_parse *cmds_list)
+void	init_heredoc(t_tokens *cmds_list)
 {
 	cmds_list->delimiter = cmds_list->infile_name;
 	cmds_list->is_heredoc = 1;
 }
 
-void	open_heredoc(t_parse *cmds_list)
+void	open_heredoc(t_tokens *cmds_list)
 {
 	char	*str;
 	int		tmp;

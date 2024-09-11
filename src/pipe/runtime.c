@@ -6,13 +6,13 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:07:40 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/09 12:22:19 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/10 13:42:46 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	init_child_pipe(t_parse *cmds_list, t_pipe *pipe_info, char **env_copy,
+void	init_child_pipe(t_tokens *cmds_list, t_pipe *pipe_info, char **env_copy,
 		int i)
 {
 	if (parse_path(cmds_list->cmd_array, cmds_list->path))
@@ -25,7 +25,7 @@ void	init_child_pipe(t_parse *cmds_list, t_pipe *pipe_info, char **env_copy,
 		exit(127);
 }
 
-t_pipe	*init_pipeinfo(t_parse *cmds_list)
+t_pipe	*init_pipeinfo(t_tokens *cmds_list)
 {
 	t_pipe	*pipe_info;
 
@@ -36,7 +36,7 @@ t_pipe	*init_pipeinfo(t_parse *cmds_list)
 	return (pipe_info);
 }
 
-void	close_extra_files(t_parse *cmds_list)
+void	close_extra_files(t_tokens *cmds_list)
 {
 	if (cmds_list->next != NULL)
 		close(cmds_list->pipe_fdo);
@@ -46,7 +46,7 @@ void	close_extra_files(t_parse *cmds_list)
 	}
 }
 
-void	close_files(t_parse *cmds_list)
+void	close_files(t_tokens *cmds_list)
 {
 	if (cmds_list->infile_name)
 		close(cmds_list->infile);
@@ -54,7 +54,7 @@ void	close_files(t_parse *cmds_list)
 		close(cmds_list->outfile);
 }
 
-void	runtime_shell(t_parse *cmds_list, char **env_copy, t_data *data,
+void	runtime_shell(t_tokens *cmds_list, char **env_copy, t_data *data,
 		t_env **env_list)
 {
 	t_pipe	*pipe_info;

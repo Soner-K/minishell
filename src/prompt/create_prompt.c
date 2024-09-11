@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libs.h                                             :+:      :+:    :+:   */
+/*   create_prompt.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/30 13:45:28 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/10 15:34:45 by sumseo           ###   ########.fr       */
+/*   Created: 2024/09/11 11:20:54 by sumseo            #+#    #+#             */
+/*   Updated: 2024/09/11 11:24:59 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBS_H
-# define LIBS_H
+#include "minishell.h"
 
-# include "libft.h"
-# include "macros.h"
-# include "structs.h"
-# include <dirent.h>
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <signal.h>
-# include <stdbool.h>
-# include <stddef.h>
-# include <sys/wait.h>
+char	*read_prompt(void)
+{
+	char cwd[1024];
+	char *pretty_prompt;
+	char *line;
 
-#endif
+	getcwd(cwd, sizeof(cwd));
+	pretty_prompt = ft_strjoin(cwd, ">");
+	if (!pretty_prompt)
+		return (NULL);
+	line = readline(pretty_prompt);
+	free(pretty_prompt);
+	add_history(line);
+	return (line);
+}

@@ -6,13 +6,13 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:59:43 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/09 12:22:11 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/10 13:41:45 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	getfile(t_parse **cmds_list)
+int	getfile(t_tokens **cmds_list)
 {
 	if ((*cmds_list)->infile_token && ft_strncmp((*cmds_list)->infile_token,
 			"<<", 2) == 0)
@@ -47,7 +47,7 @@ int	getfile(t_parse **cmds_list)
 	return (1);
 }
 
-void	close_pipe_files(t_parse *cmds_list)
+void	close_pipe_files(t_tokens *cmds_list)
 {
 	while (cmds_list != NULL)
 	{
