@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/10 14:30:03 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/11 15:28:52 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int main(int ac, char **av, char **env)
 	char		*line;
 	char		*tmp;
 	t_tokens	*head;
+	t_exec		*exec;
 	(void)ac;
 	(void)av;
 
@@ -109,7 +110,9 @@ int main(int ac, char **av, char **env)
 	printf("Tokens are : \n");
 	print_tokens(head);
 	set_cmds_arrays(&head);
-	print_tokens_and_strs(head);
+	print_tokens(head);
+	exec = new_node_exec();
+	set_node_exec(exec, head);
 	free_tokens(head);
 	free(tmp);
 }

@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/10 14:24:21 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/11 15:20:23 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@ t_tokens	*create_tokens(char *line);
 
 //				-->get_cmd_array.c
 void		set_cmds_arrays(t_tokens **head);
+
+//				-->prep_exec.c
+t_exec		*new_node_exec(void);
+__int8_t	set_node_exec(t_exec *exec, t_tokens *token);
 
 //				-->redirections_setting.c
 

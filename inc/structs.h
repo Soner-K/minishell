@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:25 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/10 15:37:46 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/11 14:21:08 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,23 +75,24 @@ typedef struct t_tokens
 	struct t_tokens	*head;
 }					t_tokens;
 
+typedef struct s_files
+{
+	__int8_t		rights_infile;
+	__int8_t		rights_outfile;
+	bool			is_heredoc;
+	char			*name_infile;
+	char			*name_outfile;
+}					t_files;
+
 typedef struct s_exec
 {
-	char			*path;
 	bool			builtin;
+	char			*path;
 	char			**cmd_array;
 	struct s_exec	*next;
 	t_files			*files_info;
 }					t_exec;
 
-typedef struct s_files
-{
-	bool			is_heredoc;
-	char			*name_infile;
-	char			*name_outfile;
-	int				acces_rights_infile;
-	int				acces_rights_outfile;
-}					t_files;
 
 typedef struct t_env
 {

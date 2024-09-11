@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:22:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/10 14:56:38 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/11 15:27:38 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	set_id(t_tokens *head)
 			head = head->next;
 			id_cmd++;
 		}
-		else if (head->type >= INREDIR && head->type <= APPENDREDIR)
-			head = head->next;
+		// else if (head->type >= INREDIR && head->type <= APPENDREDIR)
+		// 	head = head->next;
 		else
 		{
 			head->id_cmd = id_cmd;
@@ -56,11 +56,9 @@ __int8_t	get_cmd_array(t_tokens **node, int id)
 	cmd_array = ft_split(joined_cmds, -32);
 	if (!cmd_array)
 		return (free(joined_cmds), ALLOCATION_FAILURE);
+	(*node)->cmd_array = cmd_array;
 	while (*node != tmp)
-	{
-		(*node)->cmd_array = cmd_array;
 		*node = (*node)->next;
-	}
 	free(joined_cmds);
 	return (SUCCESS);
 }
