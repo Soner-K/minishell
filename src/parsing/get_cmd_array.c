@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:22:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/11 15:27:38 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/11 17:55:33 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	set_id(t_tokens *head)
 			head = head->next;
 			id_cmd++;
 		}
-		// else if (head->type >= INREDIR && head->type <= APPENDREDIR)
-		// 	head = head->next;
+		else if (head->type >= INREDIR && head->type <= APPENDREDIR)
+			head = head->next;
 		else
 		{
 			head->id_cmd = id_cmd;

@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:25 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/11 14:21:08 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/11 18:37:43 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ typedef struct s_files
 	__int8_t		rights_infile;
 	__int8_t		rights_outfile;
 	bool			is_heredoc;
-	char			*name_infile;
-	char			*name_outfile;
+	char			*infile;
+	char			*outfile;
 }					t_files;
 
 typedef struct s_exec
