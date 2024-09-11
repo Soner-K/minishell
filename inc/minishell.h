@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/11 11:23:41 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/11 12:46:00 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,5 +151,9 @@ int			getfile(t_tokens **cmds_list);
 
 // prompt
 char		*read_prompt(void);
+
+// signal
+void		init_signal(void);
+void		sig_handler(int signal);
 
 #endif
