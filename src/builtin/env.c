@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:11:21 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/10 10:44:35 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/11 14:03:32 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	func_env(t_tokens *cmds, t_env **env)
 	else
 		display_env_list(*env);
 }
+
 void	display_env_list(t_env *env_list)
 {
 	while (env_list)

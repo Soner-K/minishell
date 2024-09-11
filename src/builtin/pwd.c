@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:09:42 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/10 10:55:34 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/11 14:03:23 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	func_pwd(t_tokens *cmds)
 	else
 		printf("pwd: too many arguments\n");
 }
+
 int	count_arr_length(char **argv)
 {
 	int	i;

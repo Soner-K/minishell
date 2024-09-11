@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:20:54 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/11 11:24:59 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/11 14:01:54 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 char	*read_prompt(void)
 {
-	char cwd[1024];
-	char *pretty_prompt;
-	char *line;
+	char	cwd[1024];
+	char	*pretty_prompt;
+	char	*line;
 
 	getcwd(cwd, sizeof(cwd));
 	pretty_prompt = ft_strjoin(cwd, ">");
