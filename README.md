@@ -10,7 +10,7 @@ The shell that we are aiming is based on "BASH".
 4. Do not forget to enjoy our minishell :) This is our goal ! 
 
 ## Prompt
-Prompt is waiting for the uses's touch ⌨️. It waits until user put some commandes and save it to history. And then it sends it to the parsing part. We could make beautiful prompt, but there are errors occuring if we want to change the color.
+Prompt is waiting for the user's touch ⌨️. It waits until user put some commandes and save it to history. And then it sends it to the parsing part. We could make beautiful prompt, but there are errors occuring if we want to change the color.
 
 ## Execution
 When parsing is done, our minishell program sends the user's "input" to execution part. Then execution part will filter two cases.
@@ -41,8 +41,9 @@ All commandes return "exit-status". When commande is successfully executed, it r
 | 255   | exit with out of range(0~255)  | "numeric argument required"|
 </br>
 
-
 So whenever we execute the commande in the minishell, we would like to know this execution is succesfully done in our program. Or maybe, it was not correctly executed because of several reasons such as not finding path, etc. So to know this "status", there are ways to find out it. 
+
+But in reality, we can not control all error status code and even error messages in our minishell. To do so, we are going to use "strerror" functin which is allowed in the minishell project.
 
 ## Signal
 What is signal, by the way ? 🤔

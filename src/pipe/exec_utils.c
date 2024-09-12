@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:30:11 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/11 14:12:47 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/12 14:24:44 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,30 @@ int	init_child(t_tokens **cmds_list, char **env_copy)
 	// if (getfile(cmds_list))
 	// {
 	// 	only_redirection(cmds_list);
+	(*cmds_list)->cmd_array = malloc(2 * sizeof(char *));
+	if (!(*cmds_list)->cmd_array)
+	{
+		// Handle memory allocation failure
+		return (99);
+	}
+	// Assign the strings to the array
+	(*cmds_list)->cmd_array[0] = "ls";
+	(*cmds_list)->cmd_array[1] = NULL;
+	(*cmds_list)->path = "usr/bin/ls";
+	printf("Fork creation dddddd\n");
+	printf("Cmds list [0] %s\n", (*cmds_list)->cmd_array[0]);
+	printf("Cmds list [1] %s\n", (*cmds_list)->cmd_array[1]);
 	if (parse_path((*cmds_list)->cmd_array, (*cmds_list)->path))
 	{
 		execve((*cmds_list)->path, (*cmds_list)->cmd_array, env_copy);
 		return (0);
 	}
 	else
+	{
+		exit(127);
+		printf("HHHHO\n");
 		return (1);
+	}
 	// }
 	return (0);
 }
@@ -73,8 +90,10 @@ void	exec_shell(t_tokens **cmds_list, t_env **env_list, char **env_copy)
 
 	status = 0;
 	builtin_check = which_builtin(*cmds_list);
+	// if (builtin_check > 0)
 	if (builtin_check > 0)
 	{
+		printf("HERE??\n");
 		(*cmds_list)->old_stdin = dup(STDIN_FILENO);
 		(*cmds_list)->old_stdout = dup(STDOUT_FILENO);
 		exec_shell_builtin(cmds_list, builtin_check, env_list);
@@ -85,10 +104,11 @@ void	exec_shell(t_tokens **cmds_list, t_env **env_list, char **env_copy)
 	}
 	else
 	{
-		// printf("HERE??\n");
+		printf("THERE??\n");
 		fork_id = fork();
 		if (fork_id == 0)
 		{
+			printf("YOYO\n");
 			result = init_child(cmds_list, env_copy);
 			// free_parse_list(cmds_list);
 			// free_env_list(env_list);
@@ -96,6 +116,10 @@ void	exec_shell(t_tokens **cmds_list, t_env **env_list, char **env_copy)
 				exit(127);
 			else
 				exit(0);
+		}
+		else
+		{
+			// parent process
 		}
 		// waitpid(fork_id, &status, 0);
 		// data->exit_status = WEXITSTATUS(status);

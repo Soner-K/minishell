@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/12 13:04:37 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/12 14:07:38 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,57 +112,45 @@ void	print_tokens(t_tokens *tokens)
 // 	}
 // }
 
-int	main(int ac, char **av, char **env)
+int	main(int argc, char **argv, char **envp)
 {
-	int ret;
-	char *line;
-	char *tmp;
-	t_tokens *head;
-	t_exec *exec;
+	char		*line;
+	char		*tmp;
+	t_env		*env_list;
+	t_tokens	*head;
+	t_data		*data;
 
-	(void)ac;
-	(void)av;
-	line = readline(">>> ");
-	tmp = line;
-	head = create_tokens(line);
-	if (!head)
-		return (printf("tokens creation error"), free(tmp), FAILURE);
-	printf("Tokens are : \n");
-	print_tokens(head);
-	mark_quotes(head);
-	printf("Expanding...\n");
-	ret = extract_all(head);
-	if (ret <= 0)
-		return (printf("Error during expand\n"), free_tokens(head), free(tmp),
-			FAILURE);
-	print_tokens(head);
-	printf("Checking for unclosed quotes...\n");
-	ret = check_if_closed_quotes(head);
-	if (ret < 0)
-		return (printf("Unclosed quotes\n"), free_tokens(head), free(tmp),
-			FAILURE);
-	printf("Removing quotes, tokens are : \n");
-	ret = quotes_remover(head);
-	if (ret <= 0)
-		return (printf("Error during quotes removal\n"), free_tokens(head),
-			free(tmp), FAILURE);
-	print_tokens(head);
-	printf("Checking for commands...\n");
-	ret = find_cmd_type(head, env);
-	if (ret <= 0)
-		return (printf("Error during command checking\n"), free_tokens(head),
-			free(tmp), FAILURE);
-	printf("Checking syntax\n");
-	ret = full_check(&head);
-	if (ret <= 0)
-		return (printf("Syntax error\n"), free_tokens(head), free(tmp),
-			FAILURE);
-	printf("Tokens are : \n");
-	print_tokens(head);
-	set_cmds_arrays(&head);
-	print_tokens(head);
-	exec = new_node_exec();
-	set_node_exec(exec, head);
-	free_tokens(head);
-	free(tmp);
+	env_list = malloc(sizeof(t_env));
+	data = malloc(sizeof(t_data));
+	if (argc > 1)
+		exit_program("Minishell does not take arguments.");
+	if (argv[1] != NULL)
+		exit_program("Minishell does not take arguments.");
+	if (!data | !env_list)
+		exit_program("Memory allocation failed\n");
+	init_signal();
+	init_exit_stat(data);
+	while (42)
+	{
+		line = read_prompt();
+		if (line == NULL)
+			continue ;
+		tmp = line;
+		head = create_tokens(line);
+		store_env_list(envp, &env_list);
+		// display_env_list(env_list);
+		full_check(&head);
+		mark_quotes(head);
+		extract_all(head);
+		quotes_remover(head);
+		if (head->type > 0)
+		{
+			printf("Hello world");
+			exec_shell(&head, &env_list, envp);
+		}
+		// It is only one command -> built-in check
+		// it if is multiple commands -> built-in check
+		free_tokens(head);
+		free(tmp);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/12 12:59:53 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/12 13:54:01 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,4 +163,6 @@ char		*read_prompt(void);
 void		init_signal(void);
 void		sig_handler(int signal);
 
+// exit status
+int			init_exit_stat(t_data *data);
 #endif
