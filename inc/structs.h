@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:25 by sokaraku          #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2024/09/10 13:11:07 by sumseo           ###   ########.fr       */
-=======
-/*   Updated: 2024/09/10 13:12:01 by sokaraku         ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2024/09/11 18:37:43 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +55,7 @@ typedef enum e_type
  * (not used for now).
  * @param next Pointer to the next node.
  * @param prev Pointer to the previous node.
-
-	* @param head Pointer to the head of the list. (Need to check if the adress pointed
+ * @param head Pointer to the head of the list. (Need to check if the adress pointed
  * is valid throughout all the program, since the head of the list moves a lot.)
  *
  */
@@ -73,17 +68,31 @@ typedef struct t_tokens
 	int				old_stdout;
 	t_type			type;
 	char			*word;
-	char			*path;
 	char			**cmd_array;
+	char			*path;
 	struct t_tokens	*next;
 	struct t_tokens	*prev;
 	struct t_tokens	*head;
-<<<<<<< Updated upstream
-	int				old_stdin;
-	int				old_stdout;
-=======
->>>>>>> Stashed changes
 }					t_tokens;
+
+typedef struct s_files
+{
+	__int8_t		rights_infile;
+	__int8_t		rights_outfile;
+	bool			is_heredoc;
+	char			*infile;
+	char			*outfile;
+}					t_files;
+
+typedef struct s_exec
+{
+	bool			builtin;
+	char			*path;
+	char			**cmd_array;
+	struct s_exec	*next;
+	t_files			*files_info;
+}					t_exec;
+
 
 typedef struct t_env
 {
