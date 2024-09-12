@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:20:54 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/11 14:01:54 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/12 11:03:11 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ char	*read_prompt(void)
 	if (!pretty_prompt)
 		return (NULL);
 	line = readline(pretty_prompt);
+	if (line == NULL)
+		exit(1);
 	free(pretty_prompt);
 	add_history(line);
 	return (line);

@@ -27,9 +27,12 @@ Minishell will create multiple processes to execute many commandes. To understan
 ## Redirection
 If there are infiles or outfiles to read, write or what so more, minishell program will read, or write. Also to have good understand this part, you need to have good understanding of linux file system. Because everytime you use the file, you need to open and close to not have memory leaks in C.
 
+## Exit Status
+So whenever we execute the commande in the minishell, we would like to know this execution is succesfully done in our program. Or maybe, it was not correctly executed because of several reasons such as not finding path, etc. So to know this "status", there are ways to find out it. 
+
 ## Signal
 What is signal, by the way ? 🤔
-<br/> Signal is a literally signal for sending to processes when there are certain events in the terminal(ctrl+c, ctrl+d, etc) Meaning, it is a way to communicate between process.
+<br/> Signal is a literally sending "signal" to processes when there are certain events in the terminal(ctrl+c, ctrl+d, etc) Meaning, it is a way to communicate between process.
 
 So when process gets signals, there are three scenarios.
 1. Terminate process
@@ -39,4 +42,3 @@ So when process gets signals, there are three scenarios.
 In our minishell, we decided to interprept some of signal handlers(ctrl+c, ctrl+d, ctrl+\\). So whenever this event happens on the minishell, you will see the difference and the similarities compared to original shell or bash. 
 
 
-## Exit Status

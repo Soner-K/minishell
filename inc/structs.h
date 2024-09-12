@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:25 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/10 13:51:45 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/11 16:08:23 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,10 @@ typedef struct t_env
 	struct t_env	*prev;
 
 }					t_env;
+
+typedef struct t_data
+{
+	int				exit_status;
+}					t_data;
 
 #endif
