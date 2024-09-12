@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:47:58 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/10 10:08:01 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/11 14:15:10 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,14 @@
 # define FAILURE 0
 # define SINGLE_QUOTE '\''
 # define DOUBLE_QUOTE '"'
-# define RW 6
-
+# define NO_FILE_FOUND -1
+# define NO_RIGHT 0
+# define EXECUTE_ONLY 1
+# define WRITE_ONLY 2
+# define READ_ONLY 4
+# define WRITE_EXECUTE 3
+# define READ_EXECUTE 5
+# define READ_WRITE 6
+# define READ_WRITE_EXECUTE 7
 
 #endif

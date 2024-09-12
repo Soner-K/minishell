@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:56:05 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/09 15:05:39 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/11 12:51:22 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	free_one_token(t_tokens *node)
 	free(node->word);
 	if (node->path)
 		free(node->path);
+	if (node->cmd_array)
+		free_arrs((void **)node->cmd_array);
 	free(node);
 }
 /**

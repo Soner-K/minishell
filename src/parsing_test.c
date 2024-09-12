@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/11 15:48:55 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/12 13:04:37 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	print_var(char *str, int start, int end)
 	}
 	printf("\n");
 }
+
 void	print_tokens(t_tokens *tokens)
 {
 	if (!tokens)
@@ -50,58 +51,118 @@ void	print_tokens(t_tokens *tokens)
 	}
 }
 
-/*Will segfault if one of the function sends an error code
-because the tokens will be freed, nothing to be alarmed of,
-a simple reorganization of the main will handle that.
-*/
-int	main(int argc, char **argv, char **envp)
-{
-	char		*line;
-	char		*tmp;
-	t_env		*env_list;
-	t_tokens	*head;
+// void	print_tokens_and_strs(t_tokens *tokens)
+// {
+// 	char		*line;
+// 	char		*tmp;
+// 	t_env		*env_list;
+// 	t_tokens	*head;
 
-	env_list = NULL;
-	if (argc > 1)
-		exit_program("Minishell does not take arguments.");
-	if (argv[1] != NULL)
-		exit_program("Minishell does not take arguments.");
-	init_signal();
-	while (42)
-	{
-		line = read_prompt();
-		if (line == NULL)
-			continue ;
-		tmp = line;
-		head = create_tokens(line);
-		store_env_list(envp, &env_list);
-		// display_env_list(env_list);
-		// printf("Tokens are : \n");
-		// print_tokens(head);
-		// printf("\nChecking redirection syntax : \n");
-		full_check(&head);
-		// printf("\nTokens now are : \n");
-		// print_tokens(head);
-		// printf("\nExpand, tokens are : \n");
-		mark_quotes(head);
-		extract_all(head);
-		// print_tokens(head);
-		// printf("\nRemoving quotes, tokens are : \n");
-		quotes_remover(head);
-		// printf("Last CHECK \n");
-		// print_tokens(head);
-		// printf("Last CHECK \n");
-		// just for testing multi command and pipe
-		if (head->type > 0)
-		{
-			exec_shell(&head, &env_list, envp);
-			// printf("It is a normal command\n");
-		}
-		// It is only one command -> built-in check
-		// it if is multiple commands -> built-in check
-		free(tmp);
-		free_tokens(head);
-		free(tmp);
-	}
-	// rl_clear_history();
+// 	env_list = NULL;
+// 	if (argc > 1)
+// 		exit_program("Minishell does not take arguments.");
+// 	if (argv[1] != NULL)
+// 		exit_program("Minishell does not take arguments.");
+// 	init_signal();
+// 	while (42)
+// 	{
+// 		line = read_prompt();
+// 		if (line == NULL)
+// 			continue ;
+// 		tmp = line;
+// 		head = create_tokens(line);
+// 		store_env_list(envp, &env_list);
+// 		// display_env_list(env_list);
+// 		// printf("Tokens are : \n");
+// 		// print_tokens(head);
+// 		// printf("\nChecking redirection syntax : \n");
+// 		full_check(&head);
+// 		// printf("\nTokens now are : \n");
+// 		// print_tokens(head);
+// 		// printf("\nExpand, tokens are : \n");
+// 		mark_quotes(head);
+// 		extract_all(head);
+// 		// print_tokens(head);
+// 		// printf("\nRemoving quotes, tokens are : \n");
+// 		quotes_remover(head);
+// 		// printf("Last CHECK \n");
+// 		// print_tokens(head);
+// 		// printf("Last CHECK \n");
+// 		// just for testing multi command and pipe
+// 		if (head->type > 0)
+// 		{
+// 			exec_shell(&head, &env_list, envp);
+// 			// printf("It is a normal command\n");
+// 		}
+// 		// It is only one command -> built-in check
+// 		// it if is multiple commands -> built-in check
+// 		free(tmp);
+// 		free_tokens(head);
+// 		free(tmp);
+// 	}
+// 	// rl_clear_history();
+// 	if (!tokens)
+// 		return ;
+// 	while (tokens)
+// 	{
+// 		printf("[%d] --> %s STRS : \n", tokens->type, tokens->word);
+// 		print_strs(tokens->cmd_array);
+// 		printf("\n");
+// 		tokens = tokens->next;
+// 	}
+// }
+
+int	main(int ac, char **av, char **env)
+{
+	int ret;
+	char *line;
+	char *tmp;
+	t_tokens *head;
+	t_exec *exec;
+
+	(void)ac;
+	(void)av;
+	line = readline(">>> ");
+	tmp = line;
+	head = create_tokens(line);
+	if (!head)
+		return (printf("tokens creation error"), free(tmp), FAILURE);
+	printf("Tokens are : \n");
+	print_tokens(head);
+	mark_quotes(head);
+	printf("Expanding...\n");
+	ret = extract_all(head);
+	if (ret <= 0)
+		return (printf("Error during expand\n"), free_tokens(head), free(tmp),
+			FAILURE);
+	print_tokens(head);
+	printf("Checking for unclosed quotes...\n");
+	ret = check_if_closed_quotes(head);
+	if (ret < 0)
+		return (printf("Unclosed quotes\n"), free_tokens(head), free(tmp),
+			FAILURE);
+	printf("Removing quotes, tokens are : \n");
+	ret = quotes_remover(head);
+	if (ret <= 0)
+		return (printf("Error during quotes removal\n"), free_tokens(head),
+			free(tmp), FAILURE);
+	print_tokens(head);
+	printf("Checking for commands...\n");
+	ret = find_cmd_type(head, env);
+	if (ret <= 0)
+		return (printf("Error during command checking\n"), free_tokens(head),
+			free(tmp), FAILURE);
+	printf("Checking syntax\n");
+	ret = full_check(&head);
+	if (ret <= 0)
+		return (printf("Syntax error\n"), free_tokens(head), free(tmp),
+			FAILURE);
+	printf("Tokens are : \n");
+	print_tokens(head);
+	set_cmds_arrays(&head);
+	print_tokens(head);
+	exec = new_node_exec();
+	set_node_exec(exec, head);
+	free_tokens(head);
+	free(tmp);
 }
