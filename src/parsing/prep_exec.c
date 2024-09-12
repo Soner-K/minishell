@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prep_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 15:34:03 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/12 12:47:28 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/12 13:07:35 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_exec	*new_node_exec(void)
 	exec_node->next = NULL;
 	exec_node->files_info = files_info;
 	files_info->is_heredoc = false;
-	files_info->infile = NULL;		
+	files_info->infile = NULL;
 	files_info->outfile = NULL;
 	files_info->rights_infile = -1;
 	files_info->rights_outfile = -1;
@@ -105,8 +105,8 @@ __int8_t	set_node_exec(t_exec *exec, t_tokens *token)
 
 t_exec	*create_exec_lst(t_tokens *head)
 {
-	t_exec	*lst;
-	int		id_cmd;
+	t_exec *lst;
+	int id_cmd;
 
 	id_cmd = 0;
 	lst = NULL;
@@ -114,11 +114,14 @@ t_exec	*create_exec_lst(t_tokens *head)
 	{
 		lst = new_node_exec();
 		if (!lst)
-			return (free_tokens(head), NULL); //COME BACK
+			return (free_tokens(head), NULL); // COME BACK
 		while (head && head->id_cmd == id_cmd)
 		{
-			if (head->word == CMD || head->word == BUILTIN)
-				
+			if (head->type == CMD || head->type == BUILTIN)
+			{
+				printf("workiing in progress");
+			}
 		}
 	}
+	return (NULL);
 }
