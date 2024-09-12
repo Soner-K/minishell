@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:03:00 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/10 12:47:01 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/12 18:53:18 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
  * @brief Checks if there is an expand inside single quotes. If it is,
  * the variable isn't expanded.
  * @param str The string to check.
- * @returns True (1) if the expand isn't inside single quotes 
+ * @returns True (1) if the expand isn't inside single quotes
  * and false (0) otherwise.
  */
 bool	expand_inside_single_quotes(char *str)
@@ -51,7 +51,7 @@ bool	expand_inside_single_quotes(char *str)
  * and false (0) otherwise. For the other characters, returns true (1)
  * if the character is not alphanumerical, an underscore and not '?'.
  * Returns false (0) otherwise.
- * 
+ *
  */
 bool	check_if_edge_characters(char c, bool first_char)
 {
@@ -87,7 +87,7 @@ outside of the first loop if a dollar sign is found).
  */
 bool	check_expand_syntax(char *str, short int *start, short int *end)
 {
-	int			i;
+	int	i;
 
 	i = -1;
 	*start = 0;
@@ -156,7 +156,7 @@ char	*ft_strslice(char *str, int start, int end, bool *alloc_fail)
  * @param add The string to add in str.
  * @param start The beginning index at which to merge the new string.
  * @param end The end index at which the merge of the new string ends.
- * @returns The new string with 
+ * @returns The new string with
  */
 char	*ft_strreplace(char *str, char *add, int start, int end)
 {
@@ -186,5 +186,3 @@ char	*ft_strreplace(char *str, char *add, int start, int end)
 	new[j] = '\0';
 	return (new);
 }
-
-

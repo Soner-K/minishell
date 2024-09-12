@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:25:38 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/11 15:20:16 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/12 13:59:31 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,38 +32,6 @@ short int	count_char(char *str, char c)
 		str++;
 	}
 	return (n);
-}
-
-/**
- * @brief Create a new node tailored for a list of tokens.
- * @param word The word that will be stored in the created node.
- * @param is_head A boolean being true (1) if the created node will be the
- * head of a list, and false (0) otherwise.
- * @returns The created node.
- */
-t_tokens	*new_node_token(char *word, bool is_head)
-{
-	t_tokens			*new;
-	static t_tokens	*head = NULL;
-
-	new = malloc(sizeof(t_tokens));
-	if (!new)
-		return (NULL);
-	new->quotes = false;
-	new->n_quotes = 0;
-	new->id_cmd = -1;
-	new->old_stdin = -1;
-	new->old_stdout = -1;
-	new->word = word;
-	new->path = NULL;
-	new->cmd_array = NULL;
-	new->next = NULL;
-	new->prev = NULL;
-	new->type = NONE;
-	if (is_head)
-		head = new;
-	new->head = head;
-	return (new);
 }
 
 /**
