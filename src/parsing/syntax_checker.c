@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_checker.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:00:31 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/10 14:04:57 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/12 13:03:32 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  */
 static bool	check_operators_validity(t_tokens *head)
 {
-	static char *operators[6] = {"<", ">", "<<", ">>", "|"};
+	static char	*operators[6] = {"<", ">", "<<", ">>", "|"};
 
 	while (head)
 	{

@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libs.h                                             :+:      :+:    :+:   */
+/*   init_signal.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/30 13:45:28 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/11 14:36:22 by sumseo           ###   ########.fr       */
+/*   Created: 2024/09/11 12:42:20 by sumseo            #+#    #+#             */
+/*   Updated: 2024/09/12 11:00:46 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBS_H
-# define LIBS_H
+#include "minishell.h"
 
-# include "libft.h"
-# include "macros.h"
-# include "structs.h"
-# include <dirent.h>
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <signal.h>
-# include <stdbool.h>
-# include <stddef.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <sys/wait.h>
-# include <termios.h>
-# include <unistd.h>
+void	sig_handler(int signal)
+{
+	if (signal == SIGINT)
+	{
+		ft_putstr_fd("\n", STDOUT_FILENO);
+		rl_replace_line("", 1);
+		rl_on_new_line();
+		rl_redisplay();
+	}
+}
 
-#endif
+void	init_signal(void)
+{
+	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, SIG_IGN);
+}

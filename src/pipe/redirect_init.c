@@ -6,13 +6,13 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:13:20 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/09 12:22:16 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/10 13:42:15 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	heredoc_check(t_parse *cmds_list)
+void	heredoc_check(t_tokens *cmds_list)
 {
 	char	*str;
 	int		fd;
@@ -34,7 +34,7 @@ void	heredoc_check(t_parse *cmds_list)
 	}
 }
 
-void	only_redirection(t_parse **cmds_list)
+void	only_redirection(t_tokens **cmds_list)
 {
 	if ((*cmds_list)->infile_name)
 	{
