@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 15:34:03 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/11 21:34:24 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/12 12:47:28 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ t_exec	*create_exec_lst(t_tokens *head)
 		while (head && head->id_cmd == id_cmd)
 		{
 			if (head->word == CMD || head->word == BUILTIN)
-				s
+				
 		}
 	}
 }
