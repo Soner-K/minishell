@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/12 12:59:53 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/14 17:07:08 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,36 +89,36 @@ void		mark_quotes(t_tokens *head);
 
 // built-in BUILTIN
 int			ft_strcmp(const char *s1, const char *s2);
-int			which_builtin(t_tokens *cmds);
-void		exec_builtin(int func, t_tokens **cmds, t_env **env);
+int			which_builtin(t_exec *cmds);
+void		exec_builtin(int func, t_exec **cmds, t_env **env);
 
 // built-in UNSET
 int			is_unset(char *str);
-void		func_unset(t_tokens **cmds, t_env **env);
+void		func_unset(t_exec **cmds, t_env **env);
 
 // built-in CD
 int			is_cd(char *str);
-void		func_cd(t_tokens *cmds);
+void		func_cd(t_exec *cmds);
 void		func_path(int path_int, char *path);
 void		func_relative_cd(int path_int);
 void		func_absolute_cd(char *dir);
 
 // built-in ECHO
 int			is_echo(char *str);
-int			print_echo(t_tokens *cmds, int i, int nextline_flag);
-void		func_echo(t_tokens *cmds);
+int			print_echo(t_exec *cmds, int i, int nextline_flag);
+void		func_echo(t_exec *cmds);
 
 // built-in ENV
 int			is_env(char *str);
-void		func_env(t_tokens *cmds, t_env **env);
+void		func_env(t_exec *cmds, t_env **env);
 void		display_env_list(t_env *env_list);
 
 // built-in EXIT
 int			is_exit(char *str);
-void		control_alpha(char *s, t_tokens *cmds_list);
-void		control_many_args(t_tokens *cmds_list);
-void		normal_exit(t_tokens *cmds_list);
-void		func_exit(t_tokens **cmds);
+void		control_alpha(char *s, t_exec *cmds_list);
+void		control_many_args(t_exec *cmds_list);
+void		normal_exit(t_exec *cmds_list);
+void		func_exit(t_exec **cmds);
 
 // built-in EXPORT
 int			check_export_variable(char s);
@@ -129,11 +129,11 @@ int			is_export(char *str);
 t_env		*sort_env(t_env *env_copy, t_env *current);
 void		export_without_args(t_env **env);
 int			check_variable(t_env **env, char *new_var, char *value);
-void		func_export(t_tokens **cmds, t_env **env);
+void		func_export(t_exec **cmds, t_env **env);
 
 // built-in PWD
 int			is_pwd(char *str);
-void		func_pwd(t_tokens *cmds);
+void		func_pwd(t_exec *cmds);
 int			count_arr_length(char **argv);
 
 // env
@@ -149,10 +149,10 @@ void		exit_program(char *s);
 // execution
 int			parse_path(char **cmds, char *path);
 int			parse_path(char **cmds, char *path);
-int			init_child(t_tokens **cmds_list, char **env_copy);
-void		exec_shell_builtin(t_tokens **cmds_list, int builtin_check,
+int			init_child(t_exec **cmds_list, char **env_copy);
+void		exec_shell_builtin(t_exec **cmds_list, int builtin_check,
 				t_env **env_list);
-void		exec_shell(t_tokens **cmds_list, t_env **env_list, char **env_copy);
+void		exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy);
 void		only_redirection(t_tokens **cmds_list);
 int			getfile(t_tokens **cmds_list);
 

@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:30:11 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/11 14:12:47 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/14 17:07:17 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	parse_path(char **cmds, char *path)
 	}
 }
 
-int	init_child(t_tokens **cmds_list, char **env_copy)
+int	init_child(t_exec **cmds_list, char **env_copy)
 {
 	// if (getfile(cmds_list))
 	// {
@@ -54,7 +54,7 @@ int	init_child(t_tokens **cmds_list, char **env_copy)
 	return (0);
 }
 
-void	exec_shell_builtin(t_tokens **cmds_list, int builtin_check,
+void	exec_shell_builtin(t_exec **cmds_list, int builtin_check,
 		t_env **env_list)
 {
 	// if (getfile(cmds_list))
@@ -64,7 +64,7 @@ void	exec_shell_builtin(t_tokens **cmds_list, int builtin_check,
 	// }
 }
 
-void	exec_shell(t_tokens **cmds_list, t_env **env_list, char **env_copy)
+void	exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy)
 {
 	int		builtin_check;
 	pid_t	fork_id;
@@ -72,12 +72,12 @@ void	exec_shell(t_tokens **cmds_list, t_env **env_list, char **env_copy)
 	int		result;
 
 	status = 0;
-	builtin_check = which_builtin(*cmds_list);
+	builtin_check = which_builtin(*exec_list);
 	if (builtin_check > 0)
 	{
-		(*cmds_list)->old_stdin = dup(STDIN_FILENO);
-		(*cmds_list)->old_stdout = dup(STDOUT_FILENO);
-		exec_shell_builtin(cmds_list, builtin_check, env_list);
+		// (*exec_list)->old_stdin = dup(STDIN_FILENO);
+		// (*exec_list)->old_stdout = dup(STDOUT_FILENO);
+		exec_shell_builtin(exec_list, builtin_check, env_list);
 		// dup2((*cmds_list)->old_stdout, STDOUT_FILENO);
 		// dup2((*cmds_list)->old_stdin, STDIN_FILENO);
 		// close((*cmds_list)->old_stdout);
@@ -89,7 +89,7 @@ void	exec_shell(t_tokens **cmds_list, t_env **env_list, char **env_copy)
 		fork_id = fork();
 		if (fork_id == 0)
 		{
-			result = init_child(cmds_list, env_copy);
+			result = init_child(exec_list, env_copy);
 			// free_parse_list(cmds_list);
 			// free_env_list(env_list);
 			if (result == 1)

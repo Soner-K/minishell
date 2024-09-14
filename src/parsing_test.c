@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/14 16:48:12 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/14 17:12:43 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,8 @@ int	main(int argc, char **argv, char **envp)
 	if (argv[1] != NULL)
 		exit_program("Minishell does not take arguments.");
 	init_signal();
+	store_env_list(envp, &env_list);
+
 	while (42)
 	{
 		line = read_prompt();
@@ -174,6 +176,8 @@ int	main(int argc, char **argv, char **envp)
 		set_node_exec(exec, head);
 		printf("node exec check %s\n", exec->cmd_array[0]);
 		printf("node exec check %s\n", exec->cmd_array[1]);
+		exec_shell(&exec, &env_list, envp);
+		// printf("node next check %s\n", exec->next->cmd_array[0]);
 
 		free_tokens(head);
 		free(tmp);

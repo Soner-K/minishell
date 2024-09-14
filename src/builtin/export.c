@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:11:10 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/11 14:04:33 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/14 17:03:29 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	check_variable(t_env **env, char *new_var, char *value)
 	return (result);
 }
 
-void	func_export(t_tokens **cmds, t_env **env)
+void	func_export(t_exec **cmds, t_env **env)
 {
 	int		i;
 	char	*value;
