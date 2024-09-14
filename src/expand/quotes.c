@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:40:26 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/10 12:47:23 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/12 19:12:34 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	mark_quotes(t_tokens *head)
 	mark_quotes(head->next);
 }
 
-// is there a need to null terminate the string if ft_calloc was used ? COME BACK
+// need to null terminate the string if ft_calloc was used ? COME BACK
 static __int8_t	quotes_remover_helper(t_tokens *node, short int quotes_count)
 {
 	char		*new;
@@ -93,7 +93,7 @@ static __int8_t	quotes_remover_helper(t_tokens *node, short int quotes_count)
 // think about error codes COME BACK
 __int8_t	quotes_remover(t_tokens *head)
 {
-	short int quotes_count;
+	short int	quotes_count;
 
 	if (!head)
 		return (false);

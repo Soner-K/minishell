@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/12 12:59:53 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/12 20:46:07 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,58 +14,6 @@
 # define MINISHELL_H
 
 # include "libs.h"
-
-//							UTILS
-
-//				-->utils.c
-
-bool		is_builtin(char *cmd);
-short int	count_char(char *str, char c);
-t_tokens	*new_node_token(char *word, bool is_head);
-char		*merge_strings(char *s1, char *s2, char c);
-
-//				-->cmd_finding.c
-
-char		*find_path(char *cmd, char **env, bool *alloc_fail);
-__int8_t	find_cmd_type(t_tokens *head, char **env);
-
-//							PARSING
-//				-->create_tokens.c
-
-t_tokens	*create_tokens(char *line);
-
-//				-->get_cmd_array.c
-void		set_cmds_arrays(t_tokens **head);
-
-//				-->prep_exec.c
-t_exec		*new_node_exec(void);
-__int8_t	set_node_exec(t_exec *exec, t_tokens *token);
-
-//				-->redirections_setting.c
-
-void		set_redirections_type(t_tokens **head);
-
-//				-->get_cmd_array.c
-void		set_id(t_tokens *head);
-void		set_cmds_arrays(t_tokens **head);
-
-//				-->syntax_checker.c
-
-bool		full_check(t_tokens **head);
-
-//				-->tokenization_utils.c
-
-void		free_one_token(t_tokens *node);
-void		free_tokens(t_tokens *head);
-t_tokens	*last_token(t_tokens *lst);
-__int8_t	add_token(t_tokens **lst, t_tokens *to_add);
-
-//				-->tokenization_utils2.c
-
-__int8_t	find_one_token(char c);
-__int8_t	find_token_type(char *str);
-char		is_separator(char c);
-short int	skip_tab_spaces(char *str);
 
 //							EXPAND
 //				-->expand_utils.c
@@ -86,6 +34,63 @@ __int8_t	extract_all(t_tokens *head);
 __int8_t	check_if_closed_quotes(t_tokens *head);
 __int8_t	quotes_remover(t_tokens *head);
 void		mark_quotes(t_tokens *head);
+
+//							PARSING
+//				-->redirections_setting.c
+
+void		set_redirections_type(t_tokens **head);
+
+//				-->syntax_checker.c
+
+bool		full_check(t_tokens **head);
+
+//							PRE_EXEC
+//				-->get_cmd_array.c
+
+void		set_cmds_arrays(t_tokens **head);
+
+//				-->path_finding.c
+
+// char		*find_path(char *cmd, char **env, bool *alloc_fail);
+__int8_t	find_cmd_type(t_tokens *head, char **env);
+
+//				-->prep_exec_utils.c
+void		lst_addback_exec(t_exec **head, t_exec *add);
+t_exec		*new_node_exec(void);
+void		free_exec_nodes(t_exec *head);
+
+//				-->prep_exec.c
+
+t_exec		*new_node_exec(void);
+__int8_t	set_node_exec(t_exec *exec, t_tokens *token);
+t_exec		*create_exec_lst(t_tokens *head);
+
+//							TOKENIZER
+//				-->create_tokens.c
+
+t_tokens	*create_tokens(char *line);
+
+//				-->tokenization_utils.c
+
+t_tokens	*new_node_token(char *word, bool is_head);
+void		free_one_token(t_tokens *node);
+void		free_tokens(t_tokens *head);
+t_tokens	*last_token(t_tokens *lst);
+__int8_t	add_token(t_tokens **lst, t_tokens *to_add);
+
+//				-->tokenization_utils2.c
+
+__int8_t	find_one_token(char c);
+__int8_t	find_token_type(char *str);
+char		is_separator(char c);
+short int	skip_tab_spaces(char *str);
+
+//							UTILS
+//				-->utils.c
+
+short int	count_char(char *str, char c);
+char		*merge_strings(char *s1, char *s2, char c);
+bool		is_builtin(char *cmd);
 
 // built-in BUILTIN
 int			ft_strcmp(const char *s1, const char *s2);

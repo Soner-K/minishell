@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 14:24:41 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/10 14:23:32 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/12 20:05:23 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,17 +107,33 @@ char	*find_path(char *cmd, char **env, bool *alloc_fail)
 	return (NULL);
 }
 
+/**
+ * @brief Checks if a command is a builtin or not.
+ * @param cmd The string to check.
+ * @returns True (1) if the command is a builtin and false (0) otherwise.
+ */
 bool	check_if_builtin(t_tokens **node)
 {
+	t_tokens	*prev;
+
+	prev = (*node)->prev;
 	if (is_builtin((*node)->word))
 	{
-		(*node)->type = BUILTIN;
-		*node = (*node)->next;
-		return (true);
+		if (!prev)
+		{	
+			(*node)->type = BUILTIN;
+			*node = (*node)->next;
+			return (true);
+		}
+		else if (prev->type != CMD && prev->type != BUILTIN)
+		{	
+			(*node)->type = BUILTIN;
+			*node = (*node)->next;
+			return (true);
+		}
 	}
 	return (false);
 }
-
 /**
  * @brief Checks for all the tokens in the tokens list if there are
  * commands or builtins. If a command is found, the path to the executable

@@ -6,11 +6,43 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:56:05 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/11 12:51:22 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/12 19:14:22 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/**
+ * @brief Create a new node tailored for a list of tokens.
+ * @param word The word that will be stored in the created node.
+ * @param is_head A boolean being true (1) if the created node will be the
+ * head of a list, and false (0) otherwise.
+ * @returns The created node.
+ */
+t_tokens	*new_node_token(char *word, bool is_head)
+{
+	t_tokens		*new;
+	static t_tokens	*head = NULL;
+
+	new = malloc(sizeof(t_tokens));
+	if (!new)
+		return (NULL);
+	new->quotes = false;
+	new->n_quotes = 0;
+	new->id_cmd = -1;
+	new->old_stdin = -1;
+	new->old_stdout = -1;
+	new->word = word;
+	new->path = NULL;
+	new->cmd_array = NULL;
+	new->next = NULL;
+	new->prev = NULL;
+	new->type = NONE;
+	if (is_head)
+		head = new;
+	new->head = head;
+	return (new);
+}
 
 /**
  * @brief Frees one token node.
@@ -26,6 +58,7 @@ void	free_one_token(t_tokens *node)
 		free_arrs((void **)node->cmd_array);
 	free(node);
 }
+
 /**
  * @brief Free a list of tokens.
  * @param head The head of the tokens' list.

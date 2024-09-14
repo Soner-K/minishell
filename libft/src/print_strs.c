@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:02:19 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/06/24 18:31:05 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/12 14:29:06 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,5 @@ void	print_strs(char **strs)
 	if (!strs || !(*strs))
 		return ;
 	while (strs[++i])
-		ft_putendl_fd(strs[i], STDOUT_FILENO);
+		ft_printf("[%d] : %s\n", i, strs[i]);
 }
