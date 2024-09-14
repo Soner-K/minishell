@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/14 17:12:43 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/14 17:42:54 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,9 +121,8 @@ int	main(int argc, char **argv, char **envp)
 	// t_data *data;
 	t_tokens *head;
 	t_exec *exec;
-	env_list = malloc(sizeof(env_list));
-	if (!env_list)
-		return (0);
+	env_list = NULL;
+
 	if (argc > 1)
 		exit_program("Minishell does not take arguments.");
 	if (argv[1] != NULL)

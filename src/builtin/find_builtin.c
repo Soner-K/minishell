@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:41:15 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/14 17:09:03 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/14 17:26:19 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	which_builtin(t_exec *cmds)
 {
-	printf("CMDS ? \n");
 	if (is_echo(cmds->cmd_array[0]) == 1)
 		return (1);
 	else if (is_pwd(cmds->cmd_array[0]) == 1)
