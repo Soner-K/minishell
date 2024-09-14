@@ -6,48 +6,50 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:59:43 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/10 13:41:45 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/14 18:37:05 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	getfile(t_tokens **cmds_list)
+int	getfile(t_exec **cmds_list)
 {
-	if ((*cmds_list)->infile_token && ft_strncmp((*cmds_list)->infile_token,
-			"<<", 2) == 0)
-		call_heredoc((*cmds_list));
-	else if ((*cmds_list)->infile_token
-		&& ft_strncmp((*cmds_list)->infile_token, "<", 1) == 0)
-	{
-		if ((*cmds_list)->infile_access)
-			(*cmds_list)->infile = open((*cmds_list)->infile_name, O_RDONLY);
-		else
-		{
-			perror((*cmds_list)->infile_name);
-			return (0);
-		}
-	}
-	if ((*cmds_list)->outfile_token && ft_strncmp((*cmds_list)->outfile_token,
-			">>", 2) == 0)
-		(*cmds_list)->outfile = open((*cmds_list)->outfile_name,
-				O_RDWR | O_APPEND, 0644);
-	else if ((*cmds_list)->outfile_token)
-	{
-		if ((*cmds_list)->outfile_token && !(*cmds_list)->outfile_name)
-		{
-			perror((*cmds_list)->outfile_token);
-			return (0);
-		}
-		else if ((*cmds_list)->outfile_token
-			&& ft_strncmp((*cmds_list)->outfile_token, ">", 1) == 0)
-			(*cmds_list)->outfile = open((*cmds_list)->outfile_name,
-					O_WRONLY | O_TRUNC | O_CREAT, 0644);
-	}
+	(void)cmds_list;
+	// if ((*cmds_list)->infile_token && ft_strncmp((*cmds_list)->infile_token,
+	// 		"<<", 2) == 0)
+	// 	call_heredoc((*cmds_list));
+	// else if ((*cmds_list)->infile_token
+	// 	&& ft_strncmp((*cmds_list)->infile_token, "<", 1) == 0)
+	// {
+	// 	if ((*cmds_list)->infile_access)
+	// 		(*cmds_list)->infile = open((*cmds_list)->infile_name, O_RDONLY);
+	// 	else
+	// 	{
+	// 		perror((*cmds_list)->infile_name);
+	// 		return (0);
+	// 	}
+	// }
+	// if ((*cmds_list)->outfile_token
+	// && ft_strncmp((*cmds_list)->outfile_token,
+	// 		">>", 2) == 0)
+	// 	(*cmds_list)->outfile = open((*cmds_list)->outfile_name,
+	// 			O_RDWR | O_APPEND, 0644);
+	// else if ((*cmds_list)->outfile_token)
+	// {
+	// 	if ((*cmds_list)->outfile_token && !(*cmds_list)->outfile_name)
+	// 	{
+	// 		perror((*cmds_list)->outfile_token);
+	// 		return (0);
+	// 	}
+	// 	else if ((*cmds_list)->outfile_token
+	// 		&& ft_strncmp((*cmds_list)->outfile_token, ">", 1) == 0)
+	// 		(*cmds_list)->outfile = open((*cmds_list)->outfile_name,
+	// 				O_WRONLY | O_TRUNC | O_CREAT, 0644);
+	// }
 	return (1);
 }
 
-void	close_pipe_files(t_tokens *cmds_list)
+void	close_pipe_files(t_exec *cmds_list)
 {
 	while (cmds_list != NULL)
 	{
@@ -62,7 +64,7 @@ void	close_pipe_files(t_tokens *cmds_list)
 	}
 }
 
-void	wait_pipe_files(t_pipe *pipe_info, t_data *data)
+void	wait_pipe_files(t_data *pipe_info)
 {
 	int	i;
 	int	status;
@@ -74,14 +76,13 @@ void	wait_pipe_files(t_pipe *pipe_info, t_data *data)
 		waitpid(pipe_info->pids[i], &status, 0);
 		i++;
 	}
-	data->exit_status = WEXITSTATUS(status);
 }
 
-void	pipe_init(t_pipe *pipe_info, t_parse *cmds_list, int i, t_data *data)
+void	pipe_init(t_data *pipe_info, t_exec *cmds_list, int i, t_data *data)
 {
 	int	fd[2];
 
-	if (data->has_pipe < 1)
+	if (data->num_pipe < 1)
 		return ;
 	else
 	{
@@ -97,7 +98,7 @@ void	pipe_init(t_pipe *pipe_info, t_parse *cmds_list, int i, t_data *data)
 	}
 }
 
-void	redirection(t_parse *cmds_list, t_pipe *pipe_info, int i)
+void	redirection(t_exec *cmds_list, t_data *pipe_info, int i)
 {
 	if (!cmds_list || !pipe_info)
 		perror("cmds_list or pipe_info is NULL\n");

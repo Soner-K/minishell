@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/14 17:07:08 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/14 18:30:44 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,8 +153,8 @@ int			init_child(t_exec **cmds_list, char **env_copy);
 void		exec_shell_builtin(t_exec **cmds_list, int builtin_check,
 				t_env **env_list);
 void		exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy);
-void		only_redirection(t_tokens **cmds_list);
-int			getfile(t_tokens **cmds_list);
+void		only_redirection(t_exec **cmds_list);
+int			getfile(t_exec **cmds_list);
 
 // prompt
 char		*read_prompt(void);
@@ -163,4 +163,27 @@ char		*read_prompt(void);
 void		init_signal(void);
 void		sig_handler(int signal);
 
+// multi pipes
+
+void		runtime_shell(t_exec *cmds_list, char **env_copy, t_data *data,
+				t_env **env_list);
+t_data		*init_pipeinfo(t_exec *cmds_list);
+void		init_child_pipe(t_exec *cmds_list, t_data *pipe_info,
+				char **env_copy, int i);
+void		redirection(t_exec *cmds_list, t_data *pipe_info, int i);
+void		pipe_init(t_data *pipe_info, t_exec *cmds_list, int i,
+				t_data *data);
+void		wait_pipe_files(t_data *pipe_info);
+void		close_pipe_files(t_exec *cmds_list);
+int			parse_path(char **cmds, char *path);
+int			init_child(t_exec **cmds_list, char **env_copy);
+void		pipe_null_check(void);
+int			count_cmds(t_exec *cmds_list);
+void		close_no_file(t_exec *cmds_list);
+void		close_parent(t_exec *head, t_data *pipe_info);
+void		init_pid_array(t_data *pipe_info);
+void		store_pid(t_data *pipe_info, pid_t fork_id);
+void		first_cmd(t_exec *cmds_list);
+void		last_cmd(t_exec *cmds_list);
+void		middle_cmd(t_exec *cmds_list);
 #endif

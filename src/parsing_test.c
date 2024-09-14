@@ -6,25 +6,11 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/14 17:42:54 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/14 18:09:53 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// bool	check(char *str)
-// {
-// 	short int	i;
-
-// 	i = 0;
-// 	while (str[i])
-// 	{
-// 		if (str[i] == '$')
-// 			return (true);
-// 		i++;
-// 	}
-// 	return (false);
-// }
 
 void	print_var(char *str, int start, int end)
 {
@@ -51,78 +37,17 @@ void	print_tokens(t_tokens *tokens)
 	}
 }
 
-// void	print_tokens_and_strs(t_tokens *tokens)
-// {
-// 	char		*line;
-// 	char		*tmp;
-// 	t_env		*env_list;
-// 	t_tokens	*head;
-
-// 	env_list = NULL;
-// 	if (argc > 1)
-// 		exit_program("Minishell does not take arguments.");
-// 	if (argv[1] != NULL)
-// 		exit_program("Minishell does not take arguments.");
-// 	init_signal();
-// 	while (42)
-// 	{
-// 		line = read_prompt();
-// 		if (line == NULL)
-// 			continue ;
-// 		tmp = line;
-// 		head = create_tokens(line);
-// 		store_env_list(envp, &env_list);
-// 		// display_env_list(env_list);
-// 		// printf("Tokens are : \n");
-// 		// print_tokens(head);
-// 		// printf("\nChecking redirection syntax : \n");
-// 		full_check(&head);
-// 		// printf("\nTokens now are : \n");
-// 		// print_tokens(head);
-// 		// printf("\nExpand, tokens are : \n");
-// 		mark_quotes(head);
-// 		extract_all(head);
-// 		// print_tokens(head);
-// 		// printf("\nRemoving quotes, tokens are : \n");
-// 		quotes_remover(head);
-// 		// printf("Last CHECK \n");
-// 		// print_tokens(head);
-// 		// printf("Last CHECK \n");
-// 		// just for testing multi command and pipe
-// 		if (head->type > 0)
-// 		{
-// 			exec_shell(&head, &env_list, envp);
-// 			// printf("It is a normal command\n");
-// 		}
-// 		// It is only one command -> built-in check
-// 		// it if is multiple commands -> built-in check
-// 		free(tmp);
-// 		free_tokens(head);
-// 		free(tmp);
-// 	}
-// 	// rl_clear_history();
-// 	if (!tokens)
-// 		return ;
-// 	while (tokens)
-// 	{
-// 		printf("[%d] --> %s STRS : \n", tokens->type, tokens->word);
-// 		print_strs(tokens->cmd_array);
-// 		printf("\n");
-// 		tokens = tokens->next;
-// 	}
-// }
-
 int	main(int argc, char **argv, char **envp)
 {
 	int ret;
 	char *line;
 	char *tmp;
 	t_env *env_list;
-	// t_data *data;
+	t_data *data;
 	t_tokens *head;
 	t_exec *exec;
 	env_list = NULL;
-
+	data = NULL;
 	if (argc > 1)
 		exit_program("Minishell does not take arguments.");
 	if (argv[1] != NULL)
@@ -173,12 +98,19 @@ int	main(int argc, char **argv, char **envp)
 		// print_tokens(head);
 		exec = new_node_exec();
 		set_node_exec(exec, head);
-		printf("node exec check %s\n", exec->cmd_array[0]);
-		printf("node exec check %s\n", exec->cmd_array[1]);
-		exec_shell(&exec, &env_list, envp);
+		printf("node exec bulilitin check %d\n", exec->builtin);
+		printf("node exec path check %s\n", exec->path);
+		printf("node exec infile info check %s\n", exec->files_info->infile);
+		printf("node exec command check %s\n", exec->cmd_array[0]);
+
+		if (exec->next == NULL)
+			exec_shell(&exec, &env_list, envp);
+		else
+			runtime_shell(exec, envp, data, &env_list);
 		// printf("node next check %s\n", exec->next->cmd_array[0]);
 
 		free_tokens(head);
 		free(tmp);
 	}
+	rl_clear_history();
 }
