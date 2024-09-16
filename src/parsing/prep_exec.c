@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 15:34:03 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/12 13:07:35 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/16 14:40:40 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ t_exec	*new_node_exec(void)
 	exec_node->cmd_array = NULL;
 	exec_node->next = NULL;
 	exec_node->files_info = files_info;
+	exec_node->infile = -1;
+	exec_node->outfile = -1;
 	files_info->is_heredoc = false;
 	files_info->infile = NULL;
 	files_info->outfile = NULL;

@@ -28,7 +28,22 @@ Minishell will create multiple processes to execute many commandes. To understan
 If there are infiles or outfiles to read, write or what so more, minishell program will read, or write. Also to have good understand this part, you need to have good understanding of linux file system. Because everytime you use the file, you need to open and close to not have memory leaks in C.
 
 ## Exit Status
+All commandes return "exit-status". When commande is successfully executed, it returns 0, but if not, it returns non-zero code(1-~255) which could be considered "error code".
+
+| Exit status | Meaning    | Error message    |
+| :---:       | :---:      | :---:            |
+| 0     | Successfully exectued|              |
+| 1     | General errors       | “Operation not permitted” , "not a valid identifier", "too many arguments", etc      |
+| 2     | Builtin errors       | “No such file or directory”, etc        |
+| 126   | Permission problems  | "Permission denied", "Is a directory", etc          |
+| 127   | Path problems        | “Command not found”, “No such file or directory”, etc         |
+| 130   | Fatal error(ctrl+c)  | "Script terminated by Ctrl+C”,etc       |
+| 255   | exit with out of range(0~255)  | "numeric argument required"|
+</br>
+
 So whenever we execute the commande in the minishell, we would like to know this execution is succesfully done in our program. Or maybe, it was not correctly executed because of several reasons such as not finding path, etc. So to know this "status", there are ways to find out it. 
+
+But in reality, we can not control all error status code and even error messages in our minishell. To do so, we are going to use "strerror" functin which is allowed in the minishell project.
 
 ## Signal
 What is signal, by the way ? 🤔

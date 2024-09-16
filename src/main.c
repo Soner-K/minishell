@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_test.c                                     :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/16 13:26:21 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/16 14:46:46 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,23 +58,31 @@ t_exec	*parsing_init(t_tokens *head, char **envp, t_exec *exec, char *tmp)
 	return (exec);
 }
 
+t_data	*init_exit_status(void)
+{
+	t_data	*data;
+
+	data = malloc(sizeof(t_data));
+	data->exit_status = 0;
+	return (data);
+}
 int	main(int argc, char **argv, char **envp)
 {
 	char		*line;
 	char		*tmp;
 	t_env		*env_list;
-	t_data		*data;
 	t_tokens	*head;
 	t_exec		*exec;
+	t_data		*data;
 
 	env_list = NULL;
-	data = NULL;
 	exec = NULL;
 	if (argc > 1)
 		exit_program("Minishell does not take arguments.");
 	if (argv[1] != NULL)
 		exit_program("Minishell does not take arguments.");
 	init_signal();
+	data = init_exit_status();
 	store_env_list(envp, &env_list);
 	while (42)
 	{
@@ -82,17 +90,23 @@ int	main(int argc, char **argv, char **envp)
 		tmp = line;
 		head = create_tokens(line);
 		exec = parsing_init(head, envp, exec, tmp);
-		// printf("node exec bulilitin check %d\n", exec->builtin);
-		// printf("node exec path check %s\n", exec->path);
-		// printf("node exec infile info check %s\n", exec->files_info->infile);
-		// printf("node exec command check %s\n", exec->cmd_array[0]);
 		if (exec->next == NULL)
 		{
+			printf("node exec bulilitin check %d\n", exec->builtin);
+			printf("node exec path check %s\n", exec->path);
+			printf("node exec infile info check %s\n",
+				exec->files_info->infile);
+			printf("node exec command check %s\n", exec->cmd_array[0]);
 			printf("only one execution happened\n");
-			exec_shell(&exec, &env_list, envp);
+			exec_shell(&exec, &env_list, envp, data);
 		}
 		else
+		{
+			printf("node exec command check 0 %s\n", exec->cmd_array[0]);
+			printf("node exec command check 1 %s\n", exec->cmd_array[1]);
+			printf("Runtime shell called\n");
 			runtime_shell(exec, envp, data, &env_list);
+		}
 		free_tokens(head);
 		free(tmp);
 	}
