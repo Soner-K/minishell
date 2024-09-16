@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:30:11 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/16 14:52:00 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/16 15:32:34 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ void	init_child(t_exec **cmds_list, char **env_copy)
 void	exec_shell_builtin(t_exec **cmds_list, int builtin_check,
 		t_env **env_list)
 {
-	// if (getfile(cmds_list))
-	// {
-	// 	only_redirection(cmds_list);
-	exec_builtin(builtin_check, cmds_list, env_list);
-	// }
+	if (getfile(cmds_list))
+	{
+		only_redirection(cmds_list);
+		exec_builtin(builtin_check, cmds_list, env_list);
+	}
 }
 
 void	exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy,
@@ -55,7 +55,6 @@ void	exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy,
 	int		status;
 
 	status = 0;
-	// printf("exec_list %s\n", (*exec_list)->cmd_array[0]);
 	builtin_check = which_builtin(*exec_list);
 	if (builtin_check > 0)
 	{
