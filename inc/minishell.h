@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/16 15:43:00 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/16 16:12:01 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,9 @@ __int8_t	find_cmd_type(t_tokens *head, char **env);
 
 t_tokens	*create_tokens(char *line);
 
-//				-->get_cmd_array.c
-void		set_cmds_arrays(t_tokens **head);
+//				-->ft_parse.c
+
+t_exec		*ft_parse(char *line, char *envp[], __int8_t *error);
 
 //				-->prep_exec.c
 
@@ -53,7 +54,7 @@ void		set_redirections_type(t_tokens **head);
 
 //				-->get_cmd_array.c
 void		set_id(t_tokens *head);
-void		set_cmds_arrays(t_tokens **head);
+__int8_t	set_cmds_arrays(t_tokens **head);
 
 //				-->syntax_checker.c
 
@@ -92,6 +93,7 @@ __int8_t	extract_all(t_tokens *head);
 __int8_t	check_if_closed_quotes(t_tokens *head);
 __int8_t	quotes_remover(t_tokens *head);
 void		mark_quotes(t_tokens *head);
+__int8_t	quotes_handler(t_tokens *head, __int8_t mode);
 
 // 				-->find_builtin.c
 int			which_builtin(t_exec *cmds);

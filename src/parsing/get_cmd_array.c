@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:22:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/12 20:08:36 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/16 15:56:05 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ __int8_t	get_cmd_array(t_tokens **node, int id)
  * @param head A double pointer to the head of the linked list of tokens.
  * @returns void.
  */
-void	set_cmds_arrays(t_tokens **head)
+__int8_t	set_cmds_arrays(t_tokens **head)
 {
 	t_tokens	*first;
 	__int8_t	ret;
@@ -101,7 +101,8 @@ void	set_cmds_arrays(t_tokens **head)
 		if (ret == TOKEN_IS_PIPE)
 			*head = (*head)->next;
 		else if (ret == ALLOCATION_FAILURE)
-			return ; //COME BACK
+			return (FAILURE); //COME BACK
 	}
 	*head = first;
+	return (SUCCESS)
 }
