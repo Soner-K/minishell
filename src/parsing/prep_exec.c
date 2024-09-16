@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 15:34:03 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/16 15:44:48 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/16 16:50:03 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	set_files_names(t_files *files, t_tokens *token)
 	if (token->type == OUTREDIR || token->type == APPENDREDIR)
 	{
 		files->outfile_info->name = token->word;
-		files->outfile_info->type = token->type;	
+		files->outfile_info->type = token->type;
 	}
 }
 
@@ -81,7 +81,7 @@ void	set_files_info(t_files *files, t_tokens *token)
 		files->infile_info->rights = NO_FILE_FOUND;
 	if (!files->outfile_info)
 		files->outfile_info->rights = NO_FILE_FOUND;
-	//necessary? COME BACK
+	// necessary? COME BACK
 }
 
 /**
@@ -110,7 +110,7 @@ __int8_t	set_node_exec(t_exec *exec, t_tokens *token)
 }
 
 /**
- * @brief Creates the executions list, with informations like 
+ * @brief Creates the executions list, with informations like
  * the path of the command, the command array, and the files informations.
  * @param head A pointer to the head of the linked list of tokens.
  * @returns A pointer to the head of the list if the allocation succeeded,

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:40:26 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/16 16:11:45 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/16 16:18:26 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ static __int8_t	quotes_remover_helper(t_tokens *node, short int quotes_count)
 // think about error codes COME BACK
 __int8_t	quotes_remover(t_tokens *head)
 {
-	short int quotes_count;
+	short int	quotes_count;
 
 	if (!head)
 		return (false);
@@ -118,7 +118,8 @@ __int8_t	quotes_handler(t_tokens *head, __int8_t mode)
 	if (mode == CLOSED_QUOTES_CHECK)
 		return (check_if_closed_quotes(head));
 	if (mode == QUOTES_MARKING_MODE)
-		return (mark_quotes(head));
+		return (mark_quotes(head), SUCCESS);
 	if (mode == QUOTES_REMOVING_MODE)
 		return (quotes_remover(head));
+	return (SUCCESS);
 }
