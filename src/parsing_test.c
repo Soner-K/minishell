@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/16 12:16:49 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/16 12:19:39 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,10 @@ int	main(int argc, char **argv, char **envp)
 		// printf("node exec infile info check %s\n", exec->files_info->infile);
 		// printf("node exec command check %s\n", exec->cmd_array[0]);
 		if (exec->next == NULL)
+		{
+			printf("only one execution happened\n");
 			exec_shell(&exec, &env_list, envp);
+		}
 		else
 			runtime_shell(exec, envp, data, &env_list);
 		free_tokens(head);
