@@ -6,24 +6,11 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:30:11 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/14 17:07:17 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/16 11:44:42 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	free_array(char **line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i])
-	{
-		free(line[i]);
-		i++;
-	}
-	free(line);
-}
 
 int	parse_path(char **cmds, char *path)
 {
