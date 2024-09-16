@@ -6,12 +6,18 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 15:31:20 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/10 10:49:59 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/12 20:06:07 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief Checks if a given word is a redirection operator.
+ * @param word The word to check.
+ * @param type The type of the word.
+ * @returns The type of the redirection operator if it is one, -1 otherwise.
+ */
 static __int8_t	check_if_redir(char *word, __int8_t type)
 {
 	static char	*redirections[5] = {"<", ">", "<<", ">>"};
