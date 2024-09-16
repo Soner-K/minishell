@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/16 11:49:39 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/16 12:09:45 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,4 +196,7 @@ void		close_files(t_exec *cmds_list);
 void		runtime_shell(t_exec *cmds_list, char **env_copy, t_data *data,
 				t_env **env_list);
 
+// 				-->debugging.c
+void		print_tokens(t_tokens *tokens);
+void		print_var(char *str, int start, int end);
 #endif
