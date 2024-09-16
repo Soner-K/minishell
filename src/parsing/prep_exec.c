@@ -3,125 +3,152 @@
 /*                                                        :::      ::::::::   */
 /*   prep_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 15:34:03 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/12 13:07:35 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/16 15:25:41 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// static void	add_back(t_exec **head, t_exec *add)
-// {
-// 	t_exec	*tmp;
-
-// 	if (!(*head))
-// 	{
-// 		*head = add;
-// 		return ;
-// 	}
-// 	tmp = *head;
-// 	while ((tmp->next))
-// 		tmp = tmp->next;
-// 	tmp->next = add;
-// }
-
-t_exec	*new_node_exec(void)
-{
-	t_files	*files_info;
-	t_exec	*exec_node;
-
-	exec_node = malloc(sizeof(t_exec));
-	files_info = malloc(sizeof(t_files));
-	if (!exec_node || !files_info)
-		return (NULL);
-	exec_node->builtin = false;
-	exec_node->path = NULL;
-	exec_node->cmd_array = NULL;
-	exec_node->next = NULL;
-	exec_node->files_info = files_info;
-	files_info->is_heredoc = false;
-	files_info->infile = NULL;
-	files_info->outfile = NULL;
-	files_info->rights_infile = -1;
-	files_info->rights_outfile = -1;
-	return (exec_node);
-}
-
+/**
+ * @brief Sets the names of the infile and outfile.
+ * @param files A pointer to the structure containing the file informations.
+ * @param token A pointer to the current token.
+ * @returns void.
+ */
 void	set_files_names(t_files *files, t_tokens *token)
 {
 	if (token->type == INREDIR || token->type == HEREDOC)
-		files->infile = token->word;
-	if (token->type == HEREDOC)
-		files->is_heredoc = true;
+	{
+		files->infile_info->name = token->word;
+		files->infile_info->type = token->type;
+	}
 	if (token->type == OUTREDIR || token->type == APPENDREDIR)
-		files->outfile = token->word;
+	{
+		files->outfile_info->name = token->word;
+		files->outfile_info->type = token->type;	
+	}
 }
 
-void	set_files_rights(t_files *files, __int8_t r, __int8_t w, __int8_t ex)
+/**
+ * @brief Sets the rights of the infile and outfile.
+ * @param fls A pointer to the structure containing the file informations.
+ * @param r The read rights.
+ * @param w The write rights.
+ * @param ex The execute rights.
+ * @returns void.
+ */
+void	set_files_rights(t_files *fls, __int8_t r, __int8_t w, __int8_t ex)
 {
-	if (files->infile && access(files->infile, F_OK) == -1)
-		files->rights_infile = NO_FILE_FOUND;
-	if (files->infile && !access(files->infile, R_OK))
+	if (fls->infile_info->name && access(fls->infile_info->name, F_OK) == -1)
+		fls->infile_info->rights = NO_FILE_FOUND;
+	if (fls->infile_info->name && !access(fls->infile_info->name, R_OK))
 		r = READ_ONLY;
-	if (files->infile && !access(files->infile, W_OK))
+	if (fls->infile_info->name && !access(fls->infile_info->name, W_OK))
 		w = WRITE_ONLY;
-	if (files->infile && !access(files->infile, X_OK))
+	if (fls->infile_info->name && !access(fls->infile_info->name, X_OK))
 		ex = EXECUTE_ONLY;
-	files->rights_infile = r + w + ex;
+	if (fls->infile_info->name && fls->infile_info->rights != NO_FILE_FOUND)
+		fls->infile_info->rights = r + w + ex;
 	r = 0;
 	w = 0;
 	ex = 0;
-	if (files->outfile && access(files->outfile, F_OK) == -1)
-		files->rights_outfile = NO_FILE_FOUND;
-	if (files->outfile && !access(files->outfile, R_OK))
+	if (fls->outfile_info->name && access(fls->outfile_info->name, F_OK) == -1)
+		fls->outfile_info->rights = NO_FILE_FOUND;
+	if (fls->outfile_info->name && !access(fls->outfile_info->name, R_OK))
 		r = READ_ONLY;
-	if (files->outfile && !access(files->outfile, W_OK))
+	if (fls->outfile_info->name && !access(fls->outfile_info->name, W_OK))
 		w = WRITE_ONLY;
-	if (files->outfile && !access(files->outfile, X_OK))
+	if (fls->outfile_info->name && !access(fls->outfile_info->name, X_OK))
 		ex = EXECUTE_ONLY;
-	files->rights_outfile = r + w + ex;
+	if (fls->outfile_info && fls->outfile_info->rights != NO_FILE_FOUND)
+		fls->outfile_info->rights = r + w + ex;
 }
 
+/**
+ * @brief Sets the file informations (names and rights).
+ * @param files A pointer to the structure containing the file informations.
+ * @param token A pointer to the current token.
+ * @returns void.
+ */
+void	set_files_info(t_files *files, t_tokens *token)
+{
+	set_files_names(files, token);
+	set_files_rights(files, 0, 0, 0);
+	if (!files->infile_info)
+		files->infile_info->rights = NO_FILE_FOUND;
+	if (!files->outfile_info)
+		files->outfile_info->rights = NO_FILE_FOUND;
+	//necessary? COME BACK
+}
+
+/**
+ * @brief Sets the node of the execution list
+ * @param exec A pointer to the structure containing the execution informations.
+ * @param token A pointer to the current token.
+ * @returns SUCCESS (1) if the node was set, and FAILURE (0) otherwise.
+ */
 __int8_t	set_node_exec(t_exec *exec, t_tokens *token)
 {
 	t_files	*tmp;
+	int		id_cmd;
 
+	id_cmd = token->id_cmd;
 	if (!token || !exec)
 		return (FAILURE);
 	tmp = exec->files_info;
 	exec->builtin = (token->type == BUILTIN);
 	exec->path = token->path;
-	exec->cmd_array = token->cmd_array;
-	tmp->is_heredoc = (token->type == HEREDOC);
 	if (token->type == INREDIR || token->type == HEREDOC)
-		tmp->infile = token->word;
+		tmp->infile_info->name = token->word;
 	if (token->type == OUTREDIR || token->type == APPENDREDIR)
-		tmp->outfile = token->word;
-	// set_files_info(exec->files_info, 0, 0, 0);
+		tmp->outfile_info->name = token->word;
+	exec->cmd_array = token->cmd_array;
 	return (SUCCESS);
 }
 
+/**
+ * @brief Creates the executions list, with informations like 
+ * the path of the command, the command array, and the files informations.
+ * @param head A pointer to the head of the linked list of tokens.
+ * @returns A pointer to the head of the list if the allocation succeeded,
+ * and NULL otherwise.
+ */
 t_exec	*create_exec_lst(t_tokens *head)
 {
-	t_exec *lst;
-	int id_cmd;
+	t_exec	*itr;
+	t_exec	*exec;
+	int		id_cmd;
 
 	id_cmd = 0;
-	lst = NULL;
+	exec = new_node_exec();
+	if (!exec)
+		return (free_tokens(head), NULL); // COME BACK
+	itr = exec;
 	while (head)
 	{
-		lst = new_node_exec();
-		if (!lst)
-			return (free_tokens(head), NULL); // COME BACK
+		while (head && head->id_cmd == -1)
+			head = head->next;
 		while (head && head->id_cmd == id_cmd)
 		{
+			if (head->type >= INREDIR && head->type <= APPENDREDIR)
+				set_files_info(itr->files_info, head);
 			if (head->type == CMD || head->type == BUILTIN)
-			{
-				printf("workiing in progress");
-			}
+				set_node_exec(itr, head);
+			head = head->next;
+		}
+		id_cmd++;
+		if (itr != exec)
+			lst_addback_exec(&exec, itr);
+		itr = itr->next;
+		if (head)
+		{
+			itr = new_node_exec();
+			if (!itr)
+				return (free_tokens(head), NULL); // COME BACK
 		}
 	}
-	return (NULL);
+	return (exec);
 }

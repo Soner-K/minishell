@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:25 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/16 13:29:43 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/16 15:17:15 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,18 @@ typedef struct t_tokens
 	struct t_tokens	*head;
 }					t_tokens;
 
+typedef struct s_fdata
+{
+	__int8_t		rights;
+	t_type			type;
+	char			*name;
+}					t_fdata;
+
 typedef struct s_files
 {
-	__int8_t		rights_infile;
-	__int8_t		rights_outfile;
-	bool			is_heredoc;
-	char			*infile;
-	char			*outfile;
+	t_fdata			*infile_info;
+	t_fdata			*outfile_info;
+
 }					t_files;
 
 typedef struct s_exec
@@ -94,7 +99,10 @@ typedef struct s_exec
 	struct s_exec	*prev;
 	int				pipe_fdo;
 	int				pipe_fdi;
+	int				old_infile;
+	int				old_outfile;
 	t_files			*files_info;
+	// t_data			*data;
 }					t_exec;
 
 typedef struct t_env

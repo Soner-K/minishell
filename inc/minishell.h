@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/16 12:09:45 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/16 14:48:19 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,14 @@ t_tokens	*create_tokens(char *line);
 void		set_cmds_arrays(t_tokens **head);
 
 //				-->prep_exec.c
+
+t_exec		*create_exec_lst(t_tokens *head);
+
+//				-->prep_exec_utils.c
+
 t_exec		*new_node_exec(void);
-__int8_t	set_node_exec(t_exec *exec, t_tokens *token);
+void		lst_addback_exec(t_exec **head, t_exec *add);
+void		free_exec_nodes(t_exec *head);
 
 //				-->redirections_setting.c
 
