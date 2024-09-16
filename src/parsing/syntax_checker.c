@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_checker.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:00:31 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/12 13:03:32 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/12 20:38:40 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,16 @@ static bool	check_operators_validity(t_tokens *head)
  */
 static bool	check_syntax(t_tokens *head)
 {
+	int	len_str;
+
 	while (head)
 	{
-		if (head->type >= INREDIR && head->type < PIPE)
+		if (head->next)
+			len_str = ft_strlen(head->next->word);
+		if (head->type >= INREDIR && head->type <= PIPE)
 		{
-			if (!head->next || (head->next->type < WORD || head->next->type > CMD))
+			if (!head->next || (head->next->type < WORD
+					|| head->next->type > CMD) || len_str == 0)
 				return (false);
 		}
 		else if (head->type == PIPE && !head->next)
