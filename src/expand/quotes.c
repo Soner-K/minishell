@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:40:26 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/10 12:47:23 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/16 16:11:45 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,4 +111,14 @@ __int8_t	quotes_remover(t_tokens *head)
 		head = head->next;
 	}
 	return (SUCCESS);
+}
+
+__int8_t	quotes_handler(t_tokens *head, __int8_t mode)
+{
+	if (mode == CLOSED_QUOTES_CHECK)
+		return (check_if_closed_quotes(head));
+	if (mode == QUOTES_MARKING_MODE)
+		return (mark_quotes(head));
+	if (mode == QUOTES_REMOVING_MODE)
+		return (quotes_remover(head));
 }
