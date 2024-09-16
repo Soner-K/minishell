@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:06:26 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/10 10:30:44 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/14 17:10:05 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	is_echo(char *str)
 	return (0);
 }
 
-int	print_echo(t_tokens *cmds, int i, int nextline_flag)
+int	print_echo(t_exec *cmds, int i, int nextline_flag)
 {
 	while (cmds->cmd_array[i])
 	{
@@ -47,7 +47,7 @@ int	print_echo(t_tokens *cmds, int i, int nextline_flag)
 		return (1);
 }
 
-void	func_echo(t_tokens *cmds)
+void	func_echo(t_exec *cmds)
 {
 	int	nextline_flag;
 	int	i;

@@ -1,25 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_status.c                                      :+:      :+:    :+:   */
+/*   debugging.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/27 17:27:37 by ftanon            #+#    #+#             */
-/*   Updated: 2024/09/14 18:01:45 by sumseo           ###   ########.fr       */
+/*   Created: 2024/09/16 11:51:08 by sumseo            #+#    #+#             */
+/*   Updated: 2024/09/16 11:51:19 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	init_pid_array(t_data *pipe_info)
+void	print_var(char *str, int start, int end)
 {
-	pipe_info->counter = 0;
-	pipe_info->pids = ft_calloc(pipe_info->total_cmds + 1, sizeof(pid_t));
+	while (start <= end)
+	{
+		ft_putchar_fd(str[start], 1);
+		start++;
+	}
+	printf("\n");
 }
 
-void	store_pid(t_data *pipe_info, pid_t fork_id)
+void	print_tokens(t_tokens *tokens)
 {
-	pipe_info->pids[pipe_info->counter] = fork_id;
-	pipe_info->counter++;
+	if (!tokens)
+		return ;
+	while (tokens)
+	{
+		printf("[%d] --> %s ", tokens->type, tokens->word);
+		if (tokens->id_cmd != -1)
+			printf("ID : %d\n", tokens->id_cmd);
+		else
+			printf("\n");
+		tokens = tokens->next;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:09:42 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/11 14:03:23 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/14 17:03:43 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	is_pwd(char *str)
 	return (0);
 }
 
-void	func_pwd(t_tokens *cmds)
+void	func_pwd(t_exec *cmds)
 {
 	char	cwd[1024];
 	int		count_cmds;

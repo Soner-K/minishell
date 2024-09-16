@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:11:15 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/11 14:03:07 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/14 17:03:48 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	is_unset(char *str)
 	return (0);
 }
 
-void	func_unset(t_tokens **cmds, t_env **env)
+void	func_unset(t_exec **cmds, t_env **env)
 {
 	int		i;
 	char	*found_value;

@@ -6,13 +6,13 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:13:20 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/10 13:42:15 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/14 18:32:25 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	heredoc_check(t_tokens *cmds_list)
+void	heredoc_check(t_exec *cmds_list)
 {
 	char	*str;
 	int		fd;
@@ -23,7 +23,7 @@ void	heredoc_check(t_tokens *cmds_list)
 		str = readline("> ");
 		if (!str)
 			perror("read string problem");
-		if (ft_strncmp(str, cmds_list->delimiter, 10) == 0)
+		if (ft_strncmp(str, cmds_list->files_info->infile, 10) == 0)
 		{
 			free(str);
 			break ;
@@ -34,79 +34,83 @@ void	heredoc_check(t_tokens *cmds_list)
 	}
 }
 
-void	only_redirection(t_tokens **cmds_list)
+void	only_redirection(t_exec **cmds_list)
 {
-	if ((*cmds_list)->infile_name)
-	{
-		dup2((*cmds_list)->infile, STDIN_FILENO);
-		close((*cmds_list)->infile);
-	}
-	if ((*cmds_list)->outfile_token)
-	{
-		dup2((*cmds_list)->outfile, STDOUT_FILENO);
-		close((*cmds_list)->outfile);
-	}
+	(void)cmds_list;
+	// if ((*cmds_list)->files_info->infile)
+	// {
+	// 	dup2((*cmds_list)->files_info->infile, STDIN_FILENO);
+	// 	close((*cmds_list)->files_info->infile);
+	// }
+	// if ((*cmds_list)->files_info->outfile)
+	// {
+	// 	dup2((*cmds_list)->files_info->outfile, STDOUT_FILENO);
+	// 	close((*cmds_list)->files_info->outfile);
+	// }
 }
 
-void	first_cmd(t_parse *cmds_list)
+void	first_cmd(t_exec *cmds_list)
 {
-	if (cmds_list->infile_access)
-	{
-		dup2(cmds_list->infile, STDIN_FILENO);
-		close(cmds_list->infile);
-	}
-	if (cmds_list->outfile_token)
-	{
-		dup2(cmds_list->outfile, STDOUT_FILENO);
-		close(cmds_list->outfile);
-	}
-	else
-		dup2(cmds_list->pipe_fdo, STDOUT_FILENO);
-	close(cmds_list->pipe_fdo);
-	close(cmds_list->pipe_fdi);
+	(void)cmds_list;
+	// if (cmds_list->files_info->rights_infile)
+	// {
+	// 	dup2(cmds_list->files_info->infile, STDIN_FILENO);
+	// 	close(cmds_list->files_info->infile);
+	// }
+	// if (cmds_list->files_info->outfile)
+	// {
+	// 	dup2(cmds_list->files_info->outfile, STDOUT_FILENO);
+	// 	close(cmds_list->files_info->outfile);
+	// }
+	// else
+	// 	dup2(cmds_list->pipe_fdo, STDOUT_FILENO);
+	// close(cmds_list->pipe_fdo);
+	// close(cmds_list->pipe_fdi);
 }
 
-void	last_cmd(t_parse *cmds_list)
+void	last_cmd(t_exec *cmds_list)
 {
-	if (cmds_list->outfile_token)
-	{
-		dup2(cmds_list->outfile, STDOUT_FILENO);
-		close(cmds_list->outfile);
-	}
-	if (cmds_list->infile_access)
-	{
-		dup2(cmds_list->infile, STDIN_FILENO);
-		close(cmds_list->infile);
-	}
-	else
-	{
-		dup2(cmds_list->prev->pipe_fdi, STDIN_FILENO);
-	}
-	close(cmds_list->prev->pipe_fdi);
+	(void)cmds_list;
+	// if (cmds_list->files_info->outfile)
+	// {
+	// 	dup2(cmds_list->files_info->outfile, STDOUT_FILENO);
+	// 	close(cmds_list->files_info->outfile);
+	// }
+	// if (cmds_list->files_info->rights_infile)
+	// {
+	// 	dup2(cmds_list->files_info->infile, STDIN_FILENO);
+	// 	close(cmds_list->files_info->infile);
+	// }
+	// else
+	// {
+	// 	dup2(cmds_list->prev->pipe_fdi, STDIN_FILENO);
+	// }
+	// close(cmds_list->prev->pipe_fdi);
 }
 
-void	middle_cmd(t_parse *cmds_list)
+void	middle_cmd(t_exec *cmds_list)
 {
-	if (cmds_list->infile_access)
-	{
-		dup2(cmds_list->infile, STDIN_FILENO);
-		close(cmds_list->infile);
-	}
-	else
-	{
-		dup2(cmds_list->prev->pipe_fdi, STDIN_FILENO);
-	}
-	if (cmds_list->outfile_token)
-	{
-		dup2(cmds_list->outfile, STDOUT_FILENO);
-		close(cmds_list->outfile);
-	}
-	else
-	{
-		dup2(cmds_list->pipe_fdo, STDOUT_FILENO);
-	}
-	close(cmds_list->pipe_fdi);
-	close(cmds_list->pipe_fdo);
-	close(cmds_list->prev->pipe_fdi);
-	close(cmds_list->prev->pipe_fdo);
+	(void)cmds_list;
+	// if (cmds_list->files_info->rights_infile)
+	// {
+	// 	dup2(cmds_list->files_info->infile, STDIN_FILENO);
+	// 	close(cmds_list->files_info->infile);
+	// }
+	// else
+	// {
+	// 	dup2(cmds_list->prev->pipe_fdi, STDIN_FILENO);
+	// }
+	// if (cmds_list->files_info->outfile)
+	// {
+	// 	dup2(cmds_list->files_info->outfile, STDOUT_FILENO);
+	// 	close(cmds_list->files_info->outfile);
+	// }
+	// else
+	// {
+	// 	dup2(cmds_list->pipe_fdo, STDOUT_FILENO);
+	// }
+	// close(cmds_list->pipe_fdi);
+	// close(cmds_list->pipe_fdo);
+	// close(cmds_list->prev->pipe_fdi);
+	// close(cmds_list->prev->pipe_fdo);
 }

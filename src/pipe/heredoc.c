@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 17:15:01 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/10 13:41:21 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/14 18:29:22 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ void	write_heredoc(char *str, int tmp)
 	ft_putstr_fd("\n", tmp);
 }
 
-void	init_heredoc(t_tokens *cmds_list)
+void	init_heredoc(t_exec *cmds_list)
 {
-	cmds_list->delimiter = cmds_list->infile_name;
-	cmds_list->is_heredoc = 1;
+	cmds_list->files_info->infile = cmds_list->files_info->infile;
+	cmds_list->files_info->is_heredoc = 1;
 }
 
-void	open_heredoc(t_tokens *cmds_list)
+void	open_heredoc(t_exec *cmds_list)
 {
 	char	*str;
 	int		tmp;
@@ -35,12 +35,13 @@ void	open_heredoc(t_tokens *cmds_list)
 		str = readline(">");
 		if (str == NULL)
 		{
-			printf("heredoc delimited by EOF(`%s')\n", cmds_list->delimiter);
+			printf("heredoc delimited by EOF(`%s')\n",
+				cmds_list->files_info->infile);
 			break ;
 		}
-		if (ft_strncmp(str, cmds_list->delimiter,
-				ft_strlen(cmds_list->delimiter)) == 0
-			&& str[ft_strlen(cmds_list->delimiter)] == '\0')
+		if (ft_strncmp(str, cmds_list->files_info->infile,
+				ft_strlen(cmds_list->files_info->infile)) == 0
+			&& str[ft_strlen(cmds_list->files_info->infile)] == '\0')
 		{
 			free(str);
 			break ;
@@ -50,10 +51,10 @@ void	open_heredoc(t_tokens *cmds_list)
 	}
 	close(tmp);
 	open("tmp", O_RDONLY, 0644);
-	cmds_list->infile = tmp;
+	// cmds_list->files_info->infile = tmp;
 }
 
-void	call_heredoc(t_parse *cmds_list)
+void	call_heredoc(t_exec *cmds_list)
 {
 	init_heredoc(cmds_list);
 	open_heredoc(cmds_list);
