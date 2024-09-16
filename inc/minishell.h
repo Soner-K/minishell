@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/16 14:48:19 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/16 15:43:00 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,10 +155,11 @@ void		exit_program(char *s);
 
 // 				-->exec_utils.c
 int			parse_path(char **cmds, char *path);
-int			init_child(t_exec **cmds_list, char **env_copy);
+void		init_child(t_exec **cmds_list, char **env_copy);
 void		exec_shell_builtin(t_exec **cmds_list, int builtin_check,
 				t_env **env_list);
-void		exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy);
+void		exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy,
+				t_data *data);
 
 //				-->heredoc.
 void		write_heredoc(char *str, int tmp);

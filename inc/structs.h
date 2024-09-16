@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:25 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/16 15:17:15 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/16 15:43:08 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,10 @@ typedef struct s_exec
 	char			**cmd_array;
 	struct s_exec	*next;
 	struct s_exec	*prev;
+	int				old_stdin;
+	int				old_stdout;
+	int				infile;
+	int				outfile;
 	int				pipe_fdo;
 	int				pipe_fdi;
 	int				old_infile;

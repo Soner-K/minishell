@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/12 13:12:07 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/16 15:38:01 by sokaraku         ###   ########.fr       */
+/*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
+/*   Updated: 2024/09/16 15:44:27 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	test_function(int ac, char **av, char **env)
 		return (printf("Unclosed quotes\n"), free_tokens(head), free(tmp),
 			FAILURE);
 	mark_quotes(head);
-	printf("Expanding...\n");
+	// printf("Expanding...\n");
 	ret = extract_all(head);
 	if (ret <= 0)
 		return (printf("Error during expand\n"), free_tokens(head), free(tmp),
