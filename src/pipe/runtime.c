@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:07:40 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/17 13:02:48 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/17 13:31:44 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,11 @@ void	runtime_shell(t_exec *cmds_list, char **env_copy, t_data *data,
 
 	head = cmds_list;
 	i = 0;
-	data->total_cmds = 2;
-	data->num_pipe = 1;
+	data->total_cmds = 4;
+	data->num_pipe = 3;
 	init_pid_array(data);
 	while (i < data->total_cmds)
 	{
-		printf("pipe creationg\n");
 		pipe_init(data, cmds_list, i, data);
 		fork_id = fork();
 		if (fork_id == 0)
@@ -70,7 +69,6 @@ void	runtime_shell(t_exec *cmds_list, char **env_copy, t_data *data,
 				}
 				else
 				{
-					printf("Here?\n");
 					init_child_pipe(cmds_list, data, env_copy, i);
 				}
 				exit(0);
