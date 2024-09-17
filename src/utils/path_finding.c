@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 14:24:41 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/16 14:05:58 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/17 13:07:29 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,28 +112,15 @@ char	*find_path(char *cmd, char **env, bool *alloc_fail)
  * @param cmd The string to check.
  * @returns True (1) if the command is a builtin and false (0) otherwise.
  */
-bool	check_if_builtin(t_tokens **node)
+bool	check_if_builtin(t_exec *node)
 {
-	t_tokens	*prev;
-
-	prev = (*node)->prev;
-	if (is_builtin((*node)->word))
-	{
-		if (!prev)
-		{	
-			(*node)->type = BUILTIN;
-			*node = (*node)->next;
-			return (true);
-		}
-		else if (prev->type != CMD && prev->type != BUILTIN)
-		{	
-			(*node)->type = BUILTIN;
-			*node = (*node)->next;
-			return (true);
-		}
-	}
+	if (!node)
+		return (false);
+	if (is_builtin(node->cmd_array[0]))
+		return (true);
 	return (false);
 }
+
 /**
  * @brief Checks for all the tokens in the tokens list if there are
  * commands or builtins. If a command is found, the path to the executable
@@ -143,7 +130,7 @@ bool	check_if_builtin(t_tokens **node)
  * @returns -1 if an allocation failure occured, 0 if head is NULL and 1
  * if the list was successfully iterated through.
  */
-__int8_t	find_cmd_type(t_tokens *head, char **env)
+__int8_t	find_cmd_type(t_exec *head, char **env)
 {
 	char	*str;
 	bool	allocation_fail;
@@ -153,16 +140,16 @@ __int8_t	find_cmd_type(t_tokens *head, char **env)
 	allocation_fail = 1;
 	while (head)
 	{
-		if (check_if_builtin(&head))
+		if (check_if_builtin(head))
+		{
+			head = head->next;
 			continue ;
-		str = find_path(head->word, env, &allocation_fail);
+		}
+		str = find_path(head->cmd_array[0], env, &allocation_fail);
 		if (!str && allocation_fail)
 			return (-1); // proteger pour malloc
-		if (str && !access(str, F_OK && X_OK) && head->type == WORD)
-		{
+		if (str && !access(str, F_OK && X_OK))
 			head->path = str;
-			head->type = CMD;
-		}
 		else if (str)
 			free(str);
 		head = head->next;
