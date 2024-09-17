@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:25 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/17 13:43:02 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:03:48 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,9 +133,6 @@ typedef struct t_env
 	char			*variable;
 	struct t_env	*next;
 	struct t_env	*prev;
-
 }					t_env;
-
-
 
 #endif
