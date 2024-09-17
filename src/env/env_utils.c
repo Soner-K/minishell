@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:45:23 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/17 16:18:49 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/17 16:38:29 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,29 +48,36 @@ void	store_env_list(char **envp, t_env **env_list)
 	(*env_list)->prev = NULL;
 }
 
-void	delete_one_env(t_env **env_list, char *new_var)
+void	delete_one_env(t_env **env_list, char *var_to_delete)
 {
 	t_env	*current;
+	t_env	*next;
 	char	*variable_and;
 
-	variable_and = ft_strjoin(new_var, "=");
+	variable_and = ft_strjoin(var_to_delete, "=");
+	if (!variable_and)
+		return ;
 	current = *env_list;
 	while (current != NULL)
 	{
+		next = current->next;
 		if (ft_strnstr(current->variable, variable_and,
 				ft_strlen(current->variable)))
 		{
 			free(current->variable);
 			if (*env_list == current)
-				*env_list = current->next;
+				*env_list = next;
 			if (current->prev != NULL)
-				current->prev->next = current->next;
+				current->prev->next = next;
+			if (next != NULL)
+				next->prev = current->prev;
 			free(current);
 			free(variable_and);
 			return ;
 		}
-		current = current->next;
+		current = next;
 	}
+	free(variable_and);
 }
 
 void	replace_one_env(t_env **env_list, char *env_val, char *variable,
