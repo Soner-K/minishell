@@ -12,6 +12,24 @@
 
 #include "minishell.h"
 
+int	arg_check(int argc, char **argv)
+{
+	if (argc > 1)
+		return (1);
+	if (argv[1] != NULL)
+		return (1);
+	return (0);
+}
+void	free_args(char *line, t_exec *exec)
+{
+	free(line);
+	free_exec_nodes(exec);
+}
+
+void	init_data(void)
+{
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char		*line;
@@ -20,13 +38,10 @@ int	main(int argc, char **argv, char **envp)
 	__int8_t	error;
 	t_data		*data;
 
+
 	env_list = NULL;
-	if (argc > 1)
-		exit_program("Minishell does not take arguments.");
-	if (argv[1] != NULL)
-		exit_program("Minishell does not take arguments.");
-	init_signal();
 	store_env_list(envp, &env_list);
+	init_signal();
 	while (42)
 	{
 		line = read_prompt();
