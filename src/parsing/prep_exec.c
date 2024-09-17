@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prep_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 15:34:03 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/17 13:06:48 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/17 13:25:03 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,8 @@ __int8_t	set_node_exec(t_exec *exec, t_tokens *token, int id_cmd)
 		tmp->infile_info->name = token->word;
 	if (token->type == OUTREDIR || token->type == APPENDREDIR)
 		tmp->outfile_info->name = token->word;
-	exec->infile = 1;
-	exec->outfile = 1;
+	exec->infile = -1;
+	exec->outfile = -1;
 	exec->id_cmd = id_cmd;
 	while (token && token->id_cmd != id_cmd)
 		token = token->next;
@@ -125,7 +125,7 @@ t_exec	*create_exec_lst(t_tokens *head)
 	t_exec		*itr;
 	t_exec		*exec;
 	t_tokens	*first;
-	int		id_cmd;
+	int			id_cmd;
 
 	id_cmd = 0;
 	exec = new_node_exec();

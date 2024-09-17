@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:59:43 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/17 10:39:49 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/17 13:10:06 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,24 @@
 
 int	getfile(t_exec **cmds_list)
 {
-	printf("Check (*cmds_list)->files_info->infile_info->type: %d\n",
-		(*cmds_list)->files_info->infile_info->type);
-	printf("Check (*cmds_list)->files_info->infile_info->name: %s\n",
-		(*cmds_list)->files_info->infile_info->name);
-	printf("Check (*cmds_list)->files_info->infile_info->rights: %hd\n",
-		(*cmds_list)->files_info->infile_info->rights);
-	printf("Check (*cmds_list)->files_info->outfile_info->type: %d\n",
-		(*cmds_list)->files_info->outfile_info->type);
-	printf("Check (*cmds_list)->files_info->outfile_info->name: %s\n",
-		(*cmds_list)->files_info->outfile_info->name);
-	printf("Check (*cmds_list)->files_info->outfile_info->rights: %hd\n",
-		(*cmds_list)->files_info->outfile_info->rights);
+	// printf("Check (*cmds_list)->files_info->infile_info->type: %d\n",
+	// 	(*cmds_list)->files_info->infile_info->type);
+	// printf("Check (*cmds_list)->files_info->infile_info->name: %s\n",
+	// 	(*cmds_list)->files_info->infile_info->name);
+	// printf("Check (*cmds_list)->files_info->infile_info->rights: %hd\n",
+	// 	(*cmds_list)->files_info->infile_info->rights);
+	// printf("Check (*cmds_list)->files_info->outfile_info->type: %d\n",
+	// 	(*cmds_list)->files_info->outfile_info->type);
+	// printf("Check (*cmds_list)->files_info->outfile_info->name: %s\n",
+	// 	(*cmds_list)->files_info->outfile_info->name);
+	// printf("Check (*cmds_list)->files_info->outfile_info->rights: %hd\n",
+	// 	(*cmds_list)->files_info->outfile_info->rights);
 	if ((*cmds_list)->files_info->infile_info->type == HEREDOC)
 		call_heredoc((*cmds_list));
 	else if ((*cmds_list)->files_info->infile_info->type == INREDIR)
 	{
 		if ((*cmds_list)->files_info->infile_info->rights == 6)
 		{
-			printf("YIIII\n");
 			(*cmds_list)->infile = open((*cmds_list)->files_info->infile_info->name,
 					O_RDONLY);
 		}
@@ -50,13 +49,17 @@ int	getfile(t_exec **cmds_list)
 		if ((*cmds_list)->files_info->outfile_info->type
 			&& !(*cmds_list)->files_info->outfile_info->name)
 		{
-			printf("H??\n");
+			printf("HERE ? \n");
 			perror((*cmds_list)->files_info->outfile_info->name);
 			return (0);
 		}
 		else if ((*cmds_list)->files_info->outfile_info->type == OUTREDIR)
+		{
+			printf("THERE ? %s \n",
+				(*cmds_list)->files_info->outfile_info->name);
 			(*cmds_list)->outfile = open((*cmds_list)->files_info->outfile_info->name,
 					O_WRONLY | O_TRUNC | O_CREAT, 0644);
+		}
 	}
 	return (1);
 }
@@ -76,18 +79,19 @@ void	close_pipe_files(t_exec *cmds_list)
 	}
 }
 
-void	wait_pipe_files(t_data *pipe_info)
+void	wait_pipe_files(t_data *data)
 {
 	int	i;
 	int	status;
 
 	i = 0;
 	status = 123;
-	while (i < pipe_info->total_cmds)
+	while (i < data->total_cmds)
 	{
-		waitpid(pipe_info->pids[i], &status, 0);
+		waitpid(data->pids[i], &status, 0);
 		i++;
 	}
+	data->exit_status = WEXITSTATUS(status);
 }
 
 void	pipe_init(t_data *pipe_info, t_exec *cmds_list, int i, t_data *data)
@@ -120,9 +124,18 @@ void	redirection(t_exec *cmds_list, t_data *pipe_info, int i)
 		return ;
 	}
 	else if (i == 0)
+	{
+		printf("first command called\n");
 		first_cmd(cmds_list);
+	}
 	else if (i == pipe_info->total_cmds - 1)
+	{
+		printf("last command called\n");
 		last_cmd(cmds_list);
+	}
 	else
+	{
+		printf("middel command called\n");
 		middle_cmd(cmds_list);
+	}
 }
