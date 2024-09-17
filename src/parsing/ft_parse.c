@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 15:52:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/17 09:40:52 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/17 09:52:26 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ t_exec	*ft_parse(char *line, char *envp[], __int8_t *error)
 	if (set_cmds_arrays(&tokens) == FAILURE)
 		return (*error = ALLOCATION_FAILURE, free_tokens(tokens), NULL);
 	exec = create_exec_lst(tokens);
-	printf("EXEC %s\n", exec->cmd_array[0]);
 	if (!exec)
 		return (*error = ALLOCATION_FAILURE, free_tokens(tokens), NULL);
 	return (exec);

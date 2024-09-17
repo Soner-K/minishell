@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 15:34:03 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/16 16:50:03 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/17 10:10:56 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ __int8_t	set_node_exec(t_exec *exec, t_tokens *token)
 	if (token->type == OUTREDIR || token->type == APPENDREDIR)
 		tmp->outfile_info->name = token->word;
 	exec->cmd_array = token->cmd_array;
+	exec->infile = 1;
+	exec->outfile = 1;
 	return (SUCCESS);
 }
 
