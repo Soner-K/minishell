@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/17 10:14:56 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/17 10:42:35 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,8 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = read_prompt();
 		exec = ft_parse(line, envp, &error);
-		printf("exec cmd array %s\n", exec->cmd_array[0]);
-		// printf("exec path %s\n", exec->path);
-		if (exec->cmd_array[1] == NULL)
-		{
-			printf("Exec shell called\n");
-			exec_shell(&exec, &env_list, envp, data);
-		}
-		else
-		{
-			printf("runtime shell called\n");
-			runtime_shell(exec, envp, data, &env_list);
-		}
+		printf("Exec shell called\n");
+		exec_shell(&exec, &env_list, envp, data);
 		free(line);
 		free_exec_nodes(exec);
 	}
