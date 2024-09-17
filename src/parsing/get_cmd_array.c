@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd_array.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:22:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/16 15:56:05 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/16 16:18:47 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-# define TOKEN_IS_PIPE -2
+#define TOKEN_IS_PIPE -2
 
 /**
  * @brief Assigns an id to each command in the linked list of tokens.
@@ -101,8 +101,8 @@ __int8_t	set_cmds_arrays(t_tokens **head)
 		if (ret == TOKEN_IS_PIPE)
 			*head = (*head)->next;
 		else if (ret == ALLOCATION_FAILURE)
-			return (FAILURE); //COME BACK
+			return (FAILURE); // COME BACK
 	}
 	*head = first;
-	return (SUCCESS)
+	return (SUCCESS);
 }

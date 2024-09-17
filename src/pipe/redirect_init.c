@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:13:20 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/16 15:38:57 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/16 16:38:30 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	heredoc_check(t_exec *cmds_list)
 		str = readline("> ");
 		if (!str)
 			perror("read string problem");
-		if (ft_strncmp(str, cmds_list->files_info->infile, 10) == 0)
+		if (ft_strncmp(str, cmds_list->files_info->infile_info->name, 10) == 0)
 		{
 			free(str);
 			break ;
@@ -36,12 +36,12 @@ void	heredoc_check(t_exec *cmds_list)
 
 void	only_redirection(t_exec **cmds_list)
 {
-	if ((*cmds_list)->files_info->infile)
+	if ((*cmds_list)->files_info->infile_info->rights)
 	{
 		dup2((*cmds_list)->infile, STDIN_FILENO);
 		close((*cmds_list)->infile);
 	}
-	if ((*cmds_list)->files_info->outfile)
+	if ((*cmds_list)->files_info->outfile_info->rights)
 	{
 		dup2((*cmds_list)->outfile, STDOUT_FILENO);
 		close((*cmds_list)->outfile);
@@ -50,12 +50,12 @@ void	only_redirection(t_exec **cmds_list)
 
 void	first_cmd(t_exec *cmds_list)
 {
-	if (cmds_list->files_info->rights_infile)
+	if (cmds_list->files_info->infile_info->rights)
 	{
 		dup2(cmds_list->infile, STDIN_FILENO);
 		close(cmds_list->infile);
 	}
-	if (cmds_list->files_info->outfile)
+	if (cmds_list->files_info->outfile_info->rights)
 	{
 		dup2(cmds_list->outfile, STDOUT_FILENO);
 		close(cmds_list->outfile);
@@ -68,12 +68,12 @@ void	first_cmd(t_exec *cmds_list)
 
 void	last_cmd(t_exec *cmds_list)
 {
-	if (cmds_list->files_info->outfile)
+	if (cmds_list->files_info->outfile_info->rights)
 	{
 		dup2(cmds_list->outfile, STDOUT_FILENO);
 		close(cmds_list->outfile);
 	}
-	if (cmds_list->files_info->rights_infile)
+	if (cmds_list->files_info->infile_info->rights)
 	{
 		dup2(cmds_list->infile, STDIN_FILENO);
 		close(cmds_list->infile);
@@ -87,7 +87,7 @@ void	last_cmd(t_exec *cmds_list)
 
 void	middle_cmd(t_exec *cmds_list)
 {
-	if (cmds_list->files_info->rights_infile)
+	if (cmds_list->files_info->infile_info->name)
 	{
 		dup2(cmds_list->infile, STDIN_FILENO);
 		close(cmds_list->infile);
@@ -96,7 +96,7 @@ void	middle_cmd(t_exec *cmds_list)
 	{
 		dup2(cmds_list->prev->pipe_fdi, STDIN_FILENO);
 	}
-	if (cmds_list->files_info->outfile)
+	if (cmds_list->files_info->outfile_info->name)
 	{
 		dup2(cmds_list->outfile, STDOUT_FILENO);
 		close(cmds_list->outfile);
