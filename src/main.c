@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/17 11:06:42 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/17 10:42:35 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = read_prompt();
 		exec = ft_parse(line, envp, &error);
+		printf("Exec shell called\n");
 		exec_shell(&exec, &env_list, envp, data);
 		free(line);
 		free_exec_nodes(exec);
