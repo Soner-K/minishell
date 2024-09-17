@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:00:31 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/12 20:38:40 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/17 11:07:04 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,8 @@ bool	full_check(t_tokens **head)
 {
 	if (!check_operators_validity(*head))
 		return (false);
-	printf("Operators are valid \n");
 	if (!check_syntax(*head))
-		return (printf("Syntax not valid\n"), false);
+		return (false);
 	set_redirections_type(head);
 	return (true);
 }
