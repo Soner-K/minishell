@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:13:20 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/17 14:23:23 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/17 15:02:41 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	heredoc_check(t_exec *cmds_list)
 
 void	only_redirection(t_exec **cmds_list)
 {
-	printf("CHECK %d\b", (*cmds_list)->files_info->infile_info->rights);
 	if ((*cmds_list)->files_info->infile_info->rights)
 	{
 		dup2((*cmds_list)->infile, STDIN_FILENO);

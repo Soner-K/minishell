@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:45:23 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/11 14:02:21 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/17 16:18:49 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	store_env_list(char **envp, t_env **env_list)
 		push_env_list(env_list, envp[i], len);
 		i++;
 	}
+	(*env_list)->prev = NULL;
 }
 
 void	delete_one_env(t_env **env_list, char *new_var)
@@ -60,7 +61,13 @@ void	delete_one_env(t_env **env_list, char *new_var)
 				ft_strlen(current->variable)))
 		{
 			free(current->variable);
-			current->prev->next = current->next;
+			if (*env_list == current)
+				*env_list = current->next;
+			if (current->prev != NULL)
+				current->prev->next = current->next;
+			free(current);
+			free(variable_and);
+			return ;
 		}
 		current = current->next;
 	}
