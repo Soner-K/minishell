@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:34:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/09 15:00:45 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/17 15:04:47 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ t_tokens	*delete_whitespaces(t_tokens *tokens)
 	{
 		if (tokens->type != SPACE_ && tokens->type != TAB_)
 		{
-			tmp = new_node_token(tokens->word, ++i == 1);
+			tmp = new_node_token(tokens->word, ++i == 1,
+					tokens->last_exit_status);
 			if (add_token(&new, tmp) == -1)
 				return (free_tokens(new->head), NULL);
 		}
@@ -150,9 +151,9 @@ static char	*get_token(char **line, short int end, short int s_q, short int d_q)
  * @brief Creates a linked list of tokens, based on an input line read from
  * the command line.
  * @param line The input to tokenize.
- * @returns A list of tokens. Returns NULL if line is null.(null si !line?).
+ * @returns A list of tokens. Returns NULL if line is null.
  */
-t_tokens	*create_tokens(char *line)
+t_tokens	*create_tokens(char *line, int last_exit_status)
 {
 	t_tokens	*tokens;
 	char		*str;
@@ -160,7 +161,7 @@ t_tokens	*create_tokens(char *line)
 	str = get_token(&line, 0, 0, 0);
 	if (!str)
 		return (NULL);
-	tokens = new_node_token(str, 1);
+	tokens = new_node_token(str, 1, last_exit_status);
 	if (!tokens)
 		return (NULL);
 	tokens->type = find_token_type(tokens->word);
@@ -169,7 +170,8 @@ t_tokens	*create_tokens(char *line)
 		str = get_token(&line, 0, 0, 0);
 		if (!str)
 			return (free_tokens(tokens), NULL);
-		if (add_token(&tokens, (new_node_token(str, 0))) == -1)
+		if (add_token(&tokens, (new_node_token(str, 0, last_exit_status))) ==
+			-1)
 			return (free_tokens(tokens), NULL);
 	}
 	tokens = delete_whitespaces(tokens);

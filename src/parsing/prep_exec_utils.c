@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:16:08 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/17 13:55:38 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/17 15:05:04 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	free_exec_nodes(t_exec *head)
 	}
 }
 
-t_data	*set_data_struct(t_tokens *tokens, t_exec *exec)
+t_data	*set_data_struct(t_tokens *tokens)
 {
 	t_data	*data;
 
@@ -110,10 +110,5 @@ t_data	*set_data_struct(t_tokens *tokens, t_exec *exec)
 		tokens = tokens->next;
 	}
 	data->total_cmds = data->num_pipe + 1;
-	while (exec)
-	{
-		exec->data = data;
-		exec = exec->next;
-	}
 	return (data);
 }

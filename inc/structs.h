@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:25 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/17 14:03:48 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/17 15:04:03 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 # define STRUCTS_H
 
 # include "libs.h"
+
+// typedef enum e_type		t_type;
+// typedef struct s_tokens	t_tokens;
+// typedef struct s_fdata	t_fdata;
+// typedef struct s_files	t_files;
+// typedef struct s_exec	t_exec;
+// typedef struct s_data	t_data;
+// typedef struct s_env	t_env;
 
 /**
  * @param INREDIR
@@ -42,7 +50,7 @@ typedef enum e_type
 	SPACE_,
 	TAB_,
 	NONE,
-}					t_type;
+}						t_type;
 
 /**
  * @param quotes Signed char acting taking the ASCII code of the quote that
@@ -62,77 +70,78 @@ typedef enum e_type
  */
 typedef struct t_tokens
 {
-	__int8_t		quotes;
-	short int		n_quotes;
-	int				id_cmd;
-	int				old_stdin;
-	int				old_stdout;
-	t_type			type;
-	char			*word;
-	char			**cmd_array;
-	char			*path;
-	struct t_tokens	*next;
-	struct t_tokens	*prev;
-	struct t_tokens	*head;
-}					t_tokens;
+	__int8_t			quotes;
+	short int			n_quotes;
+	int					id_cmd;
+	int					old_stdin;
+	int					old_stdout;
+	int					last_exit_status;
+	t_type				type;
+	char				*word;
+	char				**cmd_array;
+	char				*path;
+	struct t_tokens		*next;
+	struct t_tokens		*prev;
+	struct t_tokens		*head;
+}						t_tokens;
 
 typedef struct s_fdata
 {
-	__int8_t		rights;
-	t_type			type;
-	char			*name;
-}					t_fdata;
+	__int8_t			rights;
+	t_type				type;
+	char				*name;
+}						t_fdata;
 
 typedef struct s_files
 {
-	t_fdata			*infile_info;
-	t_fdata			*outfile_info;
+	t_fdata				*infile_info;
+	t_fdata				*outfile_info;
 
-}					t_files;
+}						t_files;
 
 typedef struct t_data
 {
 	// exit status should be initiated as 0;
 	// this value is changed depending on the last cmd executed
-	int				exit_status;
-	pid_t			*pids;
-	char			*limiter;
+	int					exit_status;
+	pid_t				*pids;
+	char				*limiter;
 	// number of command -> how many commands in the total cmd line
 	// ls | ls | ls -> 3
-	int				total_cmds;
+	int					total_cmds;
 	// how many pids needed for forking. this is for counting purpose ?
 	// this should be init as 0 in parsing
-	int				counter;
+	int					counter;
 	// number of pipe;
 	// so if it is cat | cat ->should be 1
-	int				num_pipe;
-}					t_data;
+	int					num_pipe;
+}						t_data;
 
 typedef struct s_exec
 {
-	bool			builtin;
-	char			*path;
-	char			**cmd_array;
-	struct s_exec	*next;
-	struct s_exec	*prev;
-	int				id_cmd;
-	int				old_stdin;
-	int				old_stdout;
-	int				infile;
-	int				outfile;
-	int				pipe_fdo;
-	int				pipe_fdi;
-	int				old_infile;
-	int				old_outfile;
-	t_files			*files_info;
-	t_data			*data;
-}					t_exec;
+	bool				builtin;
+	char				*path;
+	char				**cmd_array;
+	struct s_exec		*next;
+	struct s_exec		*prev;
+	int					id_cmd;
+	int					old_stdin;
+	int					old_stdout;
+	int					infile;
+	int					outfile;
+	int					pipe_fdo;
+	int					pipe_fdi;
+	int					old_infile;
+	int					old_outfile;
+	t_files				*files_info;
+	t_data				*data;
+}						t_exec;
 
-typedef struct t_env
+typedef struct s_env
 {
-	char			*variable;
-	struct t_env	*next;
-	struct t_env	*prev;
-}					t_env;
+	char				*variable;
+	struct t_env		*next;
+	struct t_env		*prev;
+}						t_env;
 
 #endif

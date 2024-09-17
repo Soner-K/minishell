@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 16:20:21 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/10 12:47:08 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:40:12 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,19 @@ char	*get_new_word(t_tokens *node, char *var, short int s, short int end)
 	bool	alloc_fail;
 
 	alloc_fail = false;
-	if (!node->word || s > ft_strlen(node->word) || end > ft_strlen(node->word)
-		|| end < 0 || s < 0)
-		if (ft_strlen(var) == 0)
-		{
-			str = ft_strslice(node->word, s - (s != 0), end, &alloc_fail);
-			if (alloc_fail == true)
-				return (NULL); //how handle in calling function? COME BACK
-			return (str);
-		}
+	if (ft_strlen(var) == 0)
+	{
+		str = ft_strslice(node->word, s - (s != 0), end, &alloc_fail);
+		if (alloc_fail == true)
+			return (NULL); // how handle in calling function? COME BACK
+		return (str);
+	}
 	str = ft_strreplace(node->word, var, s - (s != 0), end);
 	if (!str)
 		return (NULL);
 	return (str);
 }
+
 /**
  * @brief Retrieves a variable name from ENV, stores its content
  * and puts it inside node's word.
@@ -71,7 +70,10 @@ __int8_t	extract_variable(t_tokens *node)
 	str = ft_substr(node->word, start, (end - start + 1));
 	if (!str)
 		return (ALLOCATION_FAILURE);
-	var_content = getenv(str);
+	if (!ft_strncmp(&node->word[start - (start > 0)], "$?", 2))
+		var_content = node->exit_status;
+	else
+		var_content = getenv(str);
 	free(str);
 	str = get_new_word(node, var_content, start, end);
 	if (!str)
@@ -109,7 +111,7 @@ static short int	count_expands(char *str)
 	return (n);
 }
 
-void	reset(t_tokens *head)
+static void	reset(t_tokens *head)
 {
 	char	*str;
 	int		i;
@@ -141,7 +143,7 @@ __int8_t	extract_all(t_tokens *head)
 	short int	n_expand;
 
 	if (!head)
-		return (0);
+		return (0); // COME BACK return is 0 but in ft_parse error with -1 only
 	n_expand = count_expands(head->word);
 	first = head;
 	while (head)

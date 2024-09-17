@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 15:52:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/17 12:58:52 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:58:07 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@
  * @returns NULL if an error occured, with error set appropriately, or the
  * execution list if the parsing was successful.
  */
-t_exec	*ft_parse(char *line, char *envp[], __int8_t *error)
+t_exec	*ft_parse(char *line, char *envp[], __int8_t *error,
+		int last_exit_status)
 {
 	t_tokens	*tokens;
 	t_exec		*exec;
 
-	tokens = create_tokens(line);
+	tokens = create_tokens(line, last_exit_status);
 	if (!tokens)
 		return (*error = ALLOCATION_FAILURE, NULL);
 	if (quotes_handler(tokens, CLOSED_QUOTES_CHECK) == false)

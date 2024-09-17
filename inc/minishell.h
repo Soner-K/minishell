@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/17 13:55:49 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/17 15:05:33 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 bool		is_builtin(char *cmd);
 short int	count_char(char *str, char c);
-t_tokens	*new_node_token(char *word, bool is_head);
+t_tokens	*new_node_token(char *word, bool is_head, int last_exit_status);
 char		*merge_strings(char *s1, char *s2, char c);
 
 //				-->cmd_finding.c
@@ -32,11 +32,12 @@ __int8_t	find_cmd_type(t_exec *head, char **env);
 //							PARSING
 //				-->create_tokens.c
 
-t_tokens	*create_tokens(char *line);
+t_tokens	*create_tokens(char *line, int last_exit_status);
 
 //				-->ft_parse.c
 
-t_exec		*ft_parse(char *line, char *envp[], __int8_t *error);
+t_exec		*ft_parse(char *line, char *envp[], __int8_t *error,
+				int last_exit_status);
 
 //				-->prep_exec.c
 
@@ -47,7 +48,7 @@ t_exec		*create_exec_lst(t_tokens *head);
 t_exec		*new_node_exec(void);
 void		lst_addback_exec(t_exec **head, t_exec *add);
 void		free_exec_nodes(t_exec *head);
-t_data		*set_data_struct(t_tokens *tokens, t_exec *exec);
+t_data		*set_data_struct(t_tokens *tokens);
 //				-->redirections_setting.c
 
 void		set_redirections_type(t_tokens **head);
