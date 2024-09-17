@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/17 13:50:38 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/17 13:58:41 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,7 @@ int	main(int argc, char **argv, char **envp)
 	__int8_t	error;
 	t_data		*data;
 
-	if (arg_check(argc, argv) > 0)
-		return (FAILURE);
-	data = malloc(sizeof(t_data));
-	if (!data)
-		return (FAILURE);
-	init_data();
+
 	env_list = NULL;
 	store_env_list(envp, &env_list);
 	init_signal();
@@ -51,9 +46,12 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = read_prompt();
 		exec = ft_parse(line, envp, &error);
+		data = exec->data;
+		printf("Exec shell called\n");
 		exec_shell(&exec, &env_list, envp, data);
-		// runtime_shell(exec, envp, data, &env_list);
-		free_args(line, exec);
+		runtime_shell(exec, envp, data, &env_list);
+		free(line);
+		free_exec_nodes(exec);
 	}
 	return (SUCCESS);
 }
