@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/17 13:28:39 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/17 13:55:49 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_exec		*create_exec_lst(t_tokens *head);
 t_exec		*new_node_exec(void);
 void		lst_addback_exec(t_exec **head, t_exec *add);
 void		free_exec_nodes(t_exec *head);
-
+t_data		*set_data_struct(t_tokens *tokens, t_exec *exec);
 //				-->redirections_setting.c
 
 void		set_redirections_type(t_tokens **head);

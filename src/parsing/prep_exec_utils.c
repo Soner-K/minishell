@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:16:08 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/17 13:07:09 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/17 13:55:38 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,30 @@ void	free_exec_nodes(t_exec *head)
 	}
 }
 
-// void	set_data_struct(t_tokens *head, t_exec *exec)
-// {
-// 	exec->data->counter = 0;
-// 	exec->data->exit_status = 0;
-// 	exec->data->limiter = NULL;
-// 	exec->data->num_pipe = 0;
-// 	exec->data->total_cmds = 0;
-	
-// }
+t_data	*set_data_struct(t_tokens *tokens, t_exec *exec)
+{
+	t_data	*data;
+
+	data = malloc(sizeof(t_data));
+	if (!data)
+		return (NULL);
+	data->exit_status = 0;
+	data->pids = NULL;
+	data->limiter = NULL;
+	data->total_cmds = 0;
+	data->counter = 0;
+	data->num_pipe = 0;
+	while (tokens)
+	{
+		if (tokens->type == PIPE)
+			data->num_pipe++;
+		tokens = tokens->next;
+	}
+	data->total_cmds = data->num_pipe + 1;
+	while (exec)
+	{
+		exec->data = data;
+		exec = exec->next;
+	}
+	return (data);
+}

@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:25 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/17 11:35:04 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/17 13:43:02 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,34 +90,6 @@ typedef struct s_files
 
 }					t_files;
 
-typedef struct s_exec
-{
-	bool			builtin;
-	char			*path;
-	char			**cmd_array;
-	struct s_exec	*next;
-	struct s_exec	*prev;
-	int				id_cmd;
-	int				old_stdin;
-	int				old_stdout;
-	int				infile;
-	int				outfile;
-	int				pipe_fdo;
-	int				pipe_fdi;
-	int				old_infile;
-	int				old_outfile;
-	t_files			*files_info;
-	// t_data			*data;
-}					t_exec;
-
-typedef struct t_env
-{
-	char			*variable;
-	struct t_env	*next;
-	struct t_env	*prev;
-
-}					t_env;
-
 typedef struct t_data
 {
 	// exit status should be initiated as 0;
@@ -135,5 +107,35 @@ typedef struct t_data
 	// so if it is cat | cat ->should be 1
 	int				num_pipe;
 }					t_data;
+
+typedef struct s_exec
+{
+	bool			builtin;
+	char			*path;
+	char			**cmd_array;
+	struct s_exec	*next;
+	struct s_exec	*prev;
+	int				id_cmd;
+	int				old_stdin;
+	int				old_stdout;
+	int				infile;
+	int				outfile;
+	int				pipe_fdo;
+	int				pipe_fdi;
+	int				old_infile;
+	int				old_outfile;
+	t_files			*files_info;
+	t_data			*data;
+}					t_exec;
+
+typedef struct t_env
+{
+	char			*variable;
+	struct t_env	*next;
+	struct t_env	*prev;
+
+}					t_env;
+
+
 
 #endif
