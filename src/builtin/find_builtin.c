@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:41:15 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/17 10:57:58 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/17 11:05:08 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 int	which_builtin(t_exec *cmds)
 {
+	if (!cmds->cmd_array)
+		return (0);
+	if (is_echo(cmds->cmd_array[0]))
+		return (1);
 	if (is_pwd(cmds->cmd_array[0]))
 		return (2);
 	else if (is_cd(cmds->cmd_array[0]))
