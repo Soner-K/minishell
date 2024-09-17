@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:30:11 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/17 14:20:49 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/17 14:25:32 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy,
 	int		builtin_check;
 	pid_t	fork_id;
 	int		status;
-	int		status_code;
 
 	status = 0;
 	builtin_check = which_builtin(*exec_list);
@@ -74,19 +73,6 @@ void	exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy,
 			init_child(exec_list, env_copy);
 		waitpid(fork_id, &status, 0);
 		if (WIFEXITED(status))
-		{
-			status_code = WEXITSTATUS(status);
-			if (status_code == 0)
-			{
-				printf("success\n");
-			}
-			else
-			{
-				printf("fail\n");
-			}
-			printf("status %d\n", status);
-			(void)data;
-			data->exit_status = status;
-		}
+			data->exit_status = WEXITSTATUS(status);
 	}
 }

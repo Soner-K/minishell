@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:59:43 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/17 14:19:46 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/17 14:38:50 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,21 +52,6 @@ void	close_pipe_files(t_exec *cmds_list)
 		}
 		cmds_list = cmds_list->next;
 	}
-}
-
-void	wait_pipe_files(t_data *data)
-{
-	int	i;
-	int	status;
-
-	i = 0;
-	status = 123;
-	while (i < data->total_cmds)
-	{
-		waitpid(data->pids[i], &status, 0);
-		i++;
-	}
-	data->exit_status = WEXITSTATUS(status);
 }
 
 void	pipe_init(t_data *pipe_info, t_exec *cmds_list, int i, t_data *data)
