@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 23:29:23 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/16 14:11:11 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/17 13:03:38 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ int	count_cmds(t_exec *cmds_list)
 	int	total_cmd;
 
 	total_cmd = 0;
-	printf("cmds_list[0] %s\n ", cmds_list->cmd_array[0]);
-	printf("cmds_list[1] %s\n ", cmds_list->cmd_array[1]);
 	while (cmds_list)
 	{
 		if (cmds_list->cmd_array)
@@ -41,10 +39,10 @@ void	close_no_file(t_exec *cmds_list)
 	exit(EXIT_FAILURE);
 }
 
-void	close_parent(t_exec *head, t_data *pipe_info)
+void	close_parent(t_exec *head, t_data *data)
 {
 	close_pipe_files(head);
-	// wait_pipe_files(pipe_info, data);
-	free(pipe_info->pids);
-	free(pipe_info);
+	wait_pipe_files(data);
+	free(data->pids);
+	free(data);
 }
