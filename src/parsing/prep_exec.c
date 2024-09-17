@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prep_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 15:34:03 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/17 13:25:03 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/17 13:42:39 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,5 +157,6 @@ t_exec	*create_exec_lst(t_tokens *head)
 				return (free_tokens(head), NULL); // COME BACK
 		}
 	}
+	set_data_struct(first, exec);
 	return (exec);
 }
