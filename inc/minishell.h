@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/16 16:12:01 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/17 12:55:27 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char		*merge_strings(char *s1, char *s2, char c);
 //				-->cmd_finding.c
 
 char		*find_path(char *cmd, char **env, bool *alloc_fail);
-__int8_t	find_cmd_type(t_tokens *head, char **env);
+__int8_t	find_cmd_type(t_exec *head, char **env);
 
 //							PARSING
 //				-->create_tokens.c

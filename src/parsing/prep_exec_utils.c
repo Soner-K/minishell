@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:16:08 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/16 15:35:46 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/17 13:07:09 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ t_exec	*new_node_exec(void)
 	exec_node->files_info = files;
 	exec_node->old_infile = -1; 
 	exec_node->old_outfile = -1;
+	exec_node->id_cmd = -1;
 	return (exec_node);
 }
 

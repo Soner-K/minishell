@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd_array.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:22:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/16 16:18:47 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/17 12:57:08 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	set_id(t_tokens *head)
  * @returns TOKEN_IS_PIPE (-2) if the token is a pipe, ALLOCATION_FAILURE (-1)
  * if the allocation failed, and SUCCESS (1) otherwise.
  */
-__int8_t	get_cmd_array(t_tokens **node, int id)
+__int8_t	get_cmd_array(t_tokens **node, t_tokens *first, int id)
 {
 	char		*joined_cmds;
 	char		**cmd_array;
@@ -54,11 +54,12 @@ __int8_t	get_cmd_array(t_tokens **node, int id)
 
 	tmp = *node;
 	joined_cmds = NULL;
+	first = NULL;
 	if (tmp->type == PIPE)
 		return (TOKEN_IS_PIPE);
 	while (tmp && (tmp->id_cmd != -1 && tmp->id_cmd == id))
 	{
-		if (tmp->type != WORD && tmp->type != CMD && tmp->type != BUILTIN)
+		if (tmp->type != WORD && tmp->type != CMD && tmp->type != BUILTIN) // COME BACK
 		{
 			tmp = tmp->next;
 			continue ;
@@ -71,14 +72,12 @@ __int8_t	get_cmd_array(t_tokens **node, int id)
 	cmd_array = ft_split(joined_cmds, -32);
 	if (!cmd_array)
 		return (free(joined_cmds), ALLOCATION_FAILURE);
-	while ((*node) && ((*node)->type != CMD && (*node)->type != BUILTIN))
-		*node = (*node)->next;
-	if (*node)
+	while ((*node) && (*node) != tmp)
+	{
 		(*node)->cmd_array = cmd_array;
-	while (*node && *node != tmp)
 		*node = (*node)->next;
-	free(joined_cmds);
-	return (SUCCESS);
+	}
+	return (free(joined_cmds), SUCCESS);
 }
 
 /**
@@ -97,7 +96,7 @@ __int8_t	set_cmds_arrays(t_tokens **head)
 	set_id(*head);
 	while (*head)
 	{
-		ret = get_cmd_array(head, (*head)->id_cmd);
+		ret = get_cmd_array(head, first, (*head)->id_cmd);
 		if (ret == TOKEN_IS_PIPE)
 			*head = (*head)->next;
 		else if (ret == ALLOCATION_FAILURE)

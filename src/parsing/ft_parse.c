@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 15:52:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/17 11:05:51 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/17 12:58:52 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ t_exec	*ft_parse(char *line, char *envp[], __int8_t *error)
 		return (*error = ALLOCATION_FAILURE, free_tokens(tokens), NULL);
 	if (quotes_handler(tokens, QUOTES_REMOVING_MODE) == FAILURE)
 		return (*error = ALLOCATION_FAILURE, free_tokens(tokens), NULL);
-	if (find_cmd_type(tokens, envp) == ALLOCATION_FAILURE)
-		return (*error = ALLOCATION_FAILURE, free_tokens(tokens), NULL);
 	if (full_check(&tokens) == false)
 		return (*error = SYNTAX_ERROR, free_tokens(tokens), NULL);
 	if (set_cmds_arrays(&tokens) == FAILURE)
 		return (*error = ALLOCATION_FAILURE, free_tokens(tokens), NULL);
 	exec = create_exec_lst(tokens);
 	if (!exec)
+		return (*error = ALLOCATION_FAILURE, free_tokens(tokens), NULL);
+	if (find_cmd_type(exec, envp) == ALLOCATION_FAILURE)
 		return (*error = ALLOCATION_FAILURE, free_tokens(tokens), NULL);
 	return (exec);
 }
