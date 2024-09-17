@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:30:11 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/16 15:32:34 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/17 10:24:03 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,14 @@ void	init_child(t_exec **cmds_list, char **env_copy)
 		if (parse_path((*cmds_list)->cmd_array, (*cmds_list)->path))
 			execve((*cmds_list)->path, (*cmds_list)->cmd_array, env_copy);
 		else
+		{
+			printf("problem ? \n");
 			exit(127);
+		}
+	}
+	else
+	{
+		printf("no get file ?\n");
 	}
 }
 
@@ -53,6 +60,7 @@ void	exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy,
 	int		builtin_check;
 	pid_t	fork_id;
 	int		status;
+	int		status_code;
 
 	status = 0;
 	builtin_check = which_builtin(*exec_list);
@@ -71,14 +79,21 @@ void	exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy,
 		fork_id = fork();
 		if (fork_id == 0)
 			init_child(exec_list, env_copy);
-		wait(&status);
+		waitpid(fork_id, &status, 0);
 		if (WIFEXITED(status))
 		{
-			WEXITSTATUS(status);
+			status_code = WEXITSTATUS(status);
+			if (status_code == 0)
+			{
+				printf("success\n");
+			}
+			else
+			{
+				printf("fail\n");
+			}
 			printf("status %d\n", status);
-			data->exit_status = status;
+			(void)data;
+			// data->exit_status = status;
 		}
-		// waitpid(fork_id, &status, 0);
-		// data->exit_status = status;
 	}
 }
