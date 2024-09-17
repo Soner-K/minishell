@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:11:10 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/14 17:37:47 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/17 14:14:29 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,7 @@ void	func_export(t_exec **cmds, t_env **env)
 	char	*final_value;
 
 	if (!(*cmds)->cmd_array[1])
-	{
-		export_without_args(env);
-		return ;
-	}
+		return (export_without_args(env));
 	i = 1;
 	while ((*cmds)->cmd_array[i])
 	{
