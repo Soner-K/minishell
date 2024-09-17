@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 15:34:03 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/17 12:40:58 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/17 13:25:03 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,10 @@ void	set_files_info(t_files *files, t_tokens *token)
  * @param token A pointer to the current token.
  * @returns SUCCESS (1) if the node was set, and FAILURE (0) otherwise.
  */
-__int8_t	set_node_exec(t_exec *exec, t_tokens *token)
+__int8_t	set_node_exec(t_exec *exec, t_tokens *token, int id_cmd)
 {
 	t_files	*tmp;
-	int		id_cmd;
 
-	id_cmd = token->id_cmd;
 	if (!token || !exec)
 		return (FAILURE);
 	tmp = exec->files_info;
@@ -105,9 +103,13 @@ __int8_t	set_node_exec(t_exec *exec, t_tokens *token)
 		tmp->infile_info->name = token->word;
 	if (token->type == OUTREDIR || token->type == APPENDREDIR)
 		tmp->outfile_info->name = token->word;
-	exec->cmd_array = token->cmd_array;
 	exec->infile = -1;
 	exec->outfile = -1;
+	exec->id_cmd = id_cmd;
+	while (token && token->id_cmd != id_cmd)
+		token = token->next;
+	if (token)
+		exec->cmd_array = token->cmd_array;
 	return (SUCCESS);
 }
 
@@ -120,15 +122,17 @@ __int8_t	set_node_exec(t_exec *exec, t_tokens *token)
  */
 t_exec	*create_exec_lst(t_tokens *head)
 {
-	t_exec	*itr;
-	t_exec	*exec;
-	int		id_cmd;
+	t_exec		*itr;
+	t_exec		*exec;
+	t_tokens	*first;
+	int			id_cmd;
 
 	id_cmd = 0;
 	exec = new_node_exec();
 	if (!exec)
 		return (free_tokens(head), NULL); // COME BACK
 	itr = exec;
+	first = head;
 	while (head)
 	{
 		while (head && head->id_cmd == -1)
@@ -137,10 +141,11 @@ t_exec	*create_exec_lst(t_tokens *head)
 		{
 			if (head->type >= INREDIR && head->type <= APPENDREDIR)
 				set_files_info(itr->files_info, head);
-			if (head->type == CMD || head->type == BUILTIN)
-				set_node_exec(itr, head);
+			else
+				set_node_exec(itr, head, id_cmd);
 			head = head->next;
 		}
+		exec->id_cmd = id_cmd;
 		id_cmd++;
 		if (itr != exec)
 			lst_addback_exec(&exec, itr);
