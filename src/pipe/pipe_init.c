@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:59:43 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/17 12:47:18 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/17 13:10:06 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,17 @@ int	getfile(t_exec **cmds_list)
 		if ((*cmds_list)->files_info->outfile_info->type
 			&& !(*cmds_list)->files_info->outfile_info->name)
 		{
+			printf("HERE ? \n");
 			perror((*cmds_list)->files_info->outfile_info->name);
 			return (0);
 		}
 		else if ((*cmds_list)->files_info->outfile_info->type == OUTREDIR)
+		{
+			printf("THERE ? %s \n",
+				(*cmds_list)->files_info->outfile_info->name);
 			(*cmds_list)->outfile = open((*cmds_list)->files_info->outfile_info->name,
 					O_WRONLY | O_TRUNC | O_CREAT, 0644);
+		}
 	}
 	return (1);
 }
