@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:27:37 by ftanon            #+#    #+#             */
-/*   Updated: 2024/09/17 16:13:37 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/18 14:39:49 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,10 @@ void	wait_pipe_files(t_data *data)
 		waitpid(data->pids[i], &status, 0);
 		if (WIFEXITED(status))
 			data->exit_status = WEXITSTATUS(status);
+		if (WIFSIGNALED(status))
+			data->exit_status = WTERMSIG(status) + 128;
 		i++;
 	}
-	// i = 0;
-	// while (i < data->total_cmds)
-	// {
-	// 	wait(0);
-	// 	i++;
-	// }
 }
 
 void	close_parent(t_exec *head, t_data *data)

@@ -6,11 +6,13 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/18 11:11:54 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/18 14:35:24 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int		signal_int = 0;
 
 int	arg_check(int argc, char **argv)
 {
@@ -43,7 +45,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = read_prompt();
 		exec = ft_parse(line, envp, &error);
-		if (!exec) // ERROR 1 and 2 correction
+		if (!exec)
 			continue ;
 		data = exec->data;
 		if (data->num_pipe < 1)
