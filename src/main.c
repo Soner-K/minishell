@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/17 15:25:02 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/18 11:11:54 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,14 @@ int	main(int argc, char **argv, char **envp)
 	if (arg_check(argc, argv) > 0)
 		return (FAILURE);
 	env_list = NULL;
-	init_signal();
 	store_env_list(envp, &env_list);
+	init_signal();
 	while (42)
 	{
 		line = read_prompt();
 		exec = ft_parse(line, envp, &error);
+		if (!exec) // ERROR 1 and 2 correction
+			continue ;
 		data = exec->data;
 		if (data->num_pipe < 1)
 			exec_shell(&exec, &env_list, envp, data);
