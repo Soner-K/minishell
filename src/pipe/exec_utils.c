@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:30:11 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/18 15:11:32 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/18 16:24:36 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	exec_shell_builtin(t_exec **cmds_list, int builtin_check,
 		exec_builtin(builtin_check, cmds_list, env_list);
 	}
 }
+
 void	get_status(int fork_id, int status, t_data *data)
 {
 	waitpid(fork_id, &status, 0);

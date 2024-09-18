@@ -15,7 +15,7 @@ SRC_FILES			=	expand/expand_utils.c expand/expand.c expand/quotes.c \
 						builtin/pwd.c builtin/unset.c env/env_utils.c \
 						prompt/create_prompt.c signal/init_signal.c pipe/exec_utils.c \
 						pipe/runtime.c pipe/heredoc.c pipe/pipe_init.c pipe/pipe_utils.c pipe/redirect_init.c \
-						parsing/ft_parse.c pipe/exit_status.c
+						parsing/ft_parse.c pipe/exit_status.c pipe/files_control.c
 SRC					=	$(addprefix $(SRC_DIR)/, $(SRC_FILES))
 
 LIBFT_PATH			=	libft

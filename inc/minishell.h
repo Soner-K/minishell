@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/18 14:34:08 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/18 16:34:45 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,4 +211,7 @@ void		close_no_file(t_exec *cmds_list);
 void		init_pid_array(t_data *pipe_info);
 void		store_pid(t_data *pipe_info, pid_t fork_id);
 void		wait_pipe_files(t_data *data);
+
+void		redirect_and_init(t_exec *cmds_list, t_data *data, int i,
+				t_env **env_list);
 #endif

@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:27:37 by ftanon            #+#    #+#             */
-/*   Updated: 2024/09/18 14:39:49 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/18 16:26:31 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,4 @@ void	close_parent(t_exec *head, t_data *data)
 {
 	close_pipe_files(head);
 	wait_pipe_files(data);
-	// free(data);
 }
