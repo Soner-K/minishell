@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:59:43 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/18 16:38:05 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/18 16:49:41 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,27 @@
 
 int	getfile(t_exec **cmds_list)
 {
+	int		flags;
+	t_fdata	*infile_info;
+
+	infile_info = (*cmds_list)->files_info->infile_info;
 	if ((*cmds_list)->files_info->infile_info->type == HEREDOC)
 		call_heredoc((*cmds_list));
 	else if ((*cmds_list)->files_info->infile_info->type == INREDIR)
 	{
-		if ((*cmds_list)->files_info->infile_info->rights == 6)
-			(*cmds_list)->infile = open((*cmds_list)->files_info->infile_info->name,
-					O_RDONLY);
+		if (infile_info->rights == 6)
+			(*cmds_list)->infile = open(infile_info->name, O_RDONLY);
 		else
 			return (perror((*cmds_list)->files_info->infile_info->name), 0);
 	}
 	if ((*cmds_list)->files_info->outfile_info->type == APPENDREDIR)
-	{
-		(*cmds_list)->outfile = open((*cmds_list)->files_info->outfile_info->name,
-				O_RDWR | O_APPEND | O_CREAT, 0644);
-		if ((*cmds_list)->outfile == -1)
-			return (perror("Error opening file"), 0);
-	}
+		flags = O_RDWR | O_APPEND | O_CREAT;
 	else if ((*cmds_list)->files_info->outfile_info->type == OUTREDIR)
-	{
-		if ((*cmds_list)->files_info->outfile_info->type
-			&& !(*cmds_list)->files_info->outfile_info->name)
-			return (perror((*cmds_list)->files_info->outfile_info->name), 0);
-		else if ((*cmds_list)->files_info->outfile_info->type == OUTREDIR)
-			(*cmds_list)->outfile = open((*cmds_list)->files_info->outfile_info->name,
-					O_WRONLY | O_TRUNC | O_CREAT, 0644);
-	}
+		flags = O_WRONLY | O_TRUNC | O_CREAT;
+	else
+		return (1);
+	(*cmds_list)->outfile = open((*cmds_list)->files_info->outfile_info->name,
+			flags, 0644);
 	return (1);
 }
 
