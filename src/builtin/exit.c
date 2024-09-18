@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:11:30 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/17 14:14:50 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/18 11:07:39 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,17 @@ void	control_alpha(char *s, t_exec *cmds_list)
 
 void	control_many_args(t_exec *cmds_list)
 {
-	printf("exit : too many arugments\n");
 	if (cmds_list->old_stdin != -1)
 		close(cmds_list->old_stdout);
 	if (cmds_list->old_stdout != -1)
 		close(cmds_list->old_stdin);
-	exit(1);
+	if (ft_isalpha(cmds_list->cmd_array[1][0]))
+	{
+		printf("exit : too many arugments\n");
+		exit(1);
+	}
+	else
+		printf("exit : too many arugments\n");
 }
 
 void	normal_exit(t_exec *cmds_list)
