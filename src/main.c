@@ -6,13 +6,11 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/18 14:58:07 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/18 16:58:13 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int		signal_int = 0;
 
 int	arg_check(int argc, char **argv)
 {
@@ -22,10 +20,18 @@ int	arg_check(int argc, char **argv)
 		return (1);
 	return (0);
 }
+
 void	free_args(char *line, t_exec *exec)
 {
 	free(line);
 	free_exec_nodes(exec);
+}
+
+void	free_all(char *line, t_exec *exec)
+{
+	free(line);
+	free_exec_nodes(exec);
+	rl_clear_history();
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -53,8 +59,7 @@ int	main(int argc, char **argv, char **envp)
 		else
 			runtime_shell(exec, envp, data, &env_list);
 		printf("DATA EXIT STATUS CHECK %d\n", data->exit_status);
-		free(line);
-		free_exec_nodes(exec);
+		free_all(line, exec);
 	}
 	return (SUCCESS);
 }
