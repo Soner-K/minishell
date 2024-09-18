@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:59:43 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/18 11:41:54 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/18 16:38:05 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,7 @@ int	getfile(t_exec **cmds_list)
 		(*cmds_list)->outfile = open((*cmds_list)->files_info->outfile_info->name,
 				O_RDWR | O_APPEND | O_CREAT, 0644);
 		if ((*cmds_list)->outfile == -1)
-		{
-			perror("Error opening file");
-		}
+			return (perror("Error opening file"), 0);
 	}
 	else if ((*cmds_list)->files_info->outfile_info->type == OUTREDIR)
 	{

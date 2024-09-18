@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/18 16:34:45 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/18 16:36:59 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,12 @@ void		middle_cmd(t_exec *cmds_list);
 t_data		*init_pipeinfo(t_exec *cmds_list);
 void		init_child_pipe(t_exec *cmds_list, t_data *pipe_info,
 				char **env_copy, int i);
+void		redirect_and_init(t_exec *cmds_list, t_data *data, int i,
+				t_env **env_list);
+void		exec_pipe(t_exec *cmds_list, char **env_copy, int i,
+				t_env **env_list);
+void		file_close(t_exec *cmds_list, t_data *data, int fork_id);
+
 // 				-->create_prompt.c
 char		*read_prompt(void);
 void		runtime_shell(t_exec *cmds_list, char **env_copy, t_data *data,
@@ -212,6 +218,4 @@ void		init_pid_array(t_data *pipe_info);
 void		store_pid(t_data *pipe_info, pid_t fork_id);
 void		wait_pipe_files(t_data *data);
 
-void		redirect_and_init(t_exec *cmds_list, t_data *data, int i,
-				t_env **env_list);
 #endif

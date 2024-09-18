@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:07:40 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/18 16:35:28 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/18 16:36:40 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	exec_pipe(t_exec *cmds_list, char **env_copy, int i, t_env **env_list)
 	if (which_builtin(cmds_list) > 0)
 		redirect_and_init(cmds_list, cmds_list->data, i, env_list);
 	else
-	// exec_pipe(cmds_list, data, env_copy, i);
 	{
 		init_child_pipe(cmds_list, cmds_list->data, env_copy, i);
 		exit(0);
