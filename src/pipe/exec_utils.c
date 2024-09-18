@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:30:11 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/18 14:42:16 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/18 15:11:32 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	parse_path(char **cmds, char *path)
 
 void	init_child(t_exec **cmds_list, char **env_copy)
 {
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	if (getfile(cmds_list))
 	{
 		only_redirection(cmds_list);
