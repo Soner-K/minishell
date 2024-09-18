@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/18 16:53:23 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/18 17:25:12 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define MINISHELL_H
 
 # include "libs.h"
-
 
 //							UTILS
 
@@ -120,6 +119,7 @@ void		func_echo(t_exec *cmds);
 int			is_env(char *str);
 void		func_env(t_exec *cmds, t_env **env);
 void		display_env_list(t_env *env_list);
+void		free_env_lists(t_env *head);
 
 // 				-->exit.c
 int			is_exit(char *str);

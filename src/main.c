@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/18 17:00:34 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/18 17:32:57 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,6 @@ int	main(int argc, char **argv, char **envp)
 		printf("DATA EXIT STATUS CHECK %d\n", data->exit_status);
 		free_all(line, exec);
 	}
+	free_env_lists(env_list);
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:45:23 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/18 13:36:12 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/18 17:28:00 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,19 @@ void	push_env_list(t_env **env_list, const char *str, int len)
 
 	last = *env_list;
 	element = malloc(sizeof(t_env));
+	if (!element)
+		return ;
 	element->variable = malloc(len + 1);
+	if (!element->variable)
+	{
+		free(element);
+		return ;
+	}
 	ft_strlcpy(element->variable, str, len + 1);
 	element->next = NULL;
 	if (*env_list == NULL)
 	{
+		element->prev = NULL;
 		*env_list = element;
 		return ;
 	}
@@ -95,4 +103,16 @@ void	replace_one_env(t_env **env_list, char *env_val, char *variable,
 		current = current->next;
 	}
 	free(new_var);
+}
+void	free_env_lists(t_env *head)
+{
+	t_env *tmp;
+
+	while (head)
+	{
+		tmp = head;
+		head = head->next;
+		free(head->variable);
+		free(tmp);
+	}
 }
