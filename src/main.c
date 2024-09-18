@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/18 16:58:13 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/18 17:00:34 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,6 @@ int	arg_check(int argc, char **argv)
 	if (argv[1] != NULL)
 		return (1);
 	return (0);
-}
-
-void	free_args(char *line, t_exec *exec)
-{
-	free(line);
-	free_exec_nodes(exec);
 }
 
 void	free_all(char *line, t_exec *exec)
