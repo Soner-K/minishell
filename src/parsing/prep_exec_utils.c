@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prep_exec_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:16:08 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/18 17:24:38 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/19 15:15:01 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,32 +71,13 @@ void	lst_addback_exec(t_exec **head, t_exec *add)
 	add->next = NULL;
 }
 
-/**
- * @brief Frees the nodes of the list.
- * @param head A pointer to the head of the list.
- */
-void	free_exec_nodes(t_exec *head)
-{
-	t_exec	*tmp;
-
-	while (head)
-	{
-		tmp = head;
-		head = head->next;
-		free(tmp->files_info->infile_info);
-		free(tmp->files_info->outfile_info);
-		free(tmp->files_info);
-		free(tmp);
-	}
-}
-
-t_data	*set_data_struct(t_tokens *tokens, t_exec *exec)
+t_data	*set_data_struct(t_tokens *tokens, t_exec *exec, t_env *env_list)
 {
 	t_data	*data;
 
 	data = malloc(sizeof(t_data));
 	if (!data)
-		return (NULL);
+		return (NULL); //COME BACK memory handler
 	data->exit_status = 0;
 	data->pids = NULL;
 	data->limiter = NULL;
@@ -115,5 +96,6 @@ t_data	*set_data_struct(t_tokens *tokens, t_exec *exec)
 		exec->data = data;
 		exec = exec->next;
 	}
+	data->env_list = env_list;
 	return (data);
 }

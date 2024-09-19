@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 15:52:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/18 12:11:23 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/19 15:20:07 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,12 @@
 /**
  * @brief Receives an input line, parses it and returns an execution list.
  * @param line The input line
- * @param envp The environment variable
  * @param error A pointer to a variable storing the kind of error that
  * happened (ALLOCATION_FAILURE, UNCLOSED_QUOTES, SYNTAX_ERROR).
  * @returns NULL if an error occured, with error set appropriately, or the
  * execution list if the parsing was successful.
  */
-t_exec	*ft_parse(char *line, char *envp[], __int8_t *error, t_env *env_list)
+t_exec	*ft_parse(char *line, __int8_t *error, t_env *env_list)
 {
 	t_tokens	*tokens;
 	t_exec		*exec;
@@ -30,20 +29,21 @@ t_exec	*ft_parse(char *line, char *envp[], __int8_t *error, t_env *env_list)
 	if (!tokens)
 		return (*error = ALLOCATION_FAILURE, NULL);
 	if (quotes_handler(tokens, CLOSED_QUOTES_CHECK) == false)
-		return (*error = UNCLOSED_QUOTES, free_tokens(tokens), NULL);
+		return (*error = UNCLOSED_QUOTES, free_tokens(tokens, true), NULL);
 	quotes_handler(tokens, QUOTES_MARKING_MODE);
 	if (extract_all(tokens, env_list) == ALLOCATION_FAILURE)
-		return (*error = ALLOCATION_FAILURE, free_tokens(tokens), NULL);
+		return (*error = ALLOCATION_FAILURE, free_tokens(tokens, true), NULL);
 	if (quotes_handler(tokens, QUOTES_REMOVING_MODE) == FAILURE)
-		return (*error = ALLOCATION_FAILURE, free_tokens(tokens), NULL);
+		return (*error = ALLOCATION_FAILURE, free_tokens(tokens, true), NULL);
 	if (full_check(&tokens) == false)
-		return (*error = SYNTAX_ERROR, free_tokens(tokens), NULL);
+		return (*error = SYNTAX_ERROR, free_tokens(tokens, true), NULL);
 	if (set_cmds_arrays(&tokens) == FAILURE)
-		return (*error = ALLOCATION_FAILURE, free_tokens(tokens), NULL);
-	exec = create_exec_lst(tokens);
+		return (*error = ALLOCATION_FAILURE, free_tokens(tokens, true), NULL);
+	exec = create_exec_lst(tokens, env_list);
 	if (!exec)
-		return (*error = ALLOCATION_FAILURE, free_tokens(tokens), NULL);
-	if (find_cmd_type(exec, envp) == ALLOCATION_FAILURE)
-		return (*error = ALLOCATION_FAILURE, free_tokens(tokens), NULL);
+		return (*error = ALLOCATION_FAILURE, free_tokens(tokens, false), NULL);
+	if (find_cmd_type(exec, env_list) == ALLOCATION_FAILURE)
+		return (*error = ALLOCATION_FAILURE, free_tokens(tokens, true), NULL);
+	free_tokens(tokens, false);
 	return (exec);
 }

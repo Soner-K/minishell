@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:25 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/18 11:30:04 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/19 15:14:04 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ typedef struct t_tokens
 	t_type			type;
 	char			*word;
 	char			**cmd_array;
-	char			*path;
 	struct t_tokens	*next;
 	struct t_tokens	*prev;
 	struct t_tokens	*head;
@@ -90,14 +89,22 @@ typedef struct s_files
 
 }					t_files;
 
+typedef struct t_env
+{
+	char			*variable;
+	struct t_env	*next;
+	struct t_env	*prev;
+}					t_env;
+
 typedef struct t_data
 {
 	int				exit_status;
-	pid_t			*pids;
-	char			*limiter;
 	int				total_cmds;
 	int				counter;
 	int				num_pipe;
+	pid_t			*pids;
+	char			*limiter;
+	t_env			*env_list;
 }					t_data;
 
 typedef struct s_exec
@@ -120,11 +127,5 @@ typedef struct s_exec
 	t_data			*data;
 }					t_exec;
 
-typedef struct t_env
-{
-	char			*variable;
-	struct t_env	*next;
-	struct t_env	*prev;
-}					t_env;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/19 16:48:15 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/19 16:57:01 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,15 @@ char		*merge_strings(char *s1, char *s2, char c);
 
 //				-->cmd_finding.c
 
-char		*find_path(char *cmd, char **env, bool *alloc_fail);
-__int8_t	find_cmd_type(t_exec *head, char **env);
+// char		*find_path(char *cmd, char **env, bool *alloc_fail);
+__int8_t	find_cmd_type(t_exec *head, t_env *env_list);
+
+//				-->memory_handler.c
+void		free_exec(t_exec *exec_head, bool all);
+void		free_all(char *line, t_exec *exec, t_env *env_list, bool free_env);
+void		free_tokens(t_tokens *head, bool all);
+void		store_or_free(char *line, t_exec *exec, bool store, bool free_env);
+void		free_env_list(t_env *env_list);
 
 //							PARSING
 //				-->create_tokens.c
@@ -36,18 +43,16 @@ t_tokens	*create_tokens(char *line);
 
 //				-->ft_parse.c
 
-t_exec		*ft_parse(char *line, char *envp[], __int8_t *error,
-				t_env *env_list);
+t_exec		*ft_parse(char *line, __int8_t *error, t_env *env_list);
 //				-->prep_exec.c
 
-t_exec		*create_exec_lst(t_tokens *head);
+t_exec		*create_exec_lst(t_tokens *head, t_env *env_list);
 
 //				-->prep_exec_utils.c
 
 t_exec		*new_node_exec(void);
 void		lst_addback_exec(t_exec **head, t_exec *add);
-void		free_exec_nodes(t_exec *head);
-t_data		*set_data_struct(t_tokens *tokens, t_exec *exec);
+t_data		*set_data_struct(t_tokens *tokens, t_exec *exec, t_env *env_list);
 //				-->redirections_setting.c
 
 void		set_redirections_type(t_tokens **head);
@@ -63,7 +68,6 @@ bool		full_check(t_tokens **head);
 //				-->tokenization_utils.c
 
 void		free_one_token(t_tokens *node);
-void		free_tokens(t_tokens *head);
 t_tokens	*last_token(t_tokens *lst);
 __int8_t	add_token(t_tokens **lst, t_tokens *to_add);
 
@@ -201,7 +205,7 @@ void		exec_pipe(t_exec *cmds_list, char **env_copy, int i,
 void		file_close(t_exec *cmds_list, t_data *data, int fork_id);
 
 // 				-->create_prompt.c
-char		*read_prompt(void);
+char		*read_prompt(t_env *env_list);
 void		runtime_shell(t_exec *cmds_list, char **env_copy, t_data *data,
 				t_env **env_list);
 

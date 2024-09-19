@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:30:11 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/19 14:31:23 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/19 16:57:25 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ void	init_child(t_exec **cmds_list, char **env_copy)
 		if (errno == EACCES)
 			exit(126);
 		else
+		{
+			store_or_free(NULL, NULL, false, true);
 			exit(127);
+		}
 	}
 }
 
