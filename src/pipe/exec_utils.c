@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:30:11 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/18 16:24:36 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/19 12:40:48 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	init_child(t_exec **cmds_list, char **env_copy)
 		only_redirection(cmds_list);
 		if (parse_path((*cmds_list)->cmd_array, (*cmds_list)->path))
 			execve((*cmds_list)->path, (*cmds_list)->cmd_array, env_copy);
+		if (errno == EACCES)
+			exit(126);
 		else
 			exit(127);
 	}

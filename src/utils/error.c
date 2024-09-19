@@ -6,16 +6,12 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:26:29 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/18 16:55:52 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/19 12:47:42 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_error(char *message)
-{
-	ft_putstr_fd(message, 2);
-}
 
 void	free_lists(t_tokens *first)
 {
@@ -30,21 +26,16 @@ void	free_lists(t_tokens *first)
 	}
 }
 
-void	exit_program(char *s)
-{
-	printf("%s\n", s);
-	exit(EXIT_FAILURE);
-}
 
-void	free_array(char **line)
+void	free_env_list(t_env *env_list)
 {
-	int		i;
+	t_env *temp;
 
-	i = 0;
-	while (line[i])
+	while (env_list)
 	{
-		free(line[i]);
-		i++;
+		temp = env_list;
+		env_list = env_list->next;
+		free(temp->variable);
+		free(temp);
 	}
-	free(line);
 }

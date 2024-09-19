@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/19 11:24:37 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/19 12:47:48 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,8 @@ void		replace_one_env(t_env **env_list, char *env_val, char *variable,
 				char *value);
 
 //				-->error.c
-void		exit_program(char *s);
+void		free_env_list(t_env *env_list);
+void		free_lists(t_tokens *first);
 
 // 				-->exec_utils.c
 int			parse_path(char **cmds, char *path);

@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/19 11:25:45 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/19 12:49:07 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@ int	arg_check(int argc, char **argv)
 	return (0);
 }
 
-void	free_all(char *line, t_exec *exec)
+void	free_all(char *line, t_exec *exec, t_env *env_list)
 {
 	free(line);
 	free_exec_nodes(exec);
+	free_env_list(env_list);
 	rl_clear_history();
 }
 
@@ -53,8 +54,7 @@ int	main(int argc, char **argv, char **envp)
 		else
 			runtime_shell(exec, envp, data, &env_list);
 		printf("DATA EXIT STATUS CHECK %d\n", data->exit_status);
-		free_all(line, exec);
+		free_all(line, exec, env_list);
 	}
-	free_env_lists(env_list);
 	return (SUCCESS);
 }
