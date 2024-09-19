@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:45:23 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/18 17:28:00 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/19 17:55:36 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ void	replace_one_env(t_env **env_list, char *env_val, char *variable,
 	t_env	*current;
 	char	*new_var;
 
+	if (value == NULL || strlen(value) == 0)
+		value = "''";
 	new_var = malloc(strlen(variable) + strlen(value) + 2);
 	if (new_var == NULL)
 	{
