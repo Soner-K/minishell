@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:34:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/09 15:00:45 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/19 13:12:03 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ t_tokens	*delete_whitespaces(t_tokens *tokens)
 {
 	t_tokens	*new;
 	t_tokens	*tmp;
-	short int	i;
 
+	short int	i;
 	i = 0;
 	new = NULL;
 	while (tokens)
@@ -34,7 +34,7 @@ t_tokens	*delete_whitespaces(t_tokens *tokens)
 		{
 			tmp = new_node_token(tokens->word, ++i == 1);
 			if (add_token(&new, tmp) == -1)
-				return (free_tokens(new->head), NULL);
+				return (free_tokens(new->head, true), NULL);
 		}
 		tmp = tokens;
 		tokens = tokens->next;
@@ -168,9 +168,9 @@ t_tokens	*create_tokens(char *line)
 	{
 		str = get_token(&line, 0, 0, 0);
 		if (!str)
-			return (free_tokens(tokens), NULL);
+			return (free_tokens(tokens, true), NULL);
 		if (add_token(&tokens, (new_node_token(str, 0))) == -1)
-			return (free_tokens(tokens), NULL);
+			return (free_tokens(tokens, true), NULL);
 	}
 	tokens = delete_whitespaces(tokens);
 	if (!tokens)

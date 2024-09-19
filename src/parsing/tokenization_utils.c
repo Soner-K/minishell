@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:56:05 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/16 15:22:26 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/19 14:33:02 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ t_tokens	*new_node_token(char *word, bool is_head)
 	new->old_stdin = -1;
 	new->old_stdout = -1;
 	new->word = word;
-	new->path = NULL;
 	new->cmd_array = NULL;
 	new->next = NULL;
 	new->prev = NULL;
@@ -52,30 +51,7 @@ t_tokens	*new_node_token(char *word, bool is_head)
 void	free_one_token(t_tokens *node)
 {
 	free(node->word);
-	if (node->path)
-		free(node->path);
-	if (node->cmd_array)
-		free_arrs((void **)node->cmd_array);
 	free(node);
-}
-
-/**
- * @brief Free a list of tokens.
- * @param head The head of the tokens' list.
- * @returns void.
- */
-void	free_tokens(t_tokens *head)
-{
-	t_tokens	*tmp;
-
-	if (!head)
-		return ;
-	while (head)
-	{
-		tmp = head;
-		head = head->next;
-		free_one_token(tmp);
-	}
 }
 
 /**

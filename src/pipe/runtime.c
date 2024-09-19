@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   runtime.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:07:40 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/18 16:36:40 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/19 15:53:02 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ void	init_child_pipe(t_exec *cmds_list, t_data *pipe_info, char **env_copy,
 		execve(cmds_list->path, cmds_list->cmd_array, env_copy);
 	}
 	else
+	{
+		store_or_free(NULL, NULL, false, true);
 		exit(127);
+	}
 }
 
 void	exec_pipe(t_exec *cmds_list, char **env_copy, int i, t_env **env_list)
@@ -33,6 +36,7 @@ void	exec_pipe(t_exec *cmds_list, char **env_copy, int i, t_env **env_list)
 	else
 	{
 		init_child_pipe(cmds_list, cmds_list->data, env_copy, i);
+		store_or_free(NULL, NULL, false, true);
 		exit(0);
 	}
 }

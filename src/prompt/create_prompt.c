@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   create_prompt.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:20:54 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/18 17:22:28 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/19 16:44:31 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*read_prompt(void)
+char	*read_prompt(t_env *env_list)
 {
 	char	cwd[1024];
 	char	*pretty_prompt;
@@ -25,6 +25,7 @@ char	*read_prompt(void)
 	line = readline(pretty_prompt);
 	if (line == NULL)
 	{
+		free_env_list(env_list);
 		free(pretty_prompt);
 		exit(0);
 	}

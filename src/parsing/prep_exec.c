@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 15:34:03 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/17 13:42:39 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/19 15:15:33 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ __int8_t	set_node_exec(t_exec *exec, t_tokens *token, int id_cmd)
 		return (FAILURE);
 	tmp = exec->files_info;
 	exec->builtin = (token->type == BUILTIN);
-	exec->path = token->path;
 	if (token->type == INREDIR || token->type == HEREDOC)
 		tmp->infile_info->name = token->word;
 	if (token->type == OUTREDIR || token->type == APPENDREDIR)
@@ -120,7 +119,7 @@ __int8_t	set_node_exec(t_exec *exec, t_tokens *token, int id_cmd)
  * @returns A pointer to the head of the list if the allocation succeeded,
  * and NULL otherwise.
  */
-t_exec	*create_exec_lst(t_tokens *head)
+t_exec	*create_exec_lst(t_tokens *head, t_env *env_list)
 {
 	t_exec		*itr;
 	t_exec		*exec;
@@ -130,7 +129,7 @@ t_exec	*create_exec_lst(t_tokens *head)
 	id_cmd = 0;
 	exec = new_node_exec();
 	if (!exec)
-		return (free_tokens(head), NULL); // COME BACK
+		return (NULL);
 	itr = exec;
 	first = head;
 	while (head)
@@ -154,9 +153,9 @@ t_exec	*create_exec_lst(t_tokens *head)
 		{
 			itr = new_node_exec();
 			if (!itr)
-				return (free_tokens(head), NULL); // COME BACK
+				return (free_exec(exec, true), NULL); // COME BACK
 		}
 	}
-	set_data_struct(first, exec);
+	set_data_struct(first, exec, env_list);
 	return (exec);
 }
