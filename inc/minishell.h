@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/18 17:25:12 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/19 11:24:37 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ t_tokens	*create_tokens(char *line);
 
 //				-->ft_parse.c
 
-t_exec		*ft_parse(char *line, char *envp[], __int8_t *error);
-
+t_exec		*ft_parse(char *line, char *envp[], __int8_t *error,
+				t_env *env_list);
 //				-->prep_exec.c
 
 t_exec		*create_exec_lst(t_tokens *head);
@@ -77,17 +77,18 @@ short int	skip_tab_spaces(char *str);
 //							EXPAND
 //				-->expand_utils.c
 
+short int	count_expands(char *str);
+void		reset_negative_characters(t_tokens *head);
 bool		check_if_edge_characters(char c, bool first_char);
 bool		check_expand_syntax(char *str, short int *start, short int *end);
 bool		expand_inside_single_quotes(char *str);
 char		*ft_strslice(char *str, int start, int end, bool *alloc_fail);
 char		*ft_strreplace(char *str, char *add, int start, int end);
-
+char		*getenv_from_env_list(char *var, t_env *env_list, t_env *first);
 //				-->expand.c
 
-__int8_t	extract_variable(t_tokens *node);
-__int8_t	extract_all(t_tokens *head);
-
+__int8_t	extract_variable(t_tokens *node, t_env *env_list);
+__int8_t	extract_all(t_tokens *head, t_env *env_list);
 //				-->quotes.c
 
 __int8_t	check_if_closed_quotes(t_tokens *head);

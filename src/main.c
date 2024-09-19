@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/18 17:32:57 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/19 11:25:45 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	main(int argc, char **argv, char **envp)
 	while (42)
 	{
 		line = read_prompt();
-		exec = ft_parse(line, envp, &error);
+		exec = ft_parse(line, envp, &error, env_list);
 		if (!exec)
 			continue ;
 		data = exec->data;
