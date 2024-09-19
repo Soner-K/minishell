@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:02:58 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/19 16:42:51 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/19 18:06:14 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	free_all(char *line, t_exec *exec, t_env *env_list, bool free_env)
 	}
 	if (free_env)
 	{
-		printf("env_list->var %s\n", env_list->variable);
+		// printf("env_list->var %s\n", env_list->variable);
 		free_env_list(env_list);
 	}
 }
