@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/19 12:47:48 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/19 14:32:30 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,6 +210,7 @@ void		runtime_shell(t_exec *cmds_list, char **env_copy, t_data *data,
 // 				-->init_signal.c
 void		init_signal(void);
 void		sig_handler(int signal);
+void		sig_handler_quit(int signal);
 
 // 				-->exit_status.c
 void		close_extra_files(t_exec *cmds_list);
