@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/17 14:04:29 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/18 14:05:14 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	main(int argc, char **argv, char **envp)
 	while (42)
 	{
 		line = read_prompt();
-		exec = ft_parse(line, envp, &error);
+		exec = ft_parse(line, envp, &error, env_list);
 		data = exec->data;
 		if (data->num_pipe < 1)
 			exec_shell(&exec, &env_list, envp, data);
