@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:25:38 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/16 14:42:42 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/18 16:57:01 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,11 @@ char	*merge_strings(char *s1, char *s2, char c)
  * @param cmd The string to check.
  * @returns True (1) if the command is a builtin and false (0) otherwise.
  */
+
 bool	is_builtin(char *cmd)
 {
 	static char	*builtins[] = {"echo", "cd", "pwd", "export", "unset", "env",
-			"exit"};
+				"exit"};
 	__int8_t	i;
 
 	i = 0;

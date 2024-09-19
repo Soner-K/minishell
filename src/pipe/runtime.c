@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:07:40 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/17 14:04:43 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/18 16:36:40 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,42 @@
 void	init_child_pipe(t_exec *cmds_list, t_data *pipe_info, char **env_copy,
 		int i)
 {
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	if (parse_path(cmds_list->cmd_array, cmds_list->path))
 	{
 		redirection(cmds_list, pipe_info, i);
 		execve(cmds_list->path, cmds_list->cmd_array, env_copy);
-		exit(0);
 	}
 	else
 		exit(127);
 }
 
-void	close_extra_files(t_exec *cmds_list)
+void	exec_pipe(t_exec *cmds_list, char **env_copy, int i, t_env **env_list)
 {
+	if (which_builtin(cmds_list) > 0)
+		redirect_and_init(cmds_list, cmds_list->data, i, env_list);
+	else
+	{
+		init_child_pipe(cmds_list, cmds_list->data, env_copy, i);
+		exit(0);
+	}
+}
+
+void	file_close(t_exec *cmds_list, t_data *data, int fork_id)
+{
+	store_pid(data, fork_id);
 	if (cmds_list->next != NULL)
 		close(cmds_list->pipe_fdo);
 	if (cmds_list->prev != NULL)
 		close(cmds_list->prev->pipe_fdi);
 }
 
-void	close_files(t_exec *cmds_list)
+void	redirect_and_init(t_exec *cmds_list, t_data *data, int i,
+		t_env **env_list)
 {
-	if (cmds_list->files_info->infile_info->name)
-		close(cmds_list->infile);
-	if (cmds_list->files_info->outfile_info->type)
-		close(cmds_list->outfile);
+	redirection(cmds_list, data, i);
+	exec_builtin(which_builtin(cmds_list), &cmds_list, env_list);
 }
 
 void	runtime_shell(t_exec *cmds_list, char **env_copy, t_data *data,
@@ -58,24 +70,11 @@ void	runtime_shell(t_exec *cmds_list, char **env_copy, t_data *data,
 		if (fork_id == 0)
 		{
 			if (getfile(&cmds_list))
-			{
-				if (which_builtin(cmds_list) > 0)
-				{
-					redirection(cmds_list, data, i);
-					exec_builtin(which_builtin(cmds_list), &cmds_list,
-						env_list);
-				}
-				else
-				{
-					init_child_pipe(cmds_list, data, env_copy, i);
-				}
-				exit(0);
-			}
+				exec_pipe(cmds_list, env_copy, i, env_list);
 			else
 				close_no_file(cmds_list);
 		}
-		store_pid(data, fork_id);
-		close_extra_files(cmds_list);
+		file_close(cmds_list, data, fork_id);
 		i++;
 		cmds_list = cmds_list->next;
 	}

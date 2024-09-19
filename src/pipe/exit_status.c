@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:27:37 by ftanon            #+#    #+#             */
-/*   Updated: 2024/09/17 13:02:18 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/18 16:26:31 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,35 @@ void	store_pid(t_data *pipe_info, pid_t fork_id)
 {
 	pipe_info->pids[pipe_info->counter] = fork_id;
 	pipe_info->counter++;
+}
+
+void	close_no_file(t_exec *cmds_list)
+{
+	close(cmds_list->pipe_fdi);
+	close(cmds_list->pipe_fdo);
+	exit(EXIT_FAILURE);
+}
+
+void	wait_pipe_files(t_data *data)
+{
+	int	i;
+	int	status;
+
+	status = 0;
+	i = 0;
+	while (i < data->total_cmds)
+	{
+		waitpid(data->pids[i], &status, 0);
+		if (WIFEXITED(status))
+			data->exit_status = WEXITSTATUS(status);
+		if (WIFSIGNALED(status))
+			data->exit_status = WTERMSIG(status) + 128;
+		i++;
+	}
+}
+
+void	close_parent(t_exec *head, t_data *data)
+{
+	close_pipe_files(head);
+	wait_pipe_files(data);
 }

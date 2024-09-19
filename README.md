@@ -55,5 +55,3 @@ So when process gets signals, there are three scenarios.
 3. Call signal-handler
 
 In our minishell, we decided to interprept some of signal handlers(ctrl+c, ctrl+d, ctrl+\\). So whenever this event happens on the minishell, you will see the difference and the similarities compared to original shell or bash. 
-
-

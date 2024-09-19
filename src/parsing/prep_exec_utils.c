@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prep_exec_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:16:08 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/17 13:55:38 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/18 17:24:38 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_exec	*new_node_exec(void)
 	exec_node->next = NULL;
 	exec_node->prev = NULL;
 	exec_node->files_info = files;
-	exec_node->old_infile = -1; 
+	exec_node->old_infile = -1;
 	exec_node->old_outfile = -1;
 	exec_node->id_cmd = -1;
 	return (exec_node);
@@ -63,7 +63,7 @@ void	lst_addback_exec(t_exec **head, t_exec *add)
 		*head = add;
 		return ;
 	}
-	tmp = *head; //COME BACK if no add, return error ?
+	tmp = *head; // COME BACK if no add, return error ?
 	while ((tmp->next))
 		tmp = tmp->next;
 	tmp->next = add;
@@ -77,7 +77,7 @@ void	lst_addback_exec(t_exec **head, t_exec *add)
  */
 void	free_exec_nodes(t_exec *head)
 {
-	t_exec *tmp;
+	t_exec	*tmp;
 
 	while (head)
 	{

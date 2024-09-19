@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:25 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/17 14:03:48 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/18 11:30:04 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,19 +92,11 @@ typedef struct s_files
 
 typedef struct t_data
 {
-	// exit status should be initiated as 0;
-	// this value is changed depending on the last cmd executed
 	int				exit_status;
 	pid_t			*pids;
 	char			*limiter;
-	// number of command -> how many commands in the total cmd line
-	// ls | ls | ls -> 3
 	int				total_cmds;
-	// how many pids needed for forking. this is for counting purpose ?
-	// this should be init as 0 in parsing
 	int				counter;
-	// number of pipe;
-	// so if it is cat | cat ->should be 1
 	int				num_pipe;
 }					t_data;
 

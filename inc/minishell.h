@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/18 14:05:19 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/19 11:24:37 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ void		func_echo(t_exec *cmds);
 int			is_env(char *str);
 void		func_env(t_exec *cmds, t_env **env);
 void		display_env_list(t_env *env_list);
+void		free_env_lists(t_env *head);
 
 // 				-->exit.c
 int			is_exit(char *str);
@@ -179,7 +180,6 @@ void		pipe_init(t_data *pipe_info, t_exec *cmds_list, int i,
 void		redirection(t_exec *cmds_list, t_data *pipe_info, int i);
 
 //				-->pipe_utils.c
-void		pipe_null_check(void);
 int			count_cmds(t_exec *cmds_list);
 void		close_no_file(t_exec *cmds_list);
 void		close_parent(t_exec *head, t_data *pipe_info);
@@ -195,20 +195,27 @@ void		middle_cmd(t_exec *cmds_list);
 t_data		*init_pipeinfo(t_exec *cmds_list);
 void		init_child_pipe(t_exec *cmds_list, t_data *pipe_info,
 				char **env_copy, int i);
+void		redirect_and_init(t_exec *cmds_list, t_data *data, int i,
+				t_env **env_list);
+void		exec_pipe(t_exec *cmds_list, char **env_copy, int i,
+				t_env **env_list);
+void		file_close(t_exec *cmds_list, t_data *data, int fork_id);
+
 // 				-->create_prompt.c
 char		*read_prompt(void);
+void		runtime_shell(t_exec *cmds_list, char **env_copy, t_data *data,
+				t_env **env_list);
 
 // 				-->init_signal.c
 void		init_signal(void);
 void		sig_handler(int signal);
+
+// 				-->exit_status.c
 void		close_extra_files(t_exec *cmds_list);
 void		close_files(t_exec *cmds_list);
-void		runtime_shell(t_exec *cmds_list, char **env_copy, t_data *data,
-				t_env **env_list);
-
-// 				-->debugging.c
-void		print_tokens(t_tokens *tokens);
-void		print_var(char *str, int start, int end);
+void		close_no_file(t_exec *cmds_list);
 void		init_pid_array(t_data *pipe_info);
 void		store_pid(t_data *pipe_info, pid_t fork_id);
+void		wait_pipe_files(t_data *data);
+
 #endif
