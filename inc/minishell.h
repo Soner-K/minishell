@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/19 14:32:30 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/19 16:48:15 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,6 @@ void		func_echo(t_exec *cmds);
 int			is_env(char *str);
 void		func_env(t_exec *cmds, t_env **env);
 void		display_env_list(t_env *env_list);
-void		free_env_lists(t_env *head);
 
 // 				-->exit.c
 int			is_exit(char *str);
@@ -155,7 +154,6 @@ void		replace_one_env(t_env **env_list, char *env_val, char *variable,
 				char *value);
 
 //				-->error.c
-void		free_env_list(t_env *env_list);
 void		free_lists(t_tokens *first);
 
 // 				-->exec_utils.c

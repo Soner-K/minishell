@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:11:10 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/17 14:14:29 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/19 16:25:54 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,9 +118,14 @@ void	func_export(t_exec **cmds, t_env **env)
 		{
 			variable_join = func_variable((*cmds)->cmd_array[i]);
 			value = func_value((*cmds)->cmd_array[i]);
-			final_value = func_join_words(variable_join, value);
-			if (!check_variable(env, variable_join, value))
-				push_env_list(env, final_value, ft_strlen(final_value));
+			if (value == NULL)
+				final_value = "";
+			else
+			{
+				final_value = func_join_words(variable_join, value);
+				if (!check_variable(env, variable_join, value))
+					push_env_list(env, final_value, ft_strlen(final_value));
+			}
 		}
 		else
 			printf("not valid in this context %s\n", (*cmds)->cmd_array[i]);
