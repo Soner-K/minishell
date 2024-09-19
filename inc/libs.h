@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:45:28 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/11 14:36:22 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/19 12:40:37 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "macros.h"
 # include "structs.h"
 # include <dirent.h>
+# include <errno.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
