@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 14:24:41 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/17 13:07:29 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/19 13:14:07 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,26 +47,26 @@ static char	*full_path(char *dir, char *cmd)
 /**
  * @brief Finds the PATH variable inside the environment variable,
 	and splits it.
- * @param env A pointer to an array of environment strings.
+ * @param env_list A pointer to an array of environment strings.
  * @returns The splitted path, with the separator being ':'. Returns NULL
  * if the allocation failed or if the PATH variable isn't found.
  */
-static char	**split_path(char **env)
+static char	**split_path(t_env *env_list)
 {
 	short int	i;
 	char		**all_paths;
 
 	i = 0;
-	while (env[i])
+	while (env_list)
 	{
-		if (!ft_strncmp(env[i], "PATH=", 5))
+		if (!ft_strncmp(env_list->variable, "PATH=", 5))
 			break ;
-		i++;
+		env_list = env_list->next;
 	}
-	if (!env[i])
+	if (!env_list)
 		return (NULL);
 	// necessary if split returns "" instead of NULL if command not found? COME BACK
-	all_paths = ft_split(env[i], ':');
+	all_paths = ft_split(env_list->variable, ':');
 	if (!all_paths)
 		return (NULL);
 	return (all_paths);
@@ -75,12 +75,12 @@ static char	**split_path(char **env)
 /**
  * @brief Finds the path of a given command, if it exists.
  * @param cmd The command for which to look for a path.
- * @param env The environment variable.
+ * @param env_list Minishell's environment variable.
  * @param alloc_fail A pointer to a boolean taking the value 1 if
  * an allocation error occured, and 0 otherwise.
  * @returns The path of a given command if it exists, and NULL otherwise.
  */
-char	*find_path(char *cmd, char **env, bool *alloc_fail)
+static char	*find_path(char *cmd, t_env *env_list, bool *alloc_fail)
 {
 	char		**all_paths;
 	char		*cmd_path;
@@ -88,7 +88,7 @@ char	*find_path(char *cmd, char **env, bool *alloc_fail)
 
 	if (!cmd || ft_strlen(cmd) == 0)
 		return (NULL);
-	all_paths = split_path(env);
+	all_paths = split_path(env_list);
 	if (!all_paths)
 		return (*alloc_fail = 1, NULL);
 	i = 0;
@@ -122,15 +122,15 @@ bool	check_if_builtin(t_exec *node)
 }
 
 /**
- * @brief Checks for all the tokens in the tokens list if there are
- * commands or builtins. If a command is found, the path to the executable
+ * @brief Checks for all the nodes in the exec list if there are
+ * commands. If a command is found, the path to the executable
  * is found.
  * @param head The head of the tokens list.
- * @param env The environment variable.
+ * @param env_list Minishell's environment variable.
  * @returns -1 if an allocation failure occured, 0 if head is NULL and 1
  * if the list was successfully iterated through.
  */
-__int8_t	find_cmd_type(t_exec *head, char **env)
+__int8_t	find_cmd_type(t_exec *head, t_env *env_list)
 {
 	char	*str;
 	bool	allocation_fail;
@@ -145,9 +145,9 @@ __int8_t	find_cmd_type(t_exec *head, char **env)
 			head = head->next;
 			continue ;
 		}
-		str = find_path(head->cmd_array[0], env, &allocation_fail);
+		str = find_path(head->cmd_array[0], env_list, &allocation_fail);
 		if (!str && allocation_fail)
-			return (-1); // proteger pour malloc
+			return (free_exec(head, false), ALLOCATION_FAILURE); // proteger pour malloc
 		if (str && !access(str, F_OK && X_OK))
 			head->path = str;
 		else if (str)
