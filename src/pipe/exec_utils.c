@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:30:11 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/19 15:51:28 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/19 18:09:49 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ void	init_child(t_exec **cmds_list, char **env_copy)
 	if (getfile(cmds_list))
 	{
 		only_redirection(cmds_list);
-		if (parse_path((*cmds_list)->cmd_array, (*cmds_list)->path))
+		if ((*cmds_list)->cmd_array && parse_path((*cmds_list)->cmd_array,
+				(*cmds_list)->path))
 			execve((*cmds_list)->path, (*cmds_list)->cmd_array, env_copy);
 		else
 		{
@@ -84,7 +85,9 @@ void	exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy,
 	{
 		fork_id = fork();
 		if (fork_id == 0)
+		{
 			init_child(exec_list, env_copy);
+		}
 		else
 			get_status(fork_id, status, data);
 	}

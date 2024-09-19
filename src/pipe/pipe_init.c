@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:59:43 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/18 16:49:41 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/19 17:29:38 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ int	getfile(t_exec **cmds_list)
 
 	infile_info = (*cmds_list)->files_info->infile_info;
 	if ((*cmds_list)->files_info->infile_info->type == HEREDOC)
+	{
 		call_heredoc((*cmds_list));
+	}
 	else if ((*cmds_list)->files_info->infile_info->type == INREDIR)
 	{
 		if (infile_info->rights == 6)

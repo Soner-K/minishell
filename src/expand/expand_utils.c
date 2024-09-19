@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:03:00 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/18 13:14:12 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/19 20:09:25 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	reset_negative_characters(t_tokens *head)
  * @brief Checks if there is an expand inside single quotes. If it is,
  * the variable isn't expanded.
  * @param str The string to check.
- * @returns True (1) if the expand isn't inside single quotes
+ * @returns True (1) if the expand is inside single quotes
  * and false (0) otherwise.
  */
 bool	expand_inside_single_quotes(char *str)
@@ -85,9 +85,10 @@ bool	expand_inside_single_quotes(char *str)
 	{
 		if (str[i] == '$' && quotes_count % 2 == 0)
 			return (false);
-		if (str[i] == '\'')
+		if (str[i] == -39)
 			quotes_count++;
 		i++;
+		printf("Quotes_c = %hd\n", quotes_count);
 	}
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 16:20:21 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/18 13:15:25 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/19 20:39:57 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,15 @@ char	*get_new_word(t_tokens *node, char *var, short int s, short int end)
  * (i.e. starts with '$'), finds the referenced variable recursively.
  * The recursion continues as long as there are referenced variables.
  * @param var The variable name.
- * @param env_list 
+ * @param env_list
  * @param first
  * @returns
  */
 char	*getenv_from_env_list(char *var, t_env *env_list, t_env *first)
+		// COME BACK
 {
-	int		len_var;
-	char	*ret;
+	int len_var;
+	char *ret;
 
 	if (!env_list || !var)
 		return (NULL);

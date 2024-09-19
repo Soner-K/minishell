@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 14:24:41 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/19 13:14:07 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/19 18:14:10 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ static char	*find_path(char *cmd, t_env *env_list, bool *alloc_fail)
  */
 bool	check_if_builtin(t_exec *node)
 {
-	if (!node)
+	if (!node || !node->cmd_array)
 		return (false);
 	if (is_builtin(node->cmd_array[0]))
 		return (true);
@@ -136,11 +136,11 @@ __int8_t	find_cmd_type(t_exec *head, t_env *env_list)
 	bool	allocation_fail;
 
 	if (!head)
-		return (0);
+		return (0); // CCOME BACK
 	allocation_fail = 1;
 	while (head)
 	{
-		if (check_if_builtin(head))
+		if (check_if_builtin(head) || !head->cmd_array)
 		{
 			head = head->next;
 			continue ;
