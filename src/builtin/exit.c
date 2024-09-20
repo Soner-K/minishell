@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:11:30 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/20 10:07:24 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/20 11:11:47 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,16 @@ void	normal_exit(t_exec *cmds_list)
 		close(cmds_list->old_stdout);
 	if (cmds_list->old_stdout != -1)
 		close(cmds_list->old_stdin);
+	if (cmds_list->cmd_array[1] == NULL)
+	{
+		store_or_free(NULL, NULL, false, true);
+		exit(0);
+	}
 	exit_num = ft_atoi(cmds_list->cmd_array[1]);
 	if (exit_num > 0)
 	{
 		store_or_free(NULL, NULL, false, true);
 		exit(exit_num);
-	}
-	else
-	{
-		store_or_free(NULL, NULL, false, true);
-		exit(0);
 	}
 }
 
@@ -88,7 +88,6 @@ void	func_exit(t_exec **cmds)
 	if (!(*cmds)->cmd_array[1])
 	{
 		normal_exit((*cmds));
-		return ;
 	}
 	if ((*cmds)->cmd_array[1] && (*cmds)->cmd_array[2])
 	{

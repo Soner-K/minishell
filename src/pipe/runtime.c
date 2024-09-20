@@ -6,45 +6,34 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:07:40 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/20 10:46:39 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/20 12:03:19 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	init_child_pipe(t_exec *cmds_list, t_data *pipe_info, char **env_copy,
-		int i)
+void	init_child_pipe(t_exec *cmds_list, char **env_copy)
 {
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
 	if (parse_path(cmds_list->cmd_array, cmds_list->path))
-	{
-		redirection(cmds_list, pipe_info, i);
 		execve(cmds_list->path, cmds_list->cmd_array, env_copy);
-	}
 	else
 	{
 		store_or_free(NULL, NULL, false, true);
 		exit(127);
 	}
 }
-void	redirect_and_init(t_exec *cmds_list, t_data *data, int i,
-		t_env **env_list)
-{
-	redirection(cmds_list, data, i);
-	exec_builtin(which_builtin(cmds_list), &cmds_list, env_list);
-}
 
 void	exec_pipe(t_exec *cmds_list, char **env_copy, int i, t_env **env_list)
 {
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+	redirection(cmds_list, cmds_list->data, i);
 	if (which_builtin(cmds_list) > 0)
-		redirect_and_init(cmds_list, cmds_list->data, i, env_list);
+		exec_builtin(which_builtin(cmds_list), &cmds_list, env_list);
 	else
-	{
-		init_child_pipe(cmds_list, cmds_list->data, env_copy, i);
-		store_or_free(NULL, NULL, false, true);
-		exit(0);
-	}
+		init_child_pipe(cmds_list, env_copy);
+	store_or_free(NULL, NULL, false, true);
+	exit(0);
 }
 
 void	file_close(t_exec *cmds_list, t_data *data, int fork_id)
@@ -75,7 +64,7 @@ void	runtime_shell(t_exec *cmds_list, char **env_copy, t_data *data,
 			if (getfile(&cmds_list))
 			{
 				exec_pipe(cmds_list, env_copy, i, env_list);
-				exit(0);
+				// exit(0);
 			}
 			else
 				close_no_file(cmds_list);
