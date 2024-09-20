@@ -6,12 +6,11 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:03:00 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/20 12:45:15 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/20 13:39:19 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 /**
  * @brief Count the number of expand(s) inside one token.
@@ -93,21 +92,26 @@ void	reset_negative_characters(t_tokens *head)
 // 	return (true);
 // }
 
-bool	expand_inside_single_quotes(t_tokens *node) // add that only when quotes is ' we do check
+bool	expand_inside_single_quotes(t_tokens *node)
+		// add that only when quotes is ' we do check
 {
-	char		*str;
-	int			i;
-	__int8_t	inside;
+	char *str;
+	int i;
+	__int8_t inside;
 
 	str = node->word;
 	i = -1;
 	inside = -1;
 	while (str[++i])
 	{
-		if (inside <= 0 && str[i] == -39)
+		if (str[i] == -39 && inside != true)
 			inside = true;
 		else if (inside == true && str[i] == -39)
+		{
 			inside = false;
+			if (!str[i + 1])
+				inside = true;
+		}
 	}
 	return (inside >= true);
 }

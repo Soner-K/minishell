@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:11:30 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/20 11:11:47 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/20 13:18:04 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	normal_exit(t_exec *cmds_list)
 {
 	int	exit_num;
 
-	printf("exittt\n");
+	printf("exit\n");
 	if (cmds_list->old_stdin != -1)
 		close(cmds_list->old_stdout);
 	if (cmds_list->old_stdout != -1)

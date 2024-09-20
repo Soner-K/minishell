@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:40:26 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/20 11:50:19 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/20 14:09:57 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,68 +37,48 @@ __int8_t	check_if_closed_quotes(t_tokens *head)
 	return (true);
 }
 
-// void	mark_quotes(t_tokens *head)
-// {
-// 	char	*str;
-// 	char	quote_to_mark;
-
-// 	if (!head)
-// 		return ;
-// 	str = head->word;
-// 	quote_to_mark = 0;
-// 	while (*str)
-// 	{
-// 		if (quote_to_mark == 0 && (*str == '\'' || *str == '"'))
-// 			quote_to_mark = *str;
-// 		if (quote_to_mark != 0 && *str == quote_to_mark)
-// 		{
-// 			*str = -(*str);
-// 			head->quotes = quote_to_mark;
-// 			head->n_quotes++;
-// 		}
-// 		str++;
-// 	}
-// 	mark_quotes(head->next);
-// }
-
 void	mark_quotes(t_tokens *head)
 {
 	char	*str;
-	int		i;
-	int		end_expand;
-	char	quote;
+	char	quote_to_mark;
 
 	if (!head)
 		return ;
 	str = head->word;
-	i = -1;
-	end_expand = 0;
-	quote = 0;
-	while (str[++i])
+	quote_to_mark = 0;
+	while (*str)
 	{
-		if ((str[i] == '\'' || str[i] == '"') && quote == 0)
-			quote = str[i];
-		else if (str[i] == quote)
-			quote = 0;
-		if (str[i] == '$')//?
+		if (quote_to_mark == 0 && (*str == '\'' || *str == '"'))
 		{
-			check_expand_syntax(str, &i, &end_expand);
-			i = end_expand;
-			continue ;
+			quote_to_mark = *str;
+			*str = -(*str);
 		}
-		if (str[i] ==  quote)
+		else if (quote_to_mark != 0 && *str == quote_to_mark)
 		{
-			str[i] = -str[i];
-			head->quotes = true;
+			*str = -(*str);
+			head->quotes = quote_to_mark;
+			head->n_quotes++;
+			quote_to_mark = 0;
 		}
-	// 	if (str[i] == '"' && quote == '\'')
-	// 	{
-	// 		str[i] = -str[i];
-	// 		head->quotes = true;
-	// 	}
+		str++;
 	}
 	mark_quotes(head->next);
 }
+
+// void	mark_quotes(t_tokens *head)
+// {
+// 	char	*str;
+// 	int		i;
+// 	char	to_remove;
+
+// 	if (!head)
+// 		return ;
+// 	str = head->word;
+// 	while (str[i])
+// 	{
+// 		if 
+// 	}
+// }
 
 // is there a need to null terminate the string if ft_calloc was used ? COME BACK
 static __int8_t	quotes_remover_helper(t_tokens *node, short int quotes_count)
