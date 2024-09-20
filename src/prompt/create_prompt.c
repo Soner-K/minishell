@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_prompt.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:20:54 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/19 18:05:46 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/20 14:20:35 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ char	*read_prompt(t_env *env_list)
 	line = readline(pretty_prompt);
 	if (line == NULL)
 	{
-		// free_env_list(env_list);
 		free_all(NULL, NULL, env_list, true);
 		free(pretty_prompt);
 		exit(0);

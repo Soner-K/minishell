@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 12:42:20 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/20 14:11:10 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/20 14:15:04 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,7 @@ void	get_status(int fork_id, int status, t_data *data)
 	if (WIFEXITED(status))
 		data->exit_status = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))
-	{
 		data->exit_status = WTERMSIG(status) + 128;
-	}
 }
 
 void	sig_handler_quit(int signal)
