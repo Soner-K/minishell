@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 15:34:03 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/20 14:16:45 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:06:35 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ __int8_t	set_node_exec(t_exec *exec, t_tokens *token, int id_cmd)
 		tmp->outfile_info->name = token->word;
 	exec->infile = -1;
 	exec->outfile = -1;
-	exec->id_cmd = id_cmd;
 	while (token && token->id_cmd != id_cmd)
 		token = token->next;
 	if (token)
@@ -119,11 +118,10 @@ __int8_t	set_node_exec(t_exec *exec, t_tokens *token, int id_cmd)
  * @returns A pointer to the head of the list if the allocation succeeded,
  * and NULL otherwise.
  */
-t_exec	*create_exec_lst(t_tokens *head, t_env *env_list)
+t_exec	*create_exec_lst(t_tokens *head, t_tokens *first, t_env *env_list)
 {
 	t_exec		*itr;
 	t_exec		*exec;
-	t_tokens	*first;
 	int			id_cmd;
 
 	id_cmd = 0;
@@ -131,20 +129,9 @@ t_exec	*create_exec_lst(t_tokens *head, t_env *env_list)
 	if (!exec)
 		return (NULL);
 	itr = exec;
-	first = head;
 	while (head)
 	{
-		while (head && head->id_cmd == -1)
-			head = head->next;
-		while (head && head->id_cmd == id_cmd)
-		{
-			if (head->type >= INREDIR && head->type <= APPENDREDIR)
-				set_files_info(itr->files_info, head);
-			else
-				set_node_exec(itr, head, id_cmd);
-			head = head->next;
-		}
-		exec->id_cmd = id_cmd;
+		all_my_homies_hate_the_norm(&head, itr, id_cmd);
 		id_cmd++;
 		if (itr != exec)
 			lst_addback_exec(&exec, itr);

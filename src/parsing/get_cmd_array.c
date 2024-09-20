@@ -6,13 +6,11 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:22:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/19 17:08:37 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:15:44 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-#define TOKEN_IS_PIPE -2
 
 /**
  * @brief Assigns an id to each command in the linked list of tokens.
@@ -46,33 +44,28 @@ void	set_id(t_tokens *head)
  * @returns TOKEN_IS_PIPE (-2) if the token is a pipe, ALLOCATION_FAILURE (-1)
  * if the allocation failed, and SUCCESS (1) otherwise.
  */
-__int8_t	get_cmd_array(t_tokens **node, t_tokens *first, int id)
+__int8_t	get_cmd_array(t_tokens **node, t_tokens *itr, int id)
 {
 	char		*joined_cmds;
 	char		**cmd_array;
-	t_tokens	*tmp;
 
-	tmp = *node;
 	joined_cmds = NULL;
-	first = NULL;
-	if (tmp->type == PIPE)
-		return (TOKEN_IS_PIPE);
-	while (tmp && (tmp->id_cmd != -1 && tmp->id_cmd == id))
+	while (itr && (itr->id_cmd != -1 && itr->id_cmd == id))
 	{
-		if (tmp->type != WORD && tmp->type != CMD && tmp->type != BUILTIN) // COME BACK
+		if (itr->type != WORD && itr->type != CMD && itr->type != BUILTIN) // COME BACK
 		{
-			tmp = tmp->next;
+			itr = itr->next;
 			continue ;
 		}
-		joined_cmds = merge_strings(joined_cmds, tmp->word, -32);
+		joined_cmds = merge_strings(joined_cmds, itr->word, -32);
 		if (!joined_cmds)
 			return (ALLOCATION_FAILURE);
-		tmp = tmp->next;
+		itr = itr->next;
 	}
 	cmd_array = ft_split(joined_cmds, -32);
 	if (!cmd_array && joined_cmds)
 		return (free(joined_cmds), ALLOCATION_FAILURE);
-	while ((*node) && (*node) != tmp)
+	while ((*node) && (*node) != itr)
 	{
 		(*node)->cmd_array = cmd_array;
 		*node = (*node)->next;
@@ -96,10 +89,13 @@ __int8_t	set_cmds_arrays(t_tokens **head)
 	set_id(*head);
 	while (*head)
 	{
-		ret = get_cmd_array(head, first, (*head)->id_cmd);
-		if (ret == TOKEN_IS_PIPE)
+		if ((*head)->type == PIPE)
+		{
 			*head = (*head)->next;
-		else if (ret == ALLOCATION_FAILURE)
+			continue ;
+		}
+		ret = get_cmd_array(head, *head, (*head)->id_cmd);
+		if (ret == ALLOCATION_FAILURE)
 			return (FAILURE); // COME BACK
 	}
 	*head = first;

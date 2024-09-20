@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:40:26 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/20 14:09:57 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:19:25 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	mark_quotes(t_tokens *head)
 		{
 			*str = -(*str);
 			head->quotes = quote_to_mark;
-			head->n_quotes++;
 			quote_to_mark = 0;
 		}
 		str++;

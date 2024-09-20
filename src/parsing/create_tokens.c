@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:34:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/19 13:12:03 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:07:32 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ t_tokens	*delete_whitespaces(t_tokens *tokens)
 {
 	t_tokens	*new;
 	t_tokens	*tmp;
-
 	short int	i;
+
 	i = 0;
 	new = NULL;
 	while (tokens)
