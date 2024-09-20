@@ -45,7 +45,8 @@ void	init_child(t_exec **cmds_list, char **env_copy)
 	if (getfile(cmds_list))
 	{
 		only_redirection(cmds_list);
-		if (parse_path((*cmds_list)->cmd_array, (*cmds_list)->path))
+		if ((*cmds_list)->cmd_array && parse_path((*cmds_list)->cmd_array,
+				(*cmds_list)->path))
 			execve((*cmds_list)->path, (*cmds_list)->cmd_array, env_copy);
 		if (errno == EACCES)
 			exit(126);
@@ -102,7 +103,9 @@ void	exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy,
 		signal(SIGQUIT, sig_handler_quit);
 		fork_id = fork();
 		if (fork_id == 0)
+		{
 			init_child(exec_list, env_copy);
+		}
 		else
 			get_status(fork_id, status, data);
 	}

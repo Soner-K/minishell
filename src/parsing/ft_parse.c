@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 15:52:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/19 15:20:07 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/19 19:10:54 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ t_exec	*ft_parse(char *line, __int8_t *error, t_env *env_list)
 	t_tokens	*tokens;
 	t_exec		*exec;
 
+	if (!line[0])
+		return (NULL);
 	tokens = create_tokens(line);
 	if (!tokens)
 		return (*error = ALLOCATION_FAILURE, NULL);
@@ -44,6 +46,5 @@ t_exec	*ft_parse(char *line, __int8_t *error, t_env *env_list)
 		return (*error = ALLOCATION_FAILURE, free_tokens(tokens, false), NULL);
 	if (find_cmd_type(exec, env_list) == ALLOCATION_FAILURE)
 		return (*error = ALLOCATION_FAILURE, free_tokens(tokens, true), NULL);
-	free_tokens(tokens, false);
-	return (exec);
+	return (free_tokens(tokens, false), exec);
 }

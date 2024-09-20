@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/19 16:57:01 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/20 10:12:41 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ short int	skip_tab_spaces(char *str);
 short int	count_expands(char *str);
 void		reset_negative_characters(t_tokens *head);
 bool		check_if_edge_characters(char c, bool first_char);
-bool		check_expand_syntax(char *str, short int *start, short int *end);
-bool		expand_inside_single_quotes(char *str);
+bool		check_expand_syntax(char *str, int *start, int *end);
+bool		expand_inside_single_quotes(t_tokens *node);
 char		*ft_strslice(char *str, int start, int end, bool *alloc_fail);
 char		*ft_strreplace(char *str, char *add, int start, int end);
 char		*getenv_from_env_list(char *var, t_env *env_list, t_env *first);

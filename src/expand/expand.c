@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 16:20:21 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/18 13:15:25 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/20 10:53:33 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,15 @@ char	*get_new_word(t_tokens *node, char *var, short int s, short int end)
  * (i.e. starts with '$'), finds the referenced variable recursively.
  * The recursion continues as long as there are referenced variables.
  * @param var The variable name.
- * @param env_list 
+ * @param env_list
  * @param first
  * @returns
  */
 char	*getenv_from_env_list(char *var, t_env *env_list, t_env *first)
+		// COME BACK
 {
-	int		len_var;
-	char	*ret;
+	int len_var;
+	char *ret;
 
 	if (!env_list || !var)
 		return (NULL);
@@ -93,14 +94,14 @@ char	*getenv_from_env_list(char *var, t_env *env_list, t_env *first)
  */
 __int8_t	extract_variable(t_tokens *node, t_env *env_list)
 {
-	short int	start;
-	short int	end;
+	int			start;
+	int			end;
 	char		*var_content;
 	char		*str;
 
-	if (node->quotes == SINGLE_QUOTE)
+	if (expand_inside_single_quotes(node) == true)
 		return (EXPAND_INSIDE_SINGLE_QUOTES);
-	if (!check_expand_syntax(node->word, &start, &end))
+	if (check_expand_syntax(node->word, &start, &end) == false)
 		return (EXPAND_SYNTAX_NOT_VALID);
 	str = ft_substr(node->word, start, (end - start + 1));
 	if (!str)
