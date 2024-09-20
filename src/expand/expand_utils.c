@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:03:00 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/19 20:09:25 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/20 12:45:15 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,25 +72,44 @@ void	reset_negative_characters(t_tokens *head)
  * @returns True (1) if the expand is inside single quotes
  * and false (0) otherwise.
  */
-bool	expand_inside_single_quotes(char *str)
-{
-	short int	quotes_count;
-	short int	i;
+// bool	expand_inside_single_quotes(char *str)
+// {
+// 	short int	quotes_count;
+// 	short int	i;
 
-	if (!str)
-		return (true);
-	quotes_count = 0;
-	i = 0;
-	while (str[i])
+// 	if (!str)
+// 		return (true);
+// 	quotes_count = 0;
+// 	i = 0;
+// 	while (str[i])
+// 	{
+// 		if (str[i] == '$' && quotes_count % 2 == 0)
+// 			return (false);
+// 		if (str[i] == -39)
+// 			quotes_count++;
+// 		i++;
+// 		printf("Quotes_c = %hd\n", quotes_count);
+// 	}
+// 	return (true);
+// }
+
+bool	expand_inside_single_quotes(t_tokens *node) // add that only when quotes is ' we do check
+{
+	char		*str;
+	int			i;
+	__int8_t	inside;
+
+	str = node->word;
+	i = -1;
+	inside = -1;
+	while (str[++i])
 	{
-		if (str[i] == '$' && quotes_count % 2 == 0)
-			return (false);
-		if (str[i] == -39)
-			quotes_count++;
-		i++;
-		printf("Quotes_c = %hd\n", quotes_count);
+		if (inside <= 0 && str[i] == -39)
+			inside = true;
+		else if (inside == true && str[i] == -39)
+			inside = false;
 	}
-	return (true);
+	return (inside >= true);
 }
 
 /**
@@ -139,7 +158,7 @@ outside of the first loop if a dollar sign is found).
  * variable exists or not. Returns false (0) if the first character of the
  * expand isn't valid.
  */
-bool	check_expand_syntax(char *str, short int *start, short int *end)
+bool	check_expand_syntax(char *str, int *start, int *end)
 {
 	int	i;
 

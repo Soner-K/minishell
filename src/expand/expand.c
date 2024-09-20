@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 16:20:21 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/19 20:39:57 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/20 10:53:33 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,14 +94,14 @@ char	*getenv_from_env_list(char *var, t_env *env_list, t_env *first)
  */
 __int8_t	extract_variable(t_tokens *node, t_env *env_list)
 {
-	short int	start;
-	short int	end;
+	int			start;
+	int			end;
 	char		*var_content;
 	char		*str;
 
-	if (node->quotes == SINGLE_QUOTE)
+	if (expand_inside_single_quotes(node) == true)
 		return (EXPAND_INSIDE_SINGLE_QUOTES);
-	if (!check_expand_syntax(node->word, &start, &end))
+	if (check_expand_syntax(node->word, &start, &end) == false)
 		return (EXPAND_SYNTAX_NOT_VALID);
 	str = ft_substr(node->word, start, (end - start + 1));
 	if (!str)
