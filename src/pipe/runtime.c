@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:07:40 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/20 16:22:37 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/20 16:40:35 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	runtime_shell(t_exec *cmds_list, char **env_copy, t_data *data,
 		cmds_list->pipe_fdi = -1;
 		cmds_list->pipe_fdo = -1;
 		pipe_init(data, cmds_list, i, data);
+		signal(SIGQUIT, sig_handler_quit);
 		fork_id = fork();
 		if (fork_id == 0)
 		{
