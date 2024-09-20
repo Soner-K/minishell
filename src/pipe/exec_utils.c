@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:30:11 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/19 16:57:25 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/20 12:54:07 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	init_child(t_exec **cmds_list, char **env_copy)
 			exit(127);
 		}
 	}
+	exit(1);
 }
 
 void	exec_shell_builtin(t_exec **cmds_list, int builtin_check,

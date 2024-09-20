@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/20 10:12:41 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/20 12:53:18 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,8 +196,7 @@ void		middle_cmd(t_exec *cmds_list);
 
 //				-->runtime.c
 t_data		*init_pipeinfo(t_exec *cmds_list);
-void		init_child_pipe(t_exec *cmds_list, t_data *pipe_info,
-				char **env_copy, int i);
+void		init_child_pipe(t_exec *cmds_list, char **env_copy);
 void		redirect_and_init(t_exec *cmds_list, t_data *data, int i,
 				t_env **env_list);
 void		exec_pipe(t_exec *cmds_list, char **env_copy, int i,

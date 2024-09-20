@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 17:15:01 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/19 12:36:45 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/20 12:54:31 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,5 @@ void	open_heredoc(t_exec *cmds_list)
 
 void	call_heredoc(t_exec *cmds_list)
 {
-	signal(SIGQUIT, SIG_IGN);
 	open_heredoc(cmds_list);
 }

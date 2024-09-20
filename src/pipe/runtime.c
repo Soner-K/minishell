@@ -6,24 +6,16 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:07:40 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/19 16:57:30 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/20 12:55:00 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	init_child_pipe(t_exec *cmds_list, t_data *pipe_info, char **env_copy,
-		int i)
+void	init_child_pipe(t_exec *cmds_list, char **env_copy)
 {
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
 	if (parse_path(cmds_list->cmd_array, cmds_list->path))
-	{
-		redirection(cmds_list, pipe_info, i);
 		execve(cmds_list->path, cmds_list->cmd_array, env_copy);
-	}
-	if (errno == EACCES)
-		exit(126);
 	else
 	{
 		store_or_free(NULL, NULL, false, true);
@@ -33,14 +25,16 @@ void	init_child_pipe(t_exec *cmds_list, t_data *pipe_info, char **env_copy,
 
 void	exec_pipe(t_exec *cmds_list, char **env_copy, int i, t_env **env_list)
 {
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+	printf("Piep exec called\n");
+	redirection(cmds_list, cmds_list->data, i);
 	if (which_builtin(cmds_list) > 0)
-		redirect_and_init(cmds_list, cmds_list->data, i, env_list);
+		exec_builtin(which_builtin(cmds_list), &cmds_list, env_list);
 	else
-	{
-		init_child_pipe(cmds_list, cmds_list->data, env_copy, i);
-		store_or_free(NULL, NULL, false, true);
-		exit(0);
-	}
+		init_child_pipe(cmds_list, env_copy);
+	store_or_free(NULL, NULL, false, true);
+	exit(0);
 }
 
 void	file_close(t_exec *cmds_list, t_data *data, int fork_id)
@@ -50,13 +44,6 @@ void	file_close(t_exec *cmds_list, t_data *data, int fork_id)
 		close(cmds_list->pipe_fdo);
 	if (cmds_list->prev != NULL)
 		close(cmds_list->prev->pipe_fdi);
-}
-
-void	redirect_and_init(t_exec *cmds_list, t_data *data, int i,
-		t_env **env_list)
-{
-	redirection(cmds_list, data, i);
-	exec_builtin(which_builtin(cmds_list), &cmds_list, env_list);
 }
 
 void	runtime_shell(t_exec *cmds_list, char **env_copy, t_data *data,

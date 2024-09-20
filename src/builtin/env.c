@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:11:21 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/14 17:11:46 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/19 17:42:31 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	func_env(t_exec *cmds, t_env **env)
 
 void	display_env_list(t_env *env_list)
 {
-	printf("HERE\n");
 	while (env_list)
 	{
 		printf("%s\n", env_list->variable);
