@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/19 16:44:41 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/20 10:28:57 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	main(int argc, char **argv, char **envp)
 			exec_shell(&exec, &env_list, envp, data);
 		else
 			runtime_shell(exec, envp, data, &env_list);
-		printf("DATA EXIT STATUS CHECK %d\n", data->exit_status);
+		// printf("DATA EXIT STATUS CHECK %d\n", data->exit_status);
 		free_all(line, exec, env_list, false);
 	}
 	free_env_lists(env_list);
