@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 17:15:01 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/20 14:42:36 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/20 16:24:04 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,18 @@ void	open_heredoc(t_exec *cmds_list)
 	while (1)
 	{
 		str = readline(">");
+		if (g_signal == 2)
+		{
+			if (cmds_list->pipe_fdi != -1)
+				close(cmds_list->pipe_fdi);
+			if (cmds_list->pipe_fdo != -1)
+				close(cmds_list->pipe_fdo);
+			if (cmds_list->prev != NULL && cmds_list->prev->pipe_fdi != -1)
+				close(cmds_list->prev->pipe_fdi);
+			close(tmp);
+			store_or_free(NULL, NULL, false, true);
+			exit(130);
+		}
 		if (str == NULL)
 		{
 			printf("heredoc delimited (`%s')\n",

@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:27:37 by ftanon            #+#    #+#             */
-/*   Updated: 2024/09/20 15:39:44 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/20 16:18:13 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	wait_pipe_files(t_data *data)
 	int	i;
 	int	status;
 
+	signal(SIGINT, &sig_handler_wait);
 	status = 0;
 	i = 0;
 	while (i < data->total_cmds)

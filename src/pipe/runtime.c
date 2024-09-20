@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:07:40 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/20 15:40:21 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/20 16:22:37 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ void	init_child_pipe(t_exec *cmds_list, char **env_copy)
 
 void	exec_pipe(t_exec *cmds_list, char **env_copy, int i, t_env **env_list)
 {
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
 	redirection(cmds_list, cmds_list->data, i);
 	if (which_builtin(cmds_list) > 0)
 		exec_builtin(which_builtin(cmds_list), &cmds_list, env_list);
@@ -57,10 +55,14 @@ void	runtime_shell(t_exec *cmds_list, char **env_copy, t_data *data,
 	init_pid_array(data);
 	while (i < data->total_cmds)
 	{
+		cmds_list->pipe_fdi = -1;
+		cmds_list->pipe_fdo = -1;
 		pipe_init(data, cmds_list, i, data);
 		fork_id = fork();
 		if (fork_id == 0)
 		{
+			signal(SIGINT, &sig_handler_forks);
+			signal(SIGQUIT, SIG_DFL);
 			if (getfile(&cmds_list))
 				exec_pipe(cmds_list, env_copy, i, env_list);
 			else

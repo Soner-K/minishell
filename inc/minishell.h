@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/20 14:27:38 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/20 16:18:34 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,6 +218,8 @@ void		runtime_shell(t_exec *cmds_list, char **env_copy, t_data *data,
 void		init_signal(void);
 void		sig_handler(int signal);
 void		sig_handler_quit(int signal);
+void		sig_handler_forks(int signal);
+void		sig_handler_wait(int signal);
 void		get_status(int fork_id, int status, t_data *data);
 
 // 				-->exit_status.c
