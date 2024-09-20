@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:30:11 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/20 12:54:07 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/20 13:21:50 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,9 @@ int	parse_path(char **cmds, char *path)
 		return (0);
 	}
 	else
-	{
 		return (1);
-	}
 }
 
-void	sig_handler_cmd_block(int signal)
-{
-	printf("CALLEd\n");
-	if (signal == SIGQUIT)
-	{
-		ft_putstr_fd("Quit (core dumped)\n", STDOUT_FILENO);
-	}
-}
-void	sig_handler_quit(int signal)
-{
-	(void)signal;
-	ft_putstr_fd("Quit (core dumped)\n", STDOUT_FILENO);
-}
 void	init_child(t_exec **cmds_list, char **env_copy)
 {
 	signal(SIGINT, SIG_DFL);
@@ -69,17 +54,6 @@ void	exec_shell_builtin(t_exec **cmds_list, int builtin_check,
 	}
 }
 
-void	get_status(int fork_id, int status, t_data *data)
-{
-	waitpid(fork_id, &status, 0);
-	if (WIFEXITED(status))
-		data->exit_status = WEXITSTATUS(status);
-	if (WIFSIGNALED(status))
-	{
-		data->exit_status = WTERMSIG(status) + 128;
-	}
-}
-
 void	exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy,
 		t_data *data)
 {
@@ -104,9 +78,7 @@ void	exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy,
 		signal(SIGQUIT, sig_handler_quit);
 		fork_id = fork();
 		if (fork_id == 0)
-		{
 			init_child(exec_list, env_copy);
-		}
 		else
 			get_status(fork_id, status, data);
 	}

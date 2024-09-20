@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:11:30 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/20 11:11:47 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/20 13:18:37 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,7 @@ void	func_exit(t_exec **cmds)
 
 	i = 0;
 	if (!(*cmds)->cmd_array[1])
-	{
 		normal_exit((*cmds));
-	}
 	if ((*cmds)->cmd_array[1] && (*cmds)->cmd_array[2])
 	{
 		control_many_args((*cmds));

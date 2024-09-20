@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_status.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:27:37 by ftanon            #+#    #+#             */
-/*   Updated: 2024/09/19 18:38:33 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/20 13:19:59 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	close_no_file(t_exec *cmds_list)
 {
 	close(cmds_list->pipe_fdi);
 	close(cmds_list->pipe_fdo);
-	exit(EXIT_FAILURE); // COME BACK
+	exit(EXIT_FAILURE);
 }
 
 void	wait_pipe_files(t_data *data)

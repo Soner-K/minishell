@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:07:40 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/20 12:55:00 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/20 13:06:08 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	exec_pipe(t_exec *cmds_list, char **env_copy, int i, t_env **env_list)
 {
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-	printf("Piep exec called\n");
 	redirection(cmds_list, cmds_list->data, i);
 	if (which_builtin(cmds_list) > 0)
 		exec_builtin(which_builtin(cmds_list), &cmds_list, env_list);
