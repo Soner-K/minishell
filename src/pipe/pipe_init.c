@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:59:43 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/18 16:49:41 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/20 12:10:42 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	pipe_init(t_data *pipe_info, t_exec *cmds_list, int i, t_data *data)
 
 void	redirection(t_exec *cmds_list, t_data *pipe_info, int i)
 {
+	printf("Redirection called\n");
 	if (!cmds_list || !pipe_info)
 		perror("cmds_list or pipe_info is NULL\n");
 	if (pipe_info->total_cmds == 1)
