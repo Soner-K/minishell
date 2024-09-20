@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:07:40 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/20 13:06:08 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/20 15:40:21 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,17 @@ void	runtime_shell(t_exec *cmds_list, char **env_copy, t_data *data,
 			if (getfile(&cmds_list))
 				exec_pipe(cmds_list, env_copy, i, env_list);
 			else
+			{
+				printf("ARE WE HERE\n");
 				close_no_file(cmds_list);
+				if (cmds_list->prev != NULL)
+				{
+					if (cmds_list->prev->pipe_fdi != -1)
+						close(cmds_list->prev->pipe_fdi);
+				}
+				store_or_free(NULL, NULL, false, true);
+				exit(EXIT_FAILURE);
+			}
 		}
 		file_close(cmds_list, data, fork_id);
 		i++;
