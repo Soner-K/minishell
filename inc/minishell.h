@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
 /*   Updated: 2024/09/20 10:12:41 by sokaraku         ###   ########.fr       */
@@ -124,7 +124,6 @@ void		func_echo(t_exec *cmds);
 int			is_env(char *str);
 void		func_env(t_exec *cmds, t_env **env);
 void		display_env_list(t_env *env_list);
-void		free_env_lists(t_env *head);
 
 // 				-->exit.c
 int			is_exit(char *str);
@@ -159,7 +158,7 @@ void		replace_one_env(t_env **env_list, char *env_val, char *variable,
 				char *value);
 
 //				-->error.c
-void		exit_program(char *s);
+void		free_lists(t_tokens *first);
 
 // 				-->exec_utils.c
 int			parse_path(char **cmds, char *path);
@@ -213,6 +212,7 @@ void		runtime_shell(t_exec *cmds_list, char **env_copy, t_data *data,
 // 				-->init_signal.c
 void		init_signal(void);
 void		sig_handler(int signal);
+void		sig_handler_quit(int signal);
 
 // 				-->exit_status.c
 void		close_extra_files(t_exec *cmds_list);
