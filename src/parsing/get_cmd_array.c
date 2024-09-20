@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:22:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/19 16:52:14 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/19 17:08:37 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ __int8_t	get_cmd_array(t_tokens **node, t_tokens *first, int id)
 		tmp = tmp->next;
 	}
 	cmd_array = ft_split(joined_cmds, -32);
-	if (!cmd_array)
+	if (!cmd_array && joined_cmds)
 		return (free(joined_cmds), ALLOCATION_FAILURE);
 	while ((*node) && (*node) != tmp)
 	{

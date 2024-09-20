@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/20 11:19:31 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/20 12:53:21 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	main(int argc, char **argv, char **envp)
 		return (FAILURE);
 	env_list = NULL;
 	store_env_list(envp, &env_list);
+	store_or_free(NULL, NULL, env_list, true);
 	init_signal();
 	while (42)
 	{
@@ -51,6 +52,7 @@ int	main(int argc, char **argv, char **envp)
 			runtime_shell(exec, envp, data, &env_list);
 		printf("DATA EXIT STATUS CHECK %d\n", data->exit_status);
 		free_all(line, exec, env_list, false);
+		
 	}
 	free_env_lists(env_list);
 	rl_clear_history();

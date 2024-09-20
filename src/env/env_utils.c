@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:45:23 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/19 17:55:36 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/20 12:53:45 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,16 +105,4 @@ void	replace_one_env(t_env **env_list, char *env_val, char *variable,
 		current = current->next;
 	}
 	free(new_var);
-}
-void	free_env_lists(t_env *head)
-{
-	t_env *tmp;
-
-	while (head)
-	{
-		tmp = head;
-		head = head->next;
-		free(head->variable);
-		free(tmp);
-	}
 }

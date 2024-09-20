@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/20 12:02:55 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/20 12:53:18 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ short int	skip_tab_spaces(char *str);
 short int	count_expands(char *str);
 void		reset_negative_characters(t_tokens *head);
 bool		check_if_edge_characters(char c, bool first_char);
-bool		check_expand_syntax(char *str, short int *start, short int *end);
-bool		expand_inside_single_quotes(char *str);
+bool		check_expand_syntax(char *str, int *start, int *end);
+bool		expand_inside_single_quotes(t_tokens *node);
 char		*ft_strslice(char *str, int start, int end, bool *alloc_fail);
 char		*ft_strreplace(char *str, char *add, int start, int end);
 char		*getenv_from_env_list(char *var, t_env *env_list, t_env *first);
@@ -124,7 +124,6 @@ void		func_echo(t_exec *cmds);
 int			is_env(char *str);
 void		func_env(t_exec *cmds, t_env **env);
 void		display_env_list(t_env *env_list);
-void		free_env_lists(t_env *head);
 
 // 				-->exit.c
 int			is_exit(char *str);
@@ -159,7 +158,7 @@ void		replace_one_env(t_env **env_list, char *env_val, char *variable,
 				char *value);
 
 //				-->error.c
-void		exit_program(char *s);
+void		free_lists(t_tokens *first);
 
 // 				-->exec_utils.c
 int			parse_path(char **cmds, char *path);
@@ -212,6 +211,7 @@ void		runtime_shell(t_exec *cmds_list, char **env_copy, t_data *data,
 // 				-->init_signal.c
 void		init_signal(void);
 void		sig_handler(int signal);
+void		sig_handler_quit(int signal);
 
 // 				-->exit_status.c
 void		close_extra_files(t_exec *cmds_list);

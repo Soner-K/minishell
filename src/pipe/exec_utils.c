@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:30:11 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/20 11:14:21 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/20 12:54:07 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,19 @@ int	parse_path(char **cmds, char *path)
 	}
 }
 
+void	sig_handler_cmd_block(int signal)
+{
+	printf("CALLEd\n");
+	if (signal == SIGQUIT)
+	{
+		ft_putstr_fd("Quit (core dumped)\n", STDOUT_FILENO);
+	}
+}
+void	sig_handler_quit(int signal)
+{
+	(void)signal;
+	ft_putstr_fd("Quit (core dumped)\n", STDOUT_FILENO);
+}
 void	init_child(t_exec **cmds_list, char **env_copy)
 {
 	signal(SIGINT, SIG_DFL);
@@ -32,8 +45,11 @@ void	init_child(t_exec **cmds_list, char **env_copy)
 	if (getfile(cmds_list))
 	{
 		only_redirection(cmds_list);
-		if (parse_path((*cmds_list)->cmd_array, (*cmds_list)->path))
+		if ((*cmds_list)->cmd_array && parse_path((*cmds_list)->cmd_array,
+				(*cmds_list)->path))
 			execve((*cmds_list)->path, (*cmds_list)->cmd_array, env_copy);
+		if (errno == EACCES)
+			exit(126);
 		else
 		{
 			store_or_free(NULL, NULL, false, true);
@@ -59,7 +75,9 @@ void	get_status(int fork_id, int status, t_data *data)
 	if (WIFEXITED(status))
 		data->exit_status = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))
+	{
 		data->exit_status = WTERMSIG(status) + 128;
+	}
 }
 
 void	exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy,
@@ -83,9 +101,12 @@ void	exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy,
 	}
 	else
 	{
+		signal(SIGQUIT, sig_handler_quit);
 		fork_id = fork();
 		if (fork_id == 0)
+		{
 			init_child(exec_list, env_copy);
+		}
 		else
 			get_status(fork_id, status, data);
 	}

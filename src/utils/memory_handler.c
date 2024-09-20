@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:02:58 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/19 18:06:14 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/20 12:55:32 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void	store_or_free(char *line, t_exec *exec, bool store, bool free_env)
 
 void	free_all(char *line, t_exec *exec, t_env *env_list, bool free_env)
 {
-	free(line);
+	if (line)
+		free(line);
 	if (exec)
 	{
 		free(exec->data->pids);
@@ -51,10 +52,7 @@ void	free_all(char *line, t_exec *exec, t_env *env_list, bool free_env)
 		free_exec(exec, true);
 	}
 	if (free_env)
-	{
-		// printf("env_list->var %s\n", env_list->variable);
 		free_env_list(env_list);
-	}
 }
 
 /**
@@ -80,8 +78,11 @@ void	free_tokens(t_tokens *tokens_head, bool all)
 			free(tmp->word);
 		if (all && id_cmd == tmp->id_cmd)
 		{
-			free_arrs((void **)tmp->cmd_array);
-			id_cmd++; // COME BACK check id code everywhere
+			if (tmp->cmd_array)
+			{
+				free_arrs((void **)tmp->cmd_array);
+				id_cmd++; // COME BACK check id code everywhere
+			}
 		}
 		free(tmp);
 	}
@@ -104,7 +105,8 @@ void	free_exec(t_exec *exec_head, bool all)
 		free(tmp->files_info->outfile_info);
 		free(tmp->files_info);
 		free(tmp->path);
-		free_arrs((void **)tmp->cmd_array);
+		if (all)
+			free_arrs((void **)tmp->cmd_array);
 		free(tmp);
 	}
 }
