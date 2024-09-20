@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 12:42:20 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/20 13:23:54 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/20 14:11:10 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void	get_status(int fork_id, int status, t_data *data)
 	}
 }
 
-void	sig_handler_quit(void)
+void	sig_handler_quit(int signal)
 {
+	(void)signal;
 	ft_putstr_fd("Quit (core dumped)\n", STDOUT_FILENO);
 }
