@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/20 14:11:16 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/20 14:27:38 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 
 # include "libs.h"
 
-//							UTILS
+// global vraibles for signal
+extern int	g_signal;
 
+//							UTILS
 //				-->utils.c
 
 bool		is_builtin(char *cmd);
@@ -44,6 +46,7 @@ t_tokens	*create_tokens(char *line);
 //				-->ft_parse.c
 
 t_exec		*ft_parse(char *line, __int8_t *error, t_env *env_list);
+
 //				-->prep_exec.c
 
 t_exec		*create_exec_lst(t_tokens *head, t_env *env_list);
@@ -53,6 +56,7 @@ t_exec		*create_exec_lst(t_tokens *head, t_env *env_list);
 t_exec		*new_node_exec(void);
 void		lst_addback_exec(t_exec **head, t_exec *add);
 t_data		*set_data_struct(t_tokens *tokens, t_exec *exec, t_env *env_list);
+
 //				-->redirections_setting.c
 
 void		set_redirections_type(t_tokens **head);
@@ -89,10 +93,12 @@ bool		expand_inside_single_quotes(t_tokens *node);
 char		*ft_strslice(char *str, int start, int end, bool *alloc_fail);
 char		*ft_strreplace(char *str, char *add, int start, int end);
 char		*getenv_from_env_list(char *var, t_env *env_list, t_env *first);
+
 //				-->expand.c
 
 __int8_t	extract_variable(t_tokens *node, t_env *env_list);
 __int8_t	extract_all(t_tokens *head, t_env *env_list);
+
 //				-->quotes.c
 
 __int8_t	check_if_closed_quotes(t_tokens *head);
@@ -168,7 +174,7 @@ void		exec_shell_builtin(t_exec **cmds_list, int builtin_check,
 void		exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy,
 				t_data *data);
 
-//				-->heredoc.
+//				-->heredoc.c
 void		write_heredoc(char *str, int tmp);
 void		init_heredoc(t_exec *cmds_list);
 void		open_heredoc(t_exec *cmds_list);

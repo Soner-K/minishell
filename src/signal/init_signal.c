@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 12:42:20 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/20 14:15:04 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/20 14:28:18 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	sig_handler(int signal)
 		rl_replace_line("", 1);
 		rl_on_new_line();
 		rl_redisplay();
+		g_signal = 2;
 	}
 }
 
