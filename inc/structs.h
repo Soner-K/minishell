@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:25 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/20 15:34:39 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/22 15:56:46 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ typedef enum e_type
  * @param quotes Signed char taking the ASCII code of the quote that
  * enclose a word, if there is one.
  * @param id_cmd Identifier of a portion in the input line.
- * @param old_stdin
- * @param old_stdout
+ * @param old_stdin COME BACK
+ * @param old_stdout COME BACK
  * @param type The type of token (see t_type).
  * @param word The word (or content) of the node.
  * @param cmd_array The command array, launched in the execution part.
@@ -63,8 +63,6 @@ typedef struct t_tokens
 {
 	__int8_t		quotes;
 	int				id_cmd;
-	int				old_stdin;
-	int				old_stdout;
 	t_type			type;
 	char			*word;
 	char			**cmd_array;

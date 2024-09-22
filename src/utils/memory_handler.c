@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:02:58 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/20 15:39:36 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/22 16:58:51 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,29 +54,6 @@ void	store_or_free(char *line, t_exec *exec, bool store, bool free_env)
 		return ;
 	}
 	free_all(line_store, exec_store, env_list_store, free_env == true);
-}
-
-/**
- * @brief Frees all the memory allocated for the shell.
- * @param line The line to free.
- * @param exec The head of the execution list.
- * @param env_list The head of the environment list.
- * @param free_env A boolean being true (1) if the environment list must be
- * freed and false (0) otherwise.
- * @returns void.
- */
-void	free_all(char *line, t_exec *exec, t_env *env_list, bool free_env)
-{
-	if (line)
-		free(line);
-	if (exec)
-	{
-		free(exec->data->pids);
-		free(exec->data);
-		free_exec(exec, true);
-	}
-	if (free_env)
-		free_env_list(env_list);
 }
 
 /**
@@ -139,4 +116,27 @@ void	free_exec(t_exec *exec_head, bool all)
 			free_arrs((void **)tmp->cmd_array);
 		free(tmp);
 	}
+}
+
+/**
+ * @brief Frees all the memory allocated for the shell.
+ * @param line The line to free.
+ * @param exec The head of the execution list.
+ * @param env_list The head of the environment list.
+ * @param free_env A boolean being true (1) if the environment list must be
+ * freed and false (0) otherwise.
+ * @returns void.
+ */
+void	free_all(char *line, t_exec *exec, t_env *env_list, bool free_env)
+{
+	if (line)
+		free(line);
+	if (exec)
+	{
+		free(exec->data->pids);
+		free(exec->data);
+		free_exec(exec, true);
+	}
+	if (free_env)
+		free_env_list(env_list);
 }

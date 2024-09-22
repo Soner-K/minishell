@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:16:08 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/20 15:28:24 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/22 17:00:53 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /**
  * @brief Creates a new node of type t_exec.
- * @return t_exec* The new node.
+ * @return The new node.
  */
 t_exec	*new_node_exec(void)
 {
@@ -67,6 +67,13 @@ void	lst_addback_exec(t_exec **head, t_exec *add)
 	add->next = NULL;
 }
 
+/**
+ * @brief Sets the data structure and stores it in the execution's node.
+ * @param tokens A pointer to the head of the tokens' list.
+ * @param exec A pointer to the head of the execution's list.
+ * @param env_list A pointer to the head of the environment list.
+ * @returns The data structure.
+ */
 t_data	*set_data_struct(t_tokens *tokens, t_exec *exec, t_env *env_list)
 {
 	t_data	*data;

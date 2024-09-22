@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/20 15:16:51 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/22 17:17:12 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ t_tokens	*create_tokens(char *line);
 
 //				-->ft_parse.c
 
-t_exec		*ft_parse(char *line, __int8_t *error, t_env *env_list);
+t_exec		*ft_parse(char *line, __int8_t *error, t_env *env_list,
+				int last_exit);
 //				-->prep_exec.c
 
 __int8_t	set_node_exec(t_exec *exec, t_tokens *token, int id_cmd);
@@ -90,18 +91,19 @@ void		reset_negative_characters(t_tokens *head);
 bool		check_if_edge_characters(char c, bool first_char);
 bool		check_expand_syntax(char *str, int *start, int *end);
 bool		expand_inside_single_quotes(t_tokens *node);
+
+//				-->str_utils.c
+
 char		*ft_strslice(char *str, int start, int end, bool *alloc_fail);
 char		*ft_strreplace(char *str, char *add, int start, int end);
-char		*getenv_from_env_list(char *var, t_env *env_list, t_env *first);
+
 //				-->expand.c
 
-__int8_t	extract_variable(t_tokens *node, t_env *env_list);
-__int8_t	extract_all(t_tokens *head, t_env *env_list);
+char		*getenv_from_env_list(char *var, t_env *env_list, t_env *first);
+__int8_t	extract_all(t_tokens *head, t_env *env_list, int last_exit_status);
+
 //				-->quotes.c
 
-__int8_t	check_if_closed_quotes(t_tokens *head);
-__int8_t	quotes_remover(t_tokens *head);
-void		mark_quotes(t_tokens *head);
 __int8_t	quotes_handler(t_tokens *head, __int8_t mode);
 
 // 				-->find_builtin.c
