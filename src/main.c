@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/22 14:25:21 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/22 17:52:37 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,11 @@ int	main(int argc, char **argv, char **envp)
 		// g_sig = 0;
 		exec = ft_parse(line, &error, env_list, last_exit_status);
 		if (!exec)
+		{
+			if (error == SYNTAX_ERROR)
+				last_exit_status = 2;
 			continue ;
+		}
 		data = exec->data;
 		store_or_free(line, exec, env_list, true);
 		if (data->num_pipe < 1)
