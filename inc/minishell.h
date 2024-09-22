@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/20 12:53:18 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/22 17:17:12 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,21 @@ t_tokens	*create_tokens(char *line);
 
 //				-->ft_parse.c
 
-t_exec		*ft_parse(char *line, __int8_t *error, t_env *env_list);
+t_exec		*ft_parse(char *line, __int8_t *error, t_env *env_list,
+				int last_exit);
 //				-->prep_exec.c
 
-t_exec		*create_exec_lst(t_tokens *head, t_env *env_list);
+__int8_t	set_node_exec(t_exec *exec, t_tokens *token, int id_cmd);
+void		set_files_info(t_files *files, t_tokens *token);
+t_exec		*create_exec_lst(t_tokens *head, t_tokens *first, t_env *env_list);
 
 //				-->prep_exec_utils.c
 
 t_exec		*new_node_exec(void);
 void		lst_addback_exec(t_exec **head, t_exec *add);
 t_data		*set_data_struct(t_tokens *tokens, t_exec *exec, t_env *env_list);
+void		all_my_homies_hate_the_norm(t_tokens **head, t_exec *itr,
+				int id_cmd);
 //				-->redirections_setting.c
 
 void		set_redirections_type(t_tokens **head);
@@ -86,18 +91,19 @@ void		reset_negative_characters(t_tokens *head);
 bool		check_if_edge_characters(char c, bool first_char);
 bool		check_expand_syntax(char *str, int *start, int *end);
 bool		expand_inside_single_quotes(t_tokens *node);
+
+//				-->str_utils.c
+
 char		*ft_strslice(char *str, int start, int end, bool *alloc_fail);
 char		*ft_strreplace(char *str, char *add, int start, int end);
-char		*getenv_from_env_list(char *var, t_env *env_list, t_env *first);
+
 //				-->expand.c
 
-__int8_t	extract_variable(t_tokens *node, t_env *env_list);
-__int8_t	extract_all(t_tokens *head, t_env *env_list);
+char		*getenv_from_env_list(char *var, t_env *env_list, t_env *first);
+__int8_t	extract_all(t_tokens *head, t_env *env_list, int last_exit_status);
+
 //				-->quotes.c
 
-__int8_t	check_if_closed_quotes(t_tokens *head);
-__int8_t	quotes_remover(t_tokens *head);
-void		mark_quotes(t_tokens *head);
 __int8_t	quotes_handler(t_tokens *head, __int8_t mode);
 
 // 				-->find_builtin.c

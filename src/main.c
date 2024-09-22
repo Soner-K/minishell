@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/20 13:02:23 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/22 14:25:21 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,22 @@ int	main(int argc, char **argv, char **envp)
 	t_exec		*exec;
 	__int8_t	error;
 	t_data		*data;
+	int			last_exit_status;
 
 	if (arg_check(argc, argv) > 0)
 		return (FAILURE);
 	env_list = NULL;
 	store_env_list(envp, &env_list);
 	init_signal();
+	data = NULL;
+	last_exit_status = 0;
 	while (42)
 	{
 		line = read_prompt(env_list);
 		// if (g_sig)
 		// 	data->exit_status = 128 + g_sig;
 		// g_sig = 0;
-		exec = ft_parse(line, &error, env_list);
+		exec = ft_parse(line, &error, env_list, last_exit_status);
 		if (!exec)
 			continue ;
 		data = exec->data;
@@ -50,8 +53,8 @@ int	main(int argc, char **argv, char **envp)
 		else
 			runtime_shell(exec, envp, data, &env_list);
 		printf("DATA EXIT STATUS CHECK %d\n", data->exit_status);
+		last_exit_status = data->exit_status;
 		free_all(line, exec, env_list, false);
-		
 	}
 	free_env_list(env_list);
 	rl_clear_history();
