@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:02:58 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/22 17:39:48 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/22 17:41:13 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	free_env_list(t_env *env_list)
 		free(tmp->variable);
 		free(tmp);
 	}
-	return ;
 }
 
 /**
