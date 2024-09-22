@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:13:50 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/22 17:14:02 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/22 18:16:56 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,6 @@ char	*ft_strreplace(char *str, char *add, int start, int end)
 	int		j;
 	int		size;
 
-	if (!str || start > ft_strlen(str) || end > ft_strlen(str) || end < 0
-		|| start < 0)
-		return (str); // COME BACK
 	i = -1;
 	j = 0;
 	size = ft_strlen(str) + ft_strlen(add) + count_char(str, -34)

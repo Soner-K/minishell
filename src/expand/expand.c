@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 16:20:21 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/22 17:11:20 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/22 18:14:23 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*get_new_word(t_tokens *node, char *var, short int s, short int end)
  * @returns The content of the variable.
  */
 char	*getenv_from_env_list(char *var, t_env *env_list, t_env *first)
-		// COME BACK
+// COME BACK
 {
 	int len_var;
 	char *ret;
@@ -90,11 +90,12 @@ char	*getenv_from_env_list(char *var, t_env *env_list, t_env *first)
  * if none of these cases happened.
  */
 static __int8_t	extract_variable(t_tokens *node, t_env *env_list, int last_exit)
+// COME BACK protect malloc
 {
-	int			start;
-	int			end;
-	char		*var_content;
-	char		*str;
+	int start;
+	int end;
+	char *var_content;
+	char *str;
 
 	if (expand_inside_single_quotes(node) == true)
 		return (EXPAND_INSIDE_SINGLE_QUOTES);
@@ -113,6 +114,7 @@ static __int8_t	extract_variable(t_tokens *node, t_env *env_list, int last_exit)
 		return (ALLOCATION_FAILURE);
 	free(node->word);
 	node->word = str;
+	free(var_content);
 	return (SUCCESS);
 }
 
