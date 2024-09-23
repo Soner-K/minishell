@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/23 12:14:49 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/23 12:32:54 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	main(int argc, char **argv, char **envp)
 	t_exec		*exec;
 	__int8_t	error;
 	t_data		*data;
-	int			last_exit_status;
 
 	if (arg_check(argc, argv) > 0)
 		return (FAILURE);
@@ -48,12 +47,11 @@ int	main(int argc, char **argv, char **envp)
 		if (line == NULL)
 			break ;
 		data = NULL;
-		last_exit_status = 0;
-		exec = ft_parse(line, &error, env_list, last_exit_status);
+		exec = ft_parse(line, &error, env_list, exit_status);
 		if (!exec)
 		{
 			if (error == SYNTAX_ERROR)
-				last_exit_status = 2;
+				exit_status = 2;
 			continue ;
 		}
 		data = exec->data;
@@ -62,8 +60,7 @@ int	main(int argc, char **argv, char **envp)
 			exec_shell(&exec, &env_list, envp, data);
 		else
 			runtime_shell(exec, envp, data, &env_list);
-		printf("DATA EXIT STATUS CHECK %d\n", data->exit_status);
-		last_exit_status = data->exit_status;
+		exit_status = data->exit_status;
 		free_all(line, exec, env_list, false);
 	}
 	free_env_list(env_list);
