@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 16:20:21 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/22 18:14:23 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/24 01:04:19 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,10 @@ char	*getenv_from_env_list(char *var, t_env *env_list, t_env *first)
 		env_list = env_list->next;
 	}
 	if (env_list)
+	{
+		ret = ft_strdup(ret);
 		return (ret);
+	}
 	return (NULL);
 }
 
@@ -111,7 +114,7 @@ static __int8_t	extract_variable(t_tokens *node, t_env *env_list, int last_exit)
 	free(str);
 	str = get_new_word(node, var_content, start, end);
 	if (!str)
-		return (ALLOCATION_FAILURE);
+		return (free(var_content), ALLOCATION_FAILURE);
 	free(node->word);
 	node->word = str;
 	free(var_content);

@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 14:24:41 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/22 16:57:08 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/24 00:53:38 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,8 @@ static char	*full_path(char *dir, char *cmd)
  */
 static char	**split_path(t_env *env_list)
 {
-	short int	i;
 	char		**all_paths;
 
-	i = 0;
 	while (env_list)
 	{
 		if (!ft_strncmp(env_list->variable, "PATH=", 5))
