@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:27:37 by ftanon            #+#    #+#             */
-/*   Updated: 2024/09/20 16:18:13 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/23 11:19:12 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	close_no_file(t_exec *cmds_list)
 		close(cmds_list->pipe_fdi);
 	if (cmds_list->pipe_fdo != -1)
 		close(cmds_list->pipe_fdo);
-	// exit(EXIT_FAILURE);
 }
 
 void	wait_pipe_files(t_data *data)

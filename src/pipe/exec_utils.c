@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:30:11 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/20 16:42:03 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/23 11:27:42 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,14 @@ void	exec_shell_builtin(t_exec **cmds_list, int builtin_check,
 	}
 }
 
+void	exec_shell_init(t_exec **exec_list)
+{
+	dup2((*exec_list)->old_stdout, STDOUT_FILENO);
+	dup2((*exec_list)->old_stdin, STDIN_FILENO);
+	close((*exec_list)->old_stdout);
+	close((*exec_list)->old_stdin);
+}
+
 void	exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy,
 		t_data *data)
 {
@@ -71,10 +79,7 @@ void	exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy,
 		(*exec_list)->old_stdin = dup(STDIN_FILENO);
 		(*exec_list)->old_stdout = dup(STDOUT_FILENO);
 		exec_shell_builtin(exec_list, builtin_check, env_list);
-		dup2((*exec_list)->old_stdout, STDOUT_FILENO);
-		dup2((*exec_list)->old_stdin, STDIN_FILENO);
-		close((*exec_list)->old_stdout);
-		close((*exec_list)->old_stdin);
+		exec_shell_init(exec_list);
 	}
 	else
 	{

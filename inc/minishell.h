@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/20 16:18:34 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/23 11:34:06 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,8 +184,7 @@ void		call_heredoc(t_exec *cmds_list);
 int			getfile(t_exec **cmds_list);
 void		close_pipe_files(t_exec *cmds_list);
 void		wait_pipe_files(t_data *pipe_info);
-void		pipe_init(t_data *pipe_info, t_exec *cmds_list, int i,
-				t_data *data);
+void		pipe_init(t_data *pipe_info, t_exec *cmds_list, int i);
 void		redirection(t_exec *cmds_list, t_data *pipe_info, int i);
 
 //				-->pipe_utils.c
@@ -229,5 +228,9 @@ void		close_no_file(t_exec *cmds_list);
 void		init_pid_array(t_data *pipe_info);
 void		store_pid(t_data *pipe_info, pid_t fork_id);
 void		wait_pipe_files(t_data *data);
+
+// 				-->runtime_utils.c
+void		runtime_signal(void);
+void		runtime_free(t_exec *cmds_list);
 
 #endif

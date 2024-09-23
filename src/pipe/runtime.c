@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:07:40 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/20 16:40:35 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/23 11:33:43 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,14 @@ void	file_close(t_exec *cmds_list, t_data *data, int fork_id)
 		close(cmds_list->prev->pipe_fdi);
 }
 
+void	runtime_shell_init(t_data *data, t_exec *cmds_list, int i)
+{
+	cmds_list->pipe_fdi = -1;
+	cmds_list->pipe_fdo = -1;
+	pipe_init(data, cmds_list, i);
+	signal(SIGQUIT, sig_handler_quit);
+}
+
 void	runtime_shell(t_exec *cmds_list, char **env_copy, t_data *data,
 		t_env **env_list)
 {
@@ -55,29 +63,15 @@ void	runtime_shell(t_exec *cmds_list, char **env_copy, t_data *data,
 	init_pid_array(data);
 	while (i < data->total_cmds)
 	{
-		cmds_list->pipe_fdi = -1;
-		cmds_list->pipe_fdo = -1;
-		pipe_init(data, cmds_list, i, data);
-		signal(SIGQUIT, sig_handler_quit);
+		runtime_shell_init(data, cmds_list, i);
 		fork_id = fork();
 		if (fork_id == 0)
 		{
-			signal(SIGINT, &sig_handler_forks);
-			signal(SIGQUIT, SIG_DFL);
+			runtime_signal();
 			if (getfile(&cmds_list))
 				exec_pipe(cmds_list, env_copy, i, env_list);
 			else
-			{
-				printf("ARE WE HERE\n");
-				close_no_file(cmds_list);
-				if (cmds_list->prev != NULL)
-				{
-					if (cmds_list->prev->pipe_fdi != -1)
-						close(cmds_list->prev->pipe_fdi);
-				}
-				store_or_free(NULL, NULL, false, true);
-				exit(EXIT_FAILURE);
-			}
+				runtime_free(cmds_list);
 		}
 		file_close(cmds_list, data, fork_id);
 		i++;

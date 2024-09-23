@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:45:23 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/20 14:20:15 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/23 11:54:39 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,4 +105,30 @@ void	replace_one_env(t_env **env_list, char *env_val, char *variable,
 		current = current->next;
 	}
 	free(new_var);
+}
+
+t_env	*sort_env(t_env *env_copy, t_env *current)
+{
+	int		swapped;
+	char	*tmp;
+
+	swapped = 1;
+	while (swapped)
+	{
+		swapped = 0;
+		current = env_copy;
+		while (current && current->next != NULL)
+		{
+			if (ft_strncmp(current->variable, current->next->variable, 1) > 0)
+			{
+				tmp = current->variable;
+				current->variable = current->next->variable;
+				current->next->variable = tmp;
+				swapped = 1;
+			}
+			current = current->next;
+		}
+	}
+	current = env_copy;
+	return (current);
 }
