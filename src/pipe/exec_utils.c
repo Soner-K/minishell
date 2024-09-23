@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:30:11 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/23 14:39:03 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/23 14:42:57 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	init_child(t_exec **cmds_list, char **env_copy)
 		if ((*cmds_list)->cmd_array && parse_path((*cmds_list)->cmd_array,
 				(*cmds_list)->path))
 			execve((*cmds_list)->path, (*cmds_list)->cmd_array, env_copy);
-		if (errno != EISDIR)
+		if (errno != EISDIR || errno != EACCES)
 		{
 			printf("%s: Is a directory\n", (*cmds_list)->cmd_array[0]);
 			store_or_free(NULL, NULL, false, true);
