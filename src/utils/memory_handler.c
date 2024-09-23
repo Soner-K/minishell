@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   memory_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:02:58 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/20 12:55:32 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/22 17:41:13 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief Frees the environment list.
+ * @param env_list The head of the environment list.
+ * @returns void.
+ */
 void	free_env_list(t_env *env_list)
 {
 	t_env	*tmp;
@@ -25,6 +30,16 @@ void	free_env_list(t_env *env_list)
 	}
 }
 
+/**
+ * @brief Stores or frees the line, the execution list and the environment list.
+ * @param line The line to store or free.
+ * @param exec The head of the execution list.
+ * @param store A boolean being true (1) if the line, the execution list and the
+ * environment list must be stored, and false (0) otherwise.
+ * @param free_env A boolean being true (1) if the environment list must be
+ * freed, and false (0) otherwise.
+ * @returns void.
+ */
 void	store_or_free(char *line, t_exec *exec, bool store, bool free_env)
 {
 	static char		*line_store = NULL;
@@ -41,22 +56,8 @@ void	store_or_free(char *line, t_exec *exec, bool store, bool free_env)
 	free_all(line_store, exec_store, env_list_store, free_env == true);
 }
 
-void	free_all(char *line, t_exec *exec, t_env *env_list, bool free_env)
-{
-	if (line)
-		free(line);
-	if (exec)
-	{
-		free(exec->data->pids);
-		free(exec->data);
-		free_exec(exec, true);
-	}
-	if (free_env)
-		free_env_list(env_list);
-}
-
 /**
- * @brief Free a list of tokens.
+ * @brief Frees a list of tokens.
  * @param head The head of the tokens' list.
  * @returns void.
  */
@@ -88,10 +89,16 @@ void	free_tokens(t_tokens *tokens_head, bool all)
 	}
 }
 
-// need to free data struct outside
+/**
+ * @brief Frees a list of executions.
+ * @param exec_head The head of the executions' list.
+ * @param all A boolean being true (1) if all the memory must be freed, and
+ * false (0) otherwise.
+ * @returns void.
+ */
 void	free_exec(t_exec *exec_head, bool all)
 {
-	t_exec *tmp;
+	t_exec	*tmp;
 
 	while (exec_head)
 	{
@@ -109,4 +116,27 @@ void	free_exec(t_exec *exec_head, bool all)
 			free_arrs((void **)tmp->cmd_array);
 		free(tmp);
 	}
+}
+
+/**
+ * @brief Frees all the memory allocated for the shell.
+ * @param line The line to free.
+ * @param exec The head of the execution list.
+ * @param env_list The head of the environment list.
+ * @param free_env A boolean being true (1) if the environment list must be
+ * freed and false (0) otherwise.
+ * @returns void.
+ */
+void	free_all(char *line, t_exec *exec, t_env *env_list, bool free_env)
+{
+	if (line)
+		free(line);
+	if (exec)
+	{
+		free(exec->data->pids);
+		free(exec->data);
+		free_exec(exec, true);
+	}
+	if (free_env)
+		free_env_list(env_list);
 }

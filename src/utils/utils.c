@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:25:38 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/23 12:10:54 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/23 12:15:11 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	*merge_strings(char *s1, char *s2, char c)
 bool	is_builtin(char *cmd)
 {
 	static char	*builtins[] = {"echo", "cd", "pwd", "export", "unset", "env",
-				"exit"};
+		"exit"};
 	__int8_t	i;
 
 	i = 0;

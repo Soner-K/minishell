@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 16:20:21 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/20 10:53:33 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/22 18:14:23 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 #define EXPAND_SYNTAX_NOT_VALID -2
 #define EXPAND_INSIDE_SINGLE_QUOTES -3
 
-/*
-Check thoroughly where to free
-*/
 /**
  * @brief Stores inside the node's word the string var, replacing the
  * expand variable's name.
@@ -51,12 +48,12 @@ char	*get_new_word(t_tokens *node, char *var, short int s, short int end)
  * (i.e. starts with '$'), finds the referenced variable recursively.
  * The recursion continues as long as there are referenced variables.
  * @param var The variable name.
- * @param env_list
- * @param first
- * @returns
+ * @param env_list The environment list.
+ * @param first A pointer to the first node of the environment list.
+ * @returns The content of the variable.
  */
 char	*getenv_from_env_list(char *var, t_env *env_list, t_env *first)
-		// COME BACK
+// COME BACK
 {
 	int len_var;
 	char *ret;
@@ -92,12 +89,13 @@ char	*getenv_from_env_list(char *var, t_env *env_list, t_env *first)
  * syntax isn't valid, -1 if there is an allocation failure and 1 (SUCESS)
  * if none of these cases happened.
  */
-__int8_t	extract_variable(t_tokens *node, t_env *env_list)
+static __int8_t	extract_variable(t_tokens *node, t_env *env_list, int last_exit)
+// COME BACK protect malloc
 {
-	int			start;
-	int			end;
-	char		*var_content;
-	char		*str;
+	int start;
+	int end;
+	char *var_content;
+	char *str;
 
 	if (expand_inside_single_quotes(node) == true)
 		return (EXPAND_INSIDE_SINGLE_QUOTES);
@@ -106,13 +104,17 @@ __int8_t	extract_variable(t_tokens *node, t_env *env_list)
 	str = ft_substr(node->word, start, (end - start + 1));
 	if (!str)
 		return (ALLOCATION_FAILURE);
-	var_content = getenv_from_env_list(str, env_list, env_list);
+	if (node->word[end] == '?')
+		var_content = ft_itoa(last_exit);
+	else
+		var_content = getenv_from_env_list(str, env_list, env_list);
 	free(str);
 	str = get_new_word(node, var_content, start, end);
 	if (!str)
 		return (ALLOCATION_FAILURE);
 	free(node->word);
 	node->word = str;
+	free(var_content);
 	return (SUCCESS);
 }
 
@@ -121,10 +123,11 @@ __int8_t	extract_variable(t_tokens *node, t_env *env_list)
  * replace the expands when found.
  * @param head A pointer to the head of the tokenized list.
  * @param env_list Pointer to the head of minishell's env_list.
+ * @param last_exit_status Value of the last exit status.
  * @returns -1 (ALLOCATION_FAILURE) if a memory allocation failed, and
  * 1 (SUCCESS) if the list was iterated through fully.
  */
-__int8_t	extract_all(t_tokens *head, t_env *env_list)
+__int8_t	extract_all(t_tokens *head, t_env *env_list, int last_exit_status)
 {
 	__int8_t	ret;
 	t_tokens	*first;
@@ -138,7 +141,7 @@ __int8_t	extract_all(t_tokens *head, t_env *env_list)
 	{
 		while (n_expand > 0)
 		{
-			ret = extract_variable(head, env_list);
+			ret = extract_variable(head, env_list, last_exit_status);
 			if (ret == ALLOCATION_FAILURE)
 				return (ret);
 			n_expand--;

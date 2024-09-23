@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 14:24:41 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/19 18:14:10 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/22 16:57:08 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ static char	*find_path(char *cmd, t_env *env_list, bool *alloc_fail)
  * @param cmd The string to check.
  * @returns True (1) if the command is a builtin and false (0) otherwise.
  */
-bool	check_if_builtin(t_exec *node)
+static bool	check_if_builtin(t_exec *node)
 {
 	if (!node || !node->cmd_array)
 		return (false);
@@ -147,7 +147,7 @@ __int8_t	find_cmd_type(t_exec *head, t_env *env_list)
 		}
 		str = find_path(head->cmd_array[0], env_list, &allocation_fail);
 		if (!str && allocation_fail)
-			return (free_exec(head, false), ALLOCATION_FAILURE); // proteger pour malloc
+			return (free_exec(head, false), ALLOCATION_FAILURE);
 		if (str && !access(str, F_OK && X_OK))
 			head->path = str;
 		else if (str)
