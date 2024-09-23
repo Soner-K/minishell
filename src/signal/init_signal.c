@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 12:42:20 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/19 16:57:33 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/23 12:08:46 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,31 @@ void	sig_handler(int signal)
 		rl_replace_line("", 1);
 		rl_on_new_line();
 		rl_redisplay();
+		g_signal = 2;
 	}
-
 }
 
 void	init_signal(void)
 {
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, SIG_IGN);
+}
+
+void	sig_handler_quit(int signal)
+{
+	(void)signal;
+	ft_putstr_fd("Quit (core dumped)\n", STDOUT_FILENO);
+}
+
+void	sig_handler_forks(int signal)
+{
+	(void)signal;
+	g_signal = signal;
+	close(0);
+}
+
+void	sig_handler_wait(int signal)
+{
+	(void)signal;
+	g_signal = signal;
 }

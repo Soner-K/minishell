@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/22 17:59:20 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/23 12:14:49 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_signal;
 
 int	arg_check(int argc, char **argv)
 {
@@ -24,6 +26,7 @@ int	arg_check(int argc, char **argv)
 int	main(int argc, char **argv, char **envp)
 {
 	char		*line;
+	int			exit_status;
 	t_env		*env_list;
 	t_exec		*exec;
 	__int8_t	error;
@@ -35,14 +38,17 @@ int	main(int argc, char **argv, char **envp)
 	env_list = NULL;
 	store_env_list(envp, &env_list);
 	init_signal();
-	data = NULL;
-	last_exit_status = 0;
+	exit_status = 0;
 	while (42)
 	{
 		line = read_prompt(env_list);
-		// if (g_sig)
-		// 	data->exit_status = 128 + g_sig;
-		// g_sig = 0;
+		if (g_signal)
+			exit_status = 128 + g_signal;
+		g_signal = 0;
+		if (line == NULL)
+			break ;
+		data = NULL;
+		last_exit_status = 0;
 		exec = ft_parse(line, &error, env_list, last_exit_status);
 		if (!exec)
 		{
@@ -62,5 +68,5 @@ int	main(int argc, char **argv, char **envp)
 	}
 	free_env_list(env_list);
 	rl_clear_history();
-	return (SUCCESS);
+	return (exit_status);
 }

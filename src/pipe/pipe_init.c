@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:59:43 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/20 12:54:37 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/23 12:10:05 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ int	getfile(t_exec **cmds_list)
 
 	infile_info = (*cmds_list)->files_info->infile_info;
 	if ((*cmds_list)->files_info->infile_info->type == HEREDOC)
-	{
-		call_heredoc((*cmds_list));
-	}
+		open_heredoc((*cmds_list));
 	else if ((*cmds_list)->files_info->infile_info->type == INREDIR)
 	{
 		if (infile_info->rights == 6)
@@ -55,7 +53,7 @@ void	close_pipe_files(t_exec *cmds_list)
 	}
 }
 
-void	pipe_init(t_data *pipe_info, t_exec *cmds_list, int i, t_data *data)
+void	pipe_init(t_data *data, t_exec *cmds_list, int i)
 {
 	int	fd[2];
 
@@ -63,12 +61,15 @@ void	pipe_init(t_data *pipe_info, t_exec *cmds_list, int i, t_data *data)
 		return ;
 	else
 	{
-		if (i < pipe_info->total_cmds - 1)
+		if (i < data->total_cmds - 1)
 		{
 			if (pipe(fd) == -1)
-				perror("Pipe");
-			cmds_list->pipe_fdi = fd[0];
-			cmds_list->pipe_fdo = fd[1];
+				perror("Pipe Init");
+			else
+			{
+				cmds_list->pipe_fdi = fd[0];
+				cmds_list->pipe_fdo = fd[1];
+			}
 		}
 		else
 			return ;
@@ -77,7 +78,6 @@ void	pipe_init(t_data *pipe_info, t_exec *cmds_list, int i, t_data *data)
 
 void	redirection(t_exec *cmds_list, t_data *pipe_info, int i)
 {
-	printf("Redirection called\n");
 	if (!cmds_list || !pipe_info)
 		perror("cmds_list or pipe_info is NULL\n");
 	if (pipe_info->total_cmds == 1)

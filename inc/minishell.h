@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/22 17:17:12 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/23 12:13:33 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 
 # include "libs.h"
 
-//							UTILS
+// global vraibles for signal
+extern int	g_signal;
 
+//							UTILS
 //				-->utils.c
 
 bool		is_builtin(char *cmd);
@@ -174,7 +176,7 @@ void		exec_shell_builtin(t_exec **cmds_list, int builtin_check,
 void		exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy,
 				t_data *data);
 
-//				-->heredoc.
+//				-->heredoc.c
 void		write_heredoc(char *str, int tmp);
 void		init_heredoc(t_exec *cmds_list);
 void		open_heredoc(t_exec *cmds_list);
@@ -184,8 +186,7 @@ void		call_heredoc(t_exec *cmds_list);
 int			getfile(t_exec **cmds_list);
 void		close_pipe_files(t_exec *cmds_list);
 void		wait_pipe_files(t_data *pipe_info);
-void		pipe_init(t_data *pipe_info, t_exec *cmds_list, int i,
-				t_data *data);
+void		pipe_init(t_data *pipe_info, t_exec *cmds_list, int i);
 void		redirection(t_exec *cmds_list, t_data *pipe_info, int i);
 
 //				-->pipe_utils.c
@@ -218,6 +219,9 @@ void		runtime_shell(t_exec *cmds_list, char **env_copy, t_data *data,
 void		init_signal(void);
 void		sig_handler(int signal);
 void		sig_handler_quit(int signal);
+void		sig_handler_forks(int signal);
+void		sig_handler_wait(int signal);
+void		get_status(int fork_id, int status, t_data *data);
 
 // 				-->exit_status.c
 void		close_extra_files(t_exec *cmds_list);
@@ -226,5 +230,9 @@ void		close_no_file(t_exec *cmds_list);
 void		init_pid_array(t_data *pipe_info);
 void		store_pid(t_data *pipe_info, pid_t fork_id);
 void		wait_pipe_files(t_data *data);
+
+// 				-->runtime_utils.c
+void		runtime_signal(void);
+void		runtime_free(t_exec *cmds_list);
 
 #endif

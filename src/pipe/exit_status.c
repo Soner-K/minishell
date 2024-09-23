@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_status.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:27:37 by ftanon            #+#    #+#             */
-/*   Updated: 2024/09/19 18:38:33 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/23 11:19:12 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,10 @@ void	store_pid(t_data *pipe_info, pid_t fork_id)
 
 void	close_no_file(t_exec *cmds_list)
 {
-	close(cmds_list->pipe_fdi);
-	close(cmds_list->pipe_fdo);
-	exit(EXIT_FAILURE); // COME BACK
+	if (cmds_list->pipe_fdi != -1)
+		close(cmds_list->pipe_fdi);
+	if (cmds_list->pipe_fdo != -1)
+		close(cmds_list->pipe_fdo);
 }
 
 void	wait_pipe_files(t_data *data)
@@ -36,6 +37,7 @@ void	wait_pipe_files(t_data *data)
 	int	i;
 	int	status;
 
+	signal(SIGINT, &sig_handler_wait);
 	status = 0;
 	i = 0;
 	while (i < data->total_cmds)
