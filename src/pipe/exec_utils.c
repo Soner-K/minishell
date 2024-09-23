@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:30:11 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/23 14:42:57 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/23 16:01:30 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	init_child(t_exec **cmds_list, char **env_copy)
 		}
 	}
 	store_or_free(NULL, NULL, false, true);
+	printf("HEREEE\n");
 	exit(1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 12:42:20 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/23 12:08:46 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/23 15:53:02 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,12 @@ void	sig_handler_forks(int signal)
 {
 	(void)signal;
 	g_signal = signal;
+	close(0);
+}
+
+void	sig_handler_heredoc(int signal)
+{
+	(void)signal;
 	close(0);
 }
 
