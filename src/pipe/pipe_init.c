@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:59:43 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/23 11:21:34 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/23 12:10:05 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ int	getfile(t_exec **cmds_list)
 
 	infile_info = (*cmds_list)->files_info->infile_info;
 	if ((*cmds_list)->files_info->infile_info->type == HEREDOC)
-	{
-		call_heredoc((*cmds_list));
-	}
+		open_heredoc((*cmds_list));
 	else if ((*cmds_list)->files_info->infile_info->type == INREDIR)
 	{
 		if (infile_info->rights == 6)
@@ -66,7 +64,7 @@ void	pipe_init(t_data *data, t_exec *cmds_list, int i)
 		if (i < data->total_cmds - 1)
 		{
 			if (pipe(fd) == -1)
-				perror("Pipe");
+				perror("Pipe Init");
 			else
 			{
 				cmds_list->pipe_fdi = fd[0];

@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 17:15:01 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/23 11:38:39 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/23 12:10:21 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,18 @@ void	close_heredoc(t_exec *cmds_list, int tmp)
 	close(tmp);
 	store_or_free(NULL, NULL, false, true);
 	exit(130);
+}
+
+void	free_heredoc(char *str, int tmp)
+{
+	write_heredoc(str, tmp);
+	free(str);
+}
+
+void	close_heredoc_tmp(int tmp, t_exec *cmds_list)
+{
+	close(tmp);
+	cmds_list->infile = open("tmp", O_RDONLY, 0644);
 }
 
 void	open_heredoc(t_exec *cmds_list)
@@ -55,14 +67,7 @@ void	open_heredoc(t_exec *cmds_list)
 			free(str);
 			break ;
 		}
-		write_heredoc(str, tmp);
-		free(str);
+		free_heredoc(str, tmp);
 	}
-	close(tmp);
-	cmds_list->infile = open("tmp", O_RDONLY, 0644);
-}
-
-void	call_heredoc(t_exec *cmds_list)
-{
-	open_heredoc(cmds_list);
+	close_heredoc_tmp(tmp, cmds_list);
 }
