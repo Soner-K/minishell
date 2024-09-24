@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:30:11 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/24 17:26:28 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/24 18:05:48 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,10 @@ void	exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy,
 		if (fork_id == 0)
 			init_child(exec_list, env_copy);
 		else
+		{
+			// printf("parent called\n");
 			get_status(fork_id, status, data);
+			// open_heredoc(*exec_list);
+		}
 	}
 }
