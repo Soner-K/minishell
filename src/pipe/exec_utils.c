@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:30:11 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/23 12:15:04 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/23 16:01:30 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 int	parse_path(char **cmds, char *path)
 {
+	(void)cmds;
 	if (!path || access(path, X_OK | F_OK) != 0)
-	{
-		printf("%s: Command not found\n", cmds[0]);
 		return (0);
-	}
 	else
 		return (1);
 }
@@ -33,18 +31,21 @@ void	init_child(t_exec **cmds_list, char **env_copy)
 		if ((*cmds_list)->cmd_array && parse_path((*cmds_list)->cmd_array,
 				(*cmds_list)->path))
 			execve((*cmds_list)->path, (*cmds_list)->cmd_array, env_copy);
-		if (errno == EACCES)
+		if (errno != EISDIR || errno != EACCES)
 		{
+			printf("%s: Is a directory\n", (*cmds_list)->cmd_array[0]);
 			store_or_free(NULL, NULL, false, true);
 			exit(126);
 		}
 		else
 		{
+			printf("%s: Command not found\n", (*cmds_list)->cmd_array[0]);
 			store_or_free(NULL, NULL, false, true);
 			exit(127);
 		}
 	}
 	store_or_free(NULL, NULL, false, true);
+	printf("HEREEE\n");
 	exit(1);
 }
 

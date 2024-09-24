@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/23 12:13:33 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/23 15:48:03 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,6 +222,7 @@ void		sig_handler_quit(int signal);
 void		sig_handler_forks(int signal);
 void		sig_handler_wait(int signal);
 void		get_status(int fork_id, int status, t_data *data);
+void		sig_handler_heredoc(int signal);
 
 // 				-->exit_status.c
 void		close_extra_files(t_exec *cmds_list);
