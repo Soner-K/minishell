@@ -6,19 +6,17 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:30:11 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/24 16:50:14 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/24 17:26:28 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	parse_path(char **cmds, char *path)
+void	quit_child(t_exec **cmds_list)
 {
-	(void)cmds;
-	if (!path || access(path, X_OK | F_OK) != 0)
-		return (0);
-	else
-		return (1);
+	printf("%s: Command not found\n", (*cmds_list)->cmd_array[0]);
+	store_or_free(NULL, NULL, false, true);
+	exit(127);
 }
 
 void	init_child(t_exec **cmds_list, char **env_copy)
@@ -28,21 +26,21 @@ void	init_child(t_exec **cmds_list, char **env_copy)
 	if (getfile(cmds_list))
 	{
 		only_redirection(cmds_list);
+		if (!(*cmds_list)->cmd_array)
+		{
+			store_or_free(NULL, NULL, false, true);
+			exit(0);
+		}
 		if ((*cmds_list)->cmd_array && parse_path((*cmds_list)->cmd_array,
 				(*cmds_list)->path))
 			execve((*cmds_list)->path, (*cmds_list)->cmd_array, env_copy);
-		if (errno != EISDIR || errno != EACCES)
+		if (errno == EISDIR)
 		{
-			printf("%s: Is a directory\n", (*cmds_list)->cmd_array[0]);
 			store_or_free(NULL, NULL, false, true);
 			exit(126);
 		}
 		else
-		{
-			printf("%s: Command not found\n", (*cmds_list)->cmd_array[0]);
-			store_or_free(NULL, NULL, false, true);
-			exit(127);
-		}
+			quit_child(cmds_list);
 	}
 	store_or_free(NULL, NULL, false, true);
 	exit(1);

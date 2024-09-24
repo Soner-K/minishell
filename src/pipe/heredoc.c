@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 17:15:01 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/24 16:49:52 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/24 17:21:35 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,5 @@ void	open_heredoc(t_exec *cmds_list)
 		free(str);
 	}
 	close(tmp);
-	printf("Infle check %d\n", cmds_list->infile);
 	cmds_list->infile = open("tmp", O_RDONLY, 0644);
-	printf("Infle check %d\n", cmds_list->infile);
-	printf("HERE DOC CLOSED\n");
 }

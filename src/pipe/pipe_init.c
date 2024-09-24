@@ -6,11 +6,20 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:59:43 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/24 16:46:28 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/24 17:26:46 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	parse_path(char **cmds, char *path)
+{
+	(void)cmds;
+	if (!path || access(path, X_OK | F_OK) != 0)
+		return (0);
+	else
+		return (1);
+}
 
 int	getfile(t_exec **cmds_list)
 {
