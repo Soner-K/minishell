@@ -6,33 +6,11 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:13:20 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/23 16:03:01 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/24 16:42:44 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	heredoc_check(t_exec *cmds_list)
-{
-	char	*str;
-	int		fd;
-
-	fd = open("tmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	while (1)
-	{
-		str = readline("> ");
-		if (!str)
-			perror("read string problem");
-		if (ft_strncmp(str, cmds_list->files_info->infile_info->name, 10) == 0)
-		{
-			free(str);
-			break ;
-		}
-		write(fd, str, ft_strlen(str));
-		write(fd, "\n", 1);
-		free(str);
-	}
-}
 
 void	only_redirection(t_exec **cmds_list)
 {

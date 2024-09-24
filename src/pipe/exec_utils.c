@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:30:11 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/23 16:01:30 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/24 16:50:14 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	parse_path(char **cmds, char *path)
 
 void	init_child(t_exec **cmds_list, char **env_copy)
 {
-	signal(SIGINT, &sig_handler_forks);
-	signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, sig_handler_forks);
+	signal(SIGQUIT, sig_handler_quit);
 	if (getfile(cmds_list))
 	{
 		only_redirection(cmds_list);
@@ -45,7 +45,6 @@ void	init_child(t_exec **cmds_list, char **env_copy)
 		}
 	}
 	store_or_free(NULL, NULL, false, true);
-	printf("HEREEE\n");
 	exit(1);
 }
 
@@ -87,7 +86,6 @@ void	exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy,
 	}
 	else
 	{
-		signal(SIGQUIT, sig_handler_quit);
 		fork_id = fork();
 		if (fork_id == 0)
 			init_child(exec_list, env_copy);
