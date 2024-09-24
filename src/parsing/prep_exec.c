@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 15:34:03 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/20 15:06:35 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/24 15:51:42 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void	set_files_info(t_files *files, t_tokens *token)
 		files->infile_info->rights = NO_FILE_FOUND;
 	if (!files->outfile_info)
 		files->outfile_info->rights = NO_FILE_FOUND;
-	// necessary? COME BACK
 }
 
 /**
@@ -140,7 +139,7 @@ t_exec	*create_exec_lst(t_tokens *head, t_tokens *first, t_env *env_list)
 		{
 			itr = new_node_exec();
 			if (!itr)
-				return (free_exec(exec, true), NULL); // COME BACK
+				return (free_exec(exec, true), NULL);
 		}
 	}
 	set_data_struct(first, exec, env_list);
