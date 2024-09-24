@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_status.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:27:37 by ftanon            #+#    #+#             */
-/*   Updated: 2024/09/23 11:19:12 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/24 17:24:16 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ void	init_pid_array(t_data *pipe_info)
 {
 	pipe_info->counter = 0;
 	pipe_info->pids = ft_calloc(pipe_info->total_cmds + 1, sizeof(pid_t));
+	if (!pipe_info->pids)
+	{
+		store_or_free(NULL, NULL, false, true);
+		exit(EXIT_FAILURE);
+	}
 }
 
 void	store_pid(t_data *pipe_info, pid_t fork_id)

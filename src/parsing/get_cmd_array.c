@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:22:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/20 15:15:44 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/24 15:13:38 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ __int8_t	get_cmd_array(t_tokens **node, t_tokens *itr, int id)
 	joined_cmds = NULL;
 	while (itr && (itr->id_cmd != -1 && itr->id_cmd == id))
 	{
-		if (itr->type != WORD && itr->type != CMD && itr->type != BUILTIN) // COME BACK
+		if (itr->type != WORD && itr->type != CMD && itr->type != BUILTIN)
 		{
 			itr = itr->next;
 			continue ;
@@ -96,7 +96,7 @@ __int8_t	set_cmds_arrays(t_tokens **head)
 		}
 		ret = get_cmd_array(head, *head, (*head)->id_cmd);
 		if (ret == ALLOCATION_FAILURE)
-			return (FAILURE); // COME BACK
+			return (ALLOCATION_FAILURE);
 	}
 	*head = first;
 	return (SUCCESS);

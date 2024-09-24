@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 16:20:21 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/24 01:04:19 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/24 15:53:09 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*get_new_word(t_tokens *node, char *var, short int s, short int end)
 	{
 		str = ft_strslice(node->word, s - (s != 0), end, &alloc_fail);
 		if (alloc_fail == true)
-			return (NULL); // how handle in calling function? COME BACK
+			return (NULL);
 		return (str);
 	}
 	str = ft_strreplace(node->word, var, s - (s != 0), end);
@@ -42,6 +42,7 @@ char	*get_new_word(t_tokens *node, char *var, short int s, short int end)
 		return (NULL);
 	return (str);
 }
+
 /**
  * @brief Retrieves the content of an environment variable
  * from minishell's environment list. If the variable refers to another one
@@ -52,13 +53,13 @@ char	*get_new_word(t_tokens *node, char *var, short int s, short int end)
  * @param first A pointer to the first node of the environment list.
  * @returns The content of the variable.
  */
-char	*getenv_from_env_list(char *var, t_env *env_list, t_env *first)
-// COME BACK
+static char	*getenv_from_env_list(char *var, t_env *env_list, t_env *first,
+		bool *alloc_fail)
 {
-	int len_var;
-	char *ret;
+	int		len_var;
+	char	*ret;
 
-	if (!env_list || !var)
+	if (!env_list || !var || *alloc_fail == true)
 		return (NULL);
 	len_var = ft_strlen(var);
 	while (env_list)
@@ -68,7 +69,7 @@ char	*getenv_from_env_list(char *var, t_env *env_list, t_env *first)
 		{
 			ret = &env_list->variable[len_var + 1];
 			if (ret[0] == '$')
-				ret = getenv_from_env_list(ret, first, first);
+				ret = getenv_from_env_list(ret, first, first, alloc_fail);
 			break ;
 		}
 		env_list = env_list->next;
@@ -76,7 +77,8 @@ char	*getenv_from_env_list(char *var, t_env *env_list, t_env *first)
 	if (env_list)
 	{
 		ret = ft_strdup(ret);
-		return (ret);
+		if (!ret)
+			return (*alloc_fail = 1, NULL);
 	}
 	return (NULL);
 }
@@ -92,13 +94,13 @@ char	*getenv_from_env_list(char *var, t_env *env_list, t_env *first)
  * syntax isn't valid, -1 if there is an allocation failure and 1 (SUCESS)
  * if none of these cases happened.
  */
-static __int8_t	extract_variable(t_tokens *node, t_env *env_list, int last_exit)
-// COME BACK protect malloc
+static __int8_t	extract_variable(t_tokens *node, t_env *env_list, int last_exit,
+		bool *alloc_f)
 {
-	int start;
-	int end;
-	char *var_content;
-	char *str;
+	int		start;
+	int		end;
+	char	*var_content;
+	char	*str;
 
 	if (expand_inside_single_quotes(node) == true)
 		return (EXPAND_INSIDE_SINGLE_QUOTES);
@@ -108,17 +110,18 @@ static __int8_t	extract_variable(t_tokens *node, t_env *env_list, int last_exit)
 	if (!str)
 		return (ALLOCATION_FAILURE);
 	if (node->word[end] == '?')
+	{
 		var_content = ft_itoa(last_exit);
+		if (!var_content)
+			return (free(str), ALLOCATION_FAILURE);
+	}
 	else
-		var_content = getenv_from_env_list(str, env_list, env_list);
+		var_content = getenv_from_env_list(str, env_list, env_list, alloc_f);
 	free(str);
 	str = get_new_word(node, var_content, start, end);
 	if (!str)
 		return (free(var_content), ALLOCATION_FAILURE);
-	free(node->word);
-	node->word = str;
-	free(var_content);
-	return (SUCCESS);
+	return (free(node->word), node->word = str, free(var_content), SUCCESS);
 }
 
 /**
@@ -135,16 +138,18 @@ __int8_t	extract_all(t_tokens *head, t_env *env_list, int last_exit_status)
 	__int8_t	ret;
 	t_tokens	*first;
 	short int	n_expand;
+	bool		alloc_f;
 
 	if (!head)
 		return (0);
 	n_expand = count_expands(head->word);
 	first = head;
+	alloc_f = false;
 	while (head)
 	{
 		while (n_expand > 0)
 		{
-			ret = extract_variable(head, env_list, last_exit_status);
+			ret = extract_variable(head, env_list, last_exit_status, &alloc_f);
 			if (ret == ALLOCATION_FAILURE)
 				return (ret);
 			n_expand--;

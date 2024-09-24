@@ -6,11 +6,38 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:16:08 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/22 17:00:53 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/24 16:46:22 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	initialize_node(t_exec **node)
+{
+	t_exec	*tmp;
+
+	tmp = *node;
+	tmp->files_info->infile_info->name = NULL;
+	tmp->files_info->infile_info->type = NONE;
+	tmp->files_info->infile_info->rights = 0;
+	tmp->files_info->outfile_info->name = NULL;
+	tmp->files_info->outfile_info->type = NONE;
+	tmp->files_info->outfile_info->rights = 0;
+	tmp->builtin = false;
+	tmp->path = NULL;
+	tmp->cmd_array = NULL;
+	tmp->next = NULL;
+	tmp->prev = NULL;
+	tmp->old_stdin = -1;
+	tmp->old_stdout = -1;
+	tmp->infile = -1;
+	tmp->outfile = -1;
+	tmp->pipe_fdo = -1;
+	tmp->pipe_fdi = -1;
+	tmp->old_infile = -1;
+	tmp->old_outfile = -1;
+	tmp->data = NULL;
+}
 
 /**
  * @brief Creates a new node of type t_exec.
@@ -24,25 +51,22 @@ t_exec	*new_node_exec(void)
 	t_files	*files;
 
 	exec = malloc(sizeof(t_exec));
-	infile_info = malloc(sizeof(t_fdata));
-	outfile_info = malloc(sizeof(t_fdata));
-	files = malloc(sizeof(t_files));
-	if (!exec || !infile_info || !outfile_info || !files)
+	if (!exec)
 		return (NULL);
-	infile_info->name = NULL;
-	infile_info->type = NONE;
-	infile_info->rights = 0;
-	outfile_info->name = NULL;
-	outfile_info->type = NONE;
-	outfile_info->rights = 0;
+	infile_info = malloc(sizeof(t_fdata));
+	if (!infile_info)
+		return (free(exec), NULL);
+	outfile_info = malloc(sizeof(t_fdata));
+	if (!outfile_info)
+		return (free(exec), free(infile_info), NULL);
+	files = malloc(sizeof(t_files));
+	if (!files)
+		return (free(exec), free(infile_info), free(outfile_info), NULL);
+	exec->files_info = files;
 	files->infile_info = infile_info;
 	files->outfile_info = outfile_info;
-	exec->builtin = false;
-	exec->cmd_array = NULL;
-	exec->files_info = files;
-	exec->old_infile = -1;
-	exec->old_outfile = -1;
-	return (exec->next = NULL, exec->prev = NULL, exec->path = NULL, exec);
+	initialize_node(&exec);
+	return (exec);
 }
 
 /**
@@ -59,7 +83,7 @@ void	lst_addback_exec(t_exec **head, t_exec *add)
 		*head = add;
 		return ;
 	}
-	tmp = *head; // COME BACK if no add, return error ?
+	tmp = *head;
 	while ((tmp->next))
 		tmp = tmp->next;
 	tmp->next = add;
@@ -80,7 +104,8 @@ t_data	*set_data_struct(t_tokens *tokens, t_exec *exec, t_env *env_list)
 
 	data = malloc(sizeof(t_data));
 	if (!data)
-		return (NULL); //COME BACK memory handler
+		return (free_tokens(tokens, false), free_exec(exec, true),
+			exit(EXIT_FAILURE), NULL);
 	data->exit_status = 0;
 	data->pids = NULL;
 	data->limiter = NULL;
@@ -99,8 +124,7 @@ t_data	*set_data_struct(t_tokens *tokens, t_exec *exec, t_env *env_list)
 		exec->data = data;
 		exec = exec->next;
 	}
-	data->env_list = env_list;
-	return (data);
+	return (data->env_list = env_list, data);
 }
 
 /**

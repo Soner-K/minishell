@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/23 15:48:03 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/24 16:21:29 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ char		*ft_strreplace(char *str, char *add, int start, int end);
 
 //				-->expand.c
 
-char		*getenv_from_env_list(char *var, t_env *env_list, t_env *first);
+// char		*getenv_from_env_list(char *var, t_env *env_list, t_env *first);
 __int8_t	extract_all(t_tokens *head, t_env *env_list, int last_exit_status);
 
 //				-->quotes.c
@@ -211,7 +211,7 @@ void		exec_pipe(t_exec *cmds_list, char **env_copy, int i,
 void		file_close(t_exec *cmds_list, t_data *data, int fork_id);
 
 // 				-->create_prompt.c
-char		*read_prompt(t_env *env_list);
+char		*read_prompt(void);
 void		runtime_shell(t_exec *cmds_list, char **env_copy, t_data *data,
 				t_env **env_list);
 
