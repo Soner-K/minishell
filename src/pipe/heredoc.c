@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 17:15:01 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/23 16:01:57 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/24 19:33:52 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,23 @@ void	open_heredoc(t_exec *cmds_list)
 		{
 			printf("heredoc delimited (`%s')\n",
 				cmds_list->files_info->infile_info->name);
-			close_heredoc(cmds_list, tmp);
+			break ;
 		}
-		if ((ft_strncmp(str, cmds_list->files_info->infile_info->name,
-					ft_strlen(cmds_list->files_info->infile_info->name)) == 0
-				&& str[ft_strlen(cmds_list->files_info->infile_info->name)] == '\0'))
+		if (ft_strncmp(str, cmds_list->files_info->infile_info->name,
+				ft_strlen(cmds_list->files_info->infile_info->name)) == 0
+			&& str[ft_strlen(cmds_list->files_info->infile_info->name)] == '\0')
 		{
-			printf("HERE? \n");
-			free(str);
-			close_heredoc(cmds_list, tmp);
+			if (cmds_list->pipe_fdi != -1)
+				close(cmds_list->pipe_fdi);
+			if (cmds_list->pipe_fdo != -1)
+				close(cmds_list->pipe_fdo);
+			if (cmds_list->prev != NULL && cmds_list->prev->pipe_fdi != -1)
+				close(cmds_list->prev->pipe_fdi);
+			break ;
 		}
-		free_heredoc(str, tmp);
+		write_heredoc(str, tmp);
+		free(str);
 	}
-	close_heredoc_tmp(tmp, cmds_list);
+	close(tmp);
+	cmds_list->infile = open("tmp", O_RDONLY, 0644);
 }

@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/24 16:21:29 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/24 19:37:18 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void		all_my_homies_hate_the_norm(t_tokens **head, t_exec *itr,
 void		set_redirections_type(t_tokens **head);
 
 //				-->get_cmd_array.c
-void		set_id(t_tokens *head);
+
 __int8_t	set_cmds_arrays(t_tokens **head);
 
 //				-->syntax_checker.c

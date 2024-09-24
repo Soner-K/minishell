@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 16:20:21 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/24 15:53:09 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/24 19:43:39 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,43 +43,32 @@ char	*get_new_word(t_tokens *node, char *var, short int s, short int end)
 	return (str);
 }
 
-/**
- * @brief Retrieves the content of an environment variable
- * from minishell's environment list. If the variable refers to another one
- * (i.e. starts with '$'), finds the referenced variable recursively.
- * The recursion continues as long as there are referenced variables.
- * @param var The variable name.
- * @param env_list The environment list.
- * @param first A pointer to the first node of the environment list.
- * @returns The content of the variable.
- */
-static char	*getenv_from_env_list(char *var, t_env *env_list, t_env *first,
-		bool *alloc_fail)
+static char	*getenv_from_env_list(char *var, t_env *env, t_env *first)
 {
-	int		len_var;
+	int		len;
 	char	*ret;
+	char	*tmp;
 
-	if (!env_list || !var || *alloc_fail == true)
+	if (!env || !var)
 		return (NULL);
-	len_var = ft_strlen(var);
-	while (env_list)
+	len = ft_strlen(var);
+	while (env)
 	{
-		if (!ft_strncmp(var, env_list->variable, len_var)
-			&& env_list->variable[len_var] == '=')
+		if (!ft_strncmp(var, env->variable, len) && env->variable[len] == '=')
 		{
-			ret = &env_list->variable[len_var + 1];
+			ret = &env->variable[len + 1];
 			if (ret[0] == '$')
-				ret = getenv_from_env_list(ret, first, first, alloc_fail);
+			{
+				tmp = ret;
+				ret = getenv_from_env_list(ret, first, first);
+				free(tmp);
+			}
 			break ;
 		}
-		env_list = env_list->next;
+		env = env->next;
 	}
-	if (env_list)
-	{
-		ret = ft_strdup(ret);
-		if (!ret)
-			return (*alloc_fail = 1, NULL);
-	}
+	if (env)
+		return (ret = ft_strdup(ret), ret);
 	return (NULL);
 }
 
@@ -94,8 +83,7 @@ static char	*getenv_from_env_list(char *var, t_env *env_list, t_env *first,
  * syntax isn't valid, -1 if there is an allocation failure and 1 (SUCESS)
  * if none of these cases happened.
  */
-static __int8_t	extract_variable(t_tokens *node, t_env *env_list, int last_exit,
-		bool *alloc_f)
+static __int8_t	extract_variable(t_tokens *node, t_env *env_list, int last_exit)
 {
 	int		start;
 	int		end;
@@ -116,7 +104,7 @@ static __int8_t	extract_variable(t_tokens *node, t_env *env_list, int last_exit,
 			return (free(str), ALLOCATION_FAILURE);
 	}
 	else
-		var_content = getenv_from_env_list(str, env_list, env_list, alloc_f);
+		var_content = getenv_from_env_list(str, env_list, env_list);
 	free(str);
 	str = get_new_word(node, var_content, start, end);
 	if (!str)
@@ -138,18 +126,16 @@ __int8_t	extract_all(t_tokens *head, t_env *env_list, int last_exit_status)
 	__int8_t	ret;
 	t_tokens	*first;
 	short int	n_expand;
-	bool		alloc_f;
 
 	if (!head)
 		return (0);
 	n_expand = count_expands(head->word);
 	first = head;
-	alloc_f = false;
 	while (head)
 	{
 		while (n_expand > 0)
 		{
-			ret = extract_variable(head, env_list, last_exit_status, &alloc_f);
+			ret = extract_variable(head, env_list, last_exit_status);
 			if (ret == ALLOCATION_FAILURE)
 				return (ret);
 			n_expand--;

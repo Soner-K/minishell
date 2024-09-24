@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:02:58 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/24 16:02:51 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/24 20:06:32 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ void	store_or_free(char *line, t_exec *exec, bool store, bool free_env)
 	{
 		line_store = line;
 		exec_store = exec;
-		if (exec && exec->data)
-			env_list_store = exec->data->env_list;
+		// if (exec && exec->data)
+		env_list_store = exec->data->env_list;
 		return ;
 	}
-	free_all(line_store, exec_store, env_list_store, free_env == true);
+	free_all(line_store, exec_store, env_list_store, free_env);
 }
 
 /**
