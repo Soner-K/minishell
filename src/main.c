@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/24 20:16:55 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/25 11:53:53 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_signal;
+int		g_signal;
 
 int	arg_check(int argc, char **argv)
 {
@@ -23,11 +23,12 @@ int	arg_check(int argc, char **argv)
 	return (0);
 }
 
-void p(t_exec *exec)
+void	p(t_exec *exec)
 {
 	while (exec)
 	{
-		printf("del is %s\n", exec->files_info->infile_info->name);
+		if (exec->files_info->infile_info->name != NULL)
+			printf("delimiter is %s\n", exec->files_info->infile_info->name);
 		exec = exec->next;
 	}
 }
@@ -55,7 +56,6 @@ int	main(int argc, char **argv, char **envp)
 			free_env_list(env_list);
 			exit(EXIT_FAILURE);
 		}
-		printf("eeee\n");
 		if (g_signal)
 			exit_status = 128 + g_signal;
 		g_signal = 0;

@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:30:11 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/25 11:41:42 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/25 17:35:47 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,33 @@ void	quit_child(t_exec **cmds_list)
 	printf("%s: Command not found\n", (*cmds_list)->cmd_array[0]);
 	store_or_free(NULL, NULL, false, true);
 	exit(127);
+}
+void	init_heredoc_child(t_exec **cmds_list, char **env_copy)
+{
+	signal(SIGINT, sig_handler_forks);
+	signal(SIGQUIT, sig_handler_quit);
+	if ((*cmds_list)->files_info->infile_info->type == HEREDOC)
+	{
+		only_redirection(cmds_list);
+		open_heredoc((*cmds_list));
+		if (!(*cmds_list)->cmd_array)
+		{
+			store_or_free(NULL, NULL, false, true);
+			exit(0);
+		}
+		if ((*cmds_list)->cmd_array && parse_path((*cmds_list)->cmd_array,
+				(*cmds_list)->path))
+			execve((*cmds_list)->path, (*cmds_list)->cmd_array, env_copy);
+		if (errno == EISDIR)
+		{
+			store_or_free(NULL, NULL, false, true);
+			exit(126);
+		}
+		else
+			quit_child(cmds_list);
+	}
+	store_or_free(NULL, NULL, false, true);
+	exit(1);
 }
 
 void	init_child(t_exec **cmds_list, char **env_copy)
@@ -33,7 +60,10 @@ void	init_child(t_exec **cmds_list, char **env_copy)
 		}
 		if ((*cmds_list)->cmd_array && parse_path((*cmds_list)->cmd_array,
 				(*cmds_list)->path))
+		{
+			printf("EXEC\n");
 			execve((*cmds_list)->path, (*cmds_list)->cmd_array, env_copy);
+		}
 		if (errno == EISDIR)
 		{
 			store_or_free(NULL, NULL, false, true);
@@ -73,8 +103,8 @@ void	exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy,
 
 	status = 0;
 	builtin_check = which_builtin(*exec_list);
-	(*exec_list)->pipe_fdi = -1;
-	(*exec_list)->pipe_fdo = -1;
+	// (*exec_list)->pipe_fdi = -1;
+	// (*exec_list)->pipe_fdo = -1;
 	if (builtin_check > 0)
 	{
 		(*exec_list)->old_stdin = dup(STDIN_FILENO);
@@ -88,10 +118,6 @@ void	exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy,
 		if (fork_id == 0)
 			init_child(exec_list, env_copy);
 		else
-		{
-			// printf("parent called\n");
 			get_status(fork_id, status, data);
-			// open_heredoc(*exec_list);
-		}
 	}
 }
