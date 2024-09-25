@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/25 11:53:53 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/25 20:22:23 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,11 @@ void	p(t_exec *exec)
 {
 	while (exec)
 	{
+		// printf("cmd is %s\n", exec->cmd_array[0]);
 		if (exec->files_info->infile_info->name != NULL)
+		{
 			printf("delimiter is %s\n", exec->files_info->infile_info->name);
+		}
 		exec = exec->next;
 	}
 }
@@ -75,9 +78,15 @@ int	main(int argc, char **argv, char **envp)
 		store_or_free(line, exec, env_list, true);
 		p(exec);
 		if (data->num_pipe < 1)
+		{
+			printf("Exec shell called\n");
 			exec_shell(&exec, &env_list, envp, data);
+		}
 		else
+		{
+			printf("Runtime shell called\n");
 			runtime_shell(exec, envp, data, &env_list);
+		}
 		exit_status = data->exit_status;
 		free_all(line, exec, env_list, false);
 	}
