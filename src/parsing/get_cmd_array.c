@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:22:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/20 15:15:44 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/24 19:37:25 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,25 @@
  * @param head The head of the linked list of tokens.
  * @returns void.
  */
-void	set_id(t_tokens *head)
+static void	set_id(t_tokens *head, int id_cmd)
 {
-	int	id_cmd;
+	bool	met_heredoc;
 
-	id_cmd = 0;
+	met_heredoc = false;
 	while (head)
 	{
-		if (head->type == PIPE)
+		if (head->type == HEREDOC)
+		{
+			met_heredoc = true;
+			head->id_cmd = id_cmd;
+			id_cmd++;
+			head = head->next;
+		}
+		else if (head->type == PIPE)
 		{
 			head = head->next;
 			id_cmd++;
+			met_heredoc = false;
 		}
 		else
 		{
@@ -52,7 +60,7 @@ __int8_t	get_cmd_array(t_tokens **node, t_tokens *itr, int id)
 	joined_cmds = NULL;
 	while (itr && (itr->id_cmd != -1 && itr->id_cmd == id))
 	{
-		if (itr->type != WORD && itr->type != CMD && itr->type != BUILTIN) // COME BACK
+		if (itr->type != WORD && itr->type != CMD && itr->type != BUILTIN)
 		{
 			itr = itr->next;
 			continue ;
@@ -86,7 +94,7 @@ __int8_t	set_cmds_arrays(t_tokens **head)
 
 	first = *head;
 	ret = SUCCESS;
-	set_id(*head);
+	set_id(*head, 0);
 	while (*head)
 	{
 		if ((*head)->type == PIPE)
@@ -96,7 +104,7 @@ __int8_t	set_cmds_arrays(t_tokens **head)
 		}
 		ret = get_cmd_array(head, *head, (*head)->id_cmd);
 		if (ret == ALLOCATION_FAILURE)
-			return (FAILURE); // COME BACK
+			return (ALLOCATION_FAILURE);
 	}
 	*head = first;
 	return (SUCCESS);

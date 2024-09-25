@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 14:24:41 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/24 00:53:38 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/24 15:14:45 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ static char	**split_path(t_env *env_list)
 	}
 	if (!env_list)
 		return (NULL);
-	// necessary if split returns "" instead of NULL if command not found? COME BACK
 	all_paths = ft_split(env_list->variable, ':');
 	if (!all_paths)
 		return (NULL);
@@ -133,8 +132,6 @@ __int8_t	find_cmd_type(t_exec *head, t_env *env_list)
 	char	*str;
 	bool	allocation_fail;
 
-	if (!head)
-		return (0); // CCOME BACK
 	allocation_fail = 1;
 	while (head)
 	{

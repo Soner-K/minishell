@@ -6,11 +6,13 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:40:26 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/22 17:20:11 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/24 17:35:57 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+#define UNCLOSED_QUOTES_ERR_MESSAGE "minishell: syntax error: unclosed quotes\n"
 
 /**
  * @brief Checks if there are unclosed quotes in the tokens' list.
@@ -36,7 +38,7 @@ static __int8_t	check_if_closed_quotes(t_tokens *head)
 				quote = str[i];
 		}
 		if (quote)
-			return (printf("minishell: unclosed quotes\n"), false);
+			return (printf("%s", UNCLOSED_QUOTES_ERR_MESSAGE), false);
 		head = head->next;
 	}
 	return (true);
