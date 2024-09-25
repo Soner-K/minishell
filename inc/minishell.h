@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/24 19:37:18 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/25 11:41:33 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,6 @@ void		close_no_file(t_exec *cmds_list);
 void		close_parent(t_exec *head, t_data *pipe_info);
 
 //				-->redirect_init.c
-void		heredoc_check(t_exec *cmds_list);
 void		only_redirection(t_exec **cmds_list);
 void		first_cmd(t_exec *cmds_list);
 void		last_cmd(t_exec *cmds_list);

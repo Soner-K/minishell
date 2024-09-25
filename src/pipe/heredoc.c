@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 17:15:01 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/24 19:33:52 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/25 11:41:53 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	open_heredoc(t_exec *cmds_list)
 	char	*str;
 	int		tmp;
 
+	printf("HERE doc called\n");
 	tmp = open("tmp", O_CREAT | O_RDWR | O_TRUNC, 0644);
 	while (1)
 	{
