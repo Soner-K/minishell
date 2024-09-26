@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:30:11 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/26 11:49:44 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/26 11:55:21 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,14 +92,8 @@ void	exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy,
 	{
 		fork_id = fork();
 		if (fork_id == 0)
-		{
-			printf("Child process\n");
 			init_child(exec_list, env_copy);
-		}
 		else
-		{
-			printf("Parent process\n");
 			get_status(fork_id, status, data);
-		}
 	}
 }
