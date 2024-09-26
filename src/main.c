@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/26 18:12:19 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/26 18:42:58 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	p(t_exec *exec)
 {
 	while (exec)
 	{
-		printf("del is %s\n", exec->files_info->infile_info->del);
+		// printf("del is %s\n", exec->files_info->infile_info->del);
 		printf("infile is %s\n", exec->files_info->infile_info->name);
 		if (exec->cmd_array)
 			printf("cmd array 0 %s\n", exec->cmd_array[0]);
