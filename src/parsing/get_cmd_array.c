@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:22:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/26 14:14:21 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/26 19:51:31 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,19 @@
  * @param head The head of the linked list of tokens.
  * @returns void.
  */
-static void	set_id(t_tokens *head, int id_cmd)
+static void	set_id(t_tokens *head, int id_cmd, bool met_heredoc)
 {
-	bool	met_heredoc;
-
-	met_heredoc = false;
 	while (head)
 	{
-		if (head->type == HEREDOC && head->next && head->next->type == HEREDOC)
+		if (head->type == HEREDOC && met_heredoc == false)
 		{
-			met_heredoc = true;
 			head->id_cmd = id_cmd;
-			id_cmd++;
+			head = head->next;
+			met_heredoc = true;
+		}
+		else if (head->type == HEREDOC && met_heredoc == true)
+		{
+			head->id_cmd = ++id_cmd;
 			head = head->next;
 		}
 		else if (head->type == PIPE)
@@ -94,7 +95,7 @@ __int8_t	set_cmds_arrays(t_tokens **head)
 
 	first = *head;
 	ret = SUCCESS;
-	set_id(*head, 0);
+	set_id(*head, 0, false);
 	while (*head)
 	{
 		if ((*head)->type == PIPE)

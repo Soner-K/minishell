@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:25 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/24 17:39:47 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/26 18:43:53 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,11 @@ typedef struct t_tokens
  */
 typedef struct s_fdata
 {
+	bool			is_heredoc;
 	__int8_t		rights;
 	t_type			type;
 	char			*name;
+	char			*del;
 }					t_fdata;
 
 /**

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/26 11:52:51 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/26 18:43:08 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,7 +210,7 @@ void		exec_pipe(t_exec *cmds_list, char **env_copy, int i,
 void		file_close(t_exec *cmds_list, t_data *data, int fork_id);
 
 // 				-->create_prompt.c
-char		*read_prompt(void);
+char		*read_prompt(t_env *env_list);
 void		runtime_shell(t_exec *cmds_list, char **env_copy, t_data *data,
 				t_env **env_list);
 
