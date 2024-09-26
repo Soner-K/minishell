@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/25 11:41:33 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/26 11:52:51 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,4 +235,7 @@ void		wait_pipe_files(t_data *data);
 void		runtime_signal(void);
 void		runtime_free(t_exec *cmds_list);
 
+//				-->handle_heredoc.c
+void		launch_heredoc(t_exec **exec_list, t_data *data, char **env_copy,
+				t_env **env_list);
 #endif

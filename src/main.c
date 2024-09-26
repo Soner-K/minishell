@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/26 14:11:11 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:25:50 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_signal;
+int		g_signal;
 
 int	arg_check(int argc, char **argv)
 {
@@ -23,7 +23,7 @@ int	arg_check(int argc, char **argv)
 	return (0);
 }
 
-void p(t_exec *exec)
+void	p(t_exec *exec)
 {
 	while (exec)
 	{
@@ -77,9 +77,15 @@ int	main(int argc, char **argv, char **envp)
 		store_or_free(line, exec, env_list, true);
 		p(exec);
 		if (data->num_pipe < 1)
+		{
+			printf("Exec shell called\n");
 			exec_shell(&exec, &env_list, envp, data);
+		}
 		else
+		{
+			printf("Runtime shell called\n");
 			runtime_shell(exec, envp, data, &env_list);
+		}
 		exit_status = data->exit_status;
 		free_all(line, exec, env_list, false);
 	}
