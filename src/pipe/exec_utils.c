@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:30:11 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/26 11:55:21 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/26 18:07:15 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ void	quit_child(t_exec **cmds_list)
 
 void	init_child(t_exec **cmds_list, char **env_copy)
 {
-	signal(SIGINT, sig_handler_forks);
-	signal(SIGQUIT, sig_handler_quit);
 	if (getfile(cmds_list))
 	{
 		only_redirection(cmds_list);
@@ -30,7 +28,6 @@ void	init_child(t_exec **cmds_list, char **env_copy)
 		{
 			store_or_free(NULL, NULL, false, true);
 			exit(0);
-			// break ;
 		}
 		if ((*cmds_list)->cmd_array && parse_path((*cmds_list)->cmd_array,
 				(*cmds_list)->path))
@@ -72,9 +69,11 @@ void	exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy,
 		t_data *data)
 {
 	int		builtin_check;
-	pid_t	fork_id;
 	int		status;
+	pid_t	fork_id;
 
+	signal(SIGINT, sig_handler_forks);
+	signal(SIGQUIT, sig_handler_quit);
 	status = 0;
 	builtin_check = which_builtin(*exec_list);
 	if ((*exec_list)->files_info->infile_info->type == HEREDOC)
