@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 15:34:03 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/24 15:51:42 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/26 18:34:37 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@
  */
 void	set_files_names(t_files *files, t_tokens *token)
 {
+	// if (token->type == HEREDOC)
+	// {
+	// 	files->infile_info->is_heredoc = true;
+	// 	files->infile_info->del = token->word;
+	// }
 	if (token->type == INREDIR || token->type == HEREDOC)
 	{
 		files->infile_info->name = token->word;
@@ -37,7 +42,7 @@ void	set_files_names(t_files *files, t_tokens *token)
  * @param fls A pointer to the structure containing the file informations.
  * @param r The read rights.
  * @param w The write rights.
- * @param ex The execute rights.
+ * @param ex The execution rights.
  * @returns void.
  */
 void	set_files_rights(t_files *fls, __int8_t r, __int8_t w, __int8_t ex)

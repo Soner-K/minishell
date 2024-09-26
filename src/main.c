@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/26 14:25:50 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/26 18:12:19 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	p(t_exec *exec)
 {
 	while (exec)
 	{
-		printf("del is %s\n", exec->files_info->infile_info->name);
-		// printf("infile is %s\n", exec->files_info->infile_info->name);
+		printf("del is %s\n", exec->files_info->infile_info->del);
+		printf("infile is %s\n", exec->files_info->infile_info->name);
 		if (exec->cmd_array)
 			printf("cmd array 0 %s\n", exec->cmd_array[0]);
 		exec = exec->next;
@@ -52,7 +52,7 @@ int	main(int argc, char **argv, char **envp)
 	exit_status = 0;
 	while (42)
 	{
-		line = read_prompt();
+		line = read_prompt(env_list);
 		if (!line)
 		{
 			free_env_list(env_list);
@@ -73,9 +73,11 @@ int	main(int argc, char **argv, char **envp)
 		}
 		data = exec->data;
 		if (!data)
-			continue ;
+		{
+			free_all(line, exec, env_list, false);
+			continue;
+		}
 		store_or_free(line, exec, env_list, true);
-		p(exec);
 		if (data->num_pipe < 1)
 		{
 			printf("Exec shell called\n");

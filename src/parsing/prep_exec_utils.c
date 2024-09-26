@@ -3,26 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   prep_exec_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:16:08 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/25 17:35:42 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/26 14:53:20 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	initialize_node(t_exec **node)
+static void	initialize_node(t_exec **node, t_exec *tmp)
 {
-	t_exec	*tmp;
-
 	tmp = *node;
-	tmp->files_info->infile_info->name = NULL;
-	tmp->files_info->infile_info->type = NONE;
+	tmp->files_info->infile_info->is_heredoc = false;
 	tmp->files_info->infile_info->rights = 0;
-	tmp->files_info->outfile_info->name = NULL;
-	tmp->files_info->outfile_info->type = NONE;
+	tmp->files_info->infile_info->type = NONE;
+	tmp->files_info->infile_info->name = NULL;
+	tmp->files_info->infile_info->del = NULL;
+	tmp->files_info->outfile_info->is_heredoc = false;
 	tmp->files_info->outfile_info->rights = 0;
+	tmp->files_info->outfile_info->type = NONE;
+	tmp->files_info->outfile_info->name = NULL;
+	tmp->files_info->outfile_info->del = NULL;
 	tmp->builtin = false;
 	tmp->path = NULL;
 	tmp->cmd_array = NULL;
@@ -65,7 +67,7 @@ t_exec	*new_node_exec(void)
 	exec->files_info = files;
 	files->infile_info = infile_info;
 	files->outfile_info = outfile_info;
-	initialize_node(&exec);
+	initialize_node(&exec, NULL);
 	return (exec);
 }
 
