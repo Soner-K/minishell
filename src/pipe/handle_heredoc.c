@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:03:52 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/26 16:28:58 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/26 17:06:19 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	launch_heredoc(t_exec **exec_list, t_data *data, char **env_copy,
 	while (i < total && *exec_list != NULL)
 	{
 		open_heredoc(*exec_list);
-		printf("current heredoc infile %d\n", (*exec_list)->infile);
+		// printf("current heredoc infile %d\n", (*exec_list)->infile);
 		exec_list = &(*exec_list)->next;
-		// (*exec_list)->files_info->infile_info->type = INREDIR;
+		i++;
 	}
 }
