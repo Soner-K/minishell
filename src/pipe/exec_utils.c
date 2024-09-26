@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:30:11 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/25 11:41:42 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/26 14:54:18 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ void	exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy,
 
 	status = 0;
 	builtin_check = which_builtin(*exec_list);
+	if ((*exec_list)->files_info->infile_info->type == HEREDOC)
+		launch_heredoc(exec_list, data, env_copy, env_list);
 	(*exec_list)->pipe_fdi = -1;
 	(*exec_list)->pipe_fdo = -1;
 	if (builtin_check > 0)
