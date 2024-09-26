@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:59:43 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/26 16:40:07 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/26 17:25:12 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ int	getfile(t_exec **cmds_list)
 	t_fdata	*infile_info;
 
 	infile_info = (*cmds_list)->files_info->infile_info;
-	// if ((*cmds_list)->files_info->infile_info->type == HEREDOC)
-	// 	open_heredoc((*cmds_list));
 	if ((*cmds_list)->files_info->infile_info->type == INREDIR)
 	{
 		if (infile_info->rights == 6)
