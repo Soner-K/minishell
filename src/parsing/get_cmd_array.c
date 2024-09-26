@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:22:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/24 19:37:25 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:14:21 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	set_id(t_tokens *head, int id_cmd)
 	met_heredoc = false;
 	while (head)
 	{
-		if (head->type == HEREDOC)
+		if (head->type == HEREDOC && head->next && head->next->type == HEREDOC)
 		{
 			met_heredoc = true;
 			head->id_cmd = id_cmd;

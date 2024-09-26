@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/25 20:22:23 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/26 14:25:50 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,10 @@ void	p(t_exec *exec)
 {
 	while (exec)
 	{
-		// printf("cmd is %s\n", exec->cmd_array[0]);
-		if (exec->files_info->infile_info->name != NULL)
-		{
-			printf("delimiter is %s\n", exec->files_info->infile_info->name);
-		}
+		printf("del is %s\n", exec->files_info->infile_info->name);
+		// printf("infile is %s\n", exec->files_info->infile_info->name);
+		if (exec->cmd_array)
+			printf("cmd array 0 %s\n", exec->cmd_array[0]);
 		exec = exec->next;
 	}
 }
