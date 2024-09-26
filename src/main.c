@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/24 20:16:55 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:11:11 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ void p(t_exec *exec)
 	while (exec)
 	{
 		printf("del is %s\n", exec->files_info->infile_info->name);
+		// printf("infile is %s\n", exec->files_info->infile_info->name);
+		if (exec->cmd_array)
+			printf("cmd array 0 %s\n", exec->cmd_array[0]);
 		exec = exec->next;
 	}
 }
@@ -55,7 +58,6 @@ int	main(int argc, char **argv, char **envp)
 			free_env_list(env_list);
 			exit(EXIT_FAILURE);
 		}
-		printf("eeee\n");
 		if (g_signal)
 			exit_status = 128 + g_signal;
 		g_signal = 0;
