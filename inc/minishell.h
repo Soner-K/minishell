@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/26 18:43:08 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/27 18:24:55 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ __int8_t	find_cmd_type(t_exec *head, t_env *env_list);
 //				-->memory_handler.c
 void		free_exec(t_exec *exec_head, bool all);
 void		free_all(char *line, t_exec *exec, t_env *env_list, bool free_env);
-void		free_tokens(t_tokens *head, bool all);
+void		free_tokens(t_tokens *head, bool all, t_exec *exec);
 void		store_or_free(char *line, t_exec *exec, bool store, bool free_env);
 void		free_env_list(t_env *env_list);
 

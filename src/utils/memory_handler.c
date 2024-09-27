@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:02:58 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/24 20:06:32 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/27 18:36:15 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	store_or_free(char *line, t_exec *exec, bool store, bool free_env)
 	{
 		line_store = line;
 		exec_store = exec;
-		// if (exec && exec->data)
+		// if (exec && exec->data) COME BACK
 		env_list_store = exec->data->env_list;
 		return ;
 	}
@@ -62,7 +62,7 @@ void	store_or_free(char *line, t_exec *exec, bool store, bool free_env)
  * @param head The head of the tokens' list.
  * @returns void.
  */
-void	free_tokens(t_tokens *tokens_head, bool all)
+void	free_tokens(t_tokens *tokens_head, bool all, t_exec *exec)
 {
 	t_tokens	*tmp;
 	__int8_t	id_cmd;
@@ -70,12 +70,18 @@ void	free_tokens(t_tokens *tokens_head, bool all)
 	if (!tokens_head)
 		return ;
 	id_cmd = 0;
+	exec = NULL;
 	while (tokens_head)
 	{
 		tmp = tokens_head;
 		tokens_head = tokens_head->next;
 		if (all)
 			free(tmp->word);
+		// else if (all == false)
+		// {
+		// 	if (exec && exec->files_info->infile_info->name != tmp->word)
+		// 		free(tmp->word);
+		// }
 		else if (all == false && tmp->type > APPENDREDIR)
 			free(tmp->word);
 		if (all && id_cmd == tmp->id_cmd)
@@ -106,15 +112,17 @@ void	free_exec(t_exec *exec_head, bool all)
 		tmp = exec_head;
 		exec_head = exec_head->next;
 		if (all)
+		{
 			free(tmp->files_info->infile_info->name);
-		free(tmp->files_info->infile_info);
-		if (all)
+			// if (tmp->files_info->infile_info->is_heredoc)
+			// 	free(tmp->files_info->infile_info->del);
 			free(tmp->files_info->outfile_info->name);
+			free_arrs((void **)tmp->cmd_array);	
+		}
+		free(tmp->files_info->infile_info);
 		free(tmp->files_info->outfile_info);
 		free(tmp->files_info);
 		free(tmp->path);
-		if (all)
-			free_arrs((void **)tmp->cmd_array);
 		free(tmp);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/26 19:52:16 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/27 18:03:04 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	p(t_exec *exec)
 		printf("infile is %s\n", exec->files_info->infile_info->name);
 		if (exec->cmd_array)
 			printf("cmd array 0 %s\n", exec->cmd_array[0]);
+		if (exec->files_info->infile_info->is_heredoc)
+			printf("delimiter is %s\n", exec->files_info->infile_info->del);
 		exec = exec->next;
 	}
 }
@@ -45,6 +47,8 @@ int	main(int argc, char **argv, char **envp)
 
 	if (arg_check(argc, argv) > 0)
 		return (FAILURE);
+	if (!envp)
+		exit(EXIT_FAILURE);
 	env_list = NULL;
 	store_env_list(envp, &env_list);
 	init_signal();
