@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 17:15:01 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/25 20:41:22 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/27 21:30:19 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,14 @@ void	close_heredoc_tmp(int tmp, t_exec *cmds_list)
 	cmds_list->infile = open("tmp", O_RDONLY, 0644);
 }
 
-void	open_heredoc(t_exec *cmds_list)
+void	open_heredoc(t_exec *cmds_list, int i, t_data *data)
 {
 	char	*str;
-	int		tmp;
 
-	tmp = open("tmp", O_CREAT | O_RDWR | O_TRUNC, 0644);
+	(void)i;
+	(void)data;
+	printf("HEREdoc opend\n");
+	data->fd_hd[i] = open(data->hd_files[i], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	while (1)
 	{
 		str = readline(">");
@@ -60,7 +62,7 @@ void	open_heredoc(t_exec *cmds_list)
 				close(cmds_list->pipe_fdo);
 			if (cmds_list->prev != NULL && cmds_list->prev->pipe_fdi != -1)
 				close(cmds_list->prev->pipe_fdi);
-			close(tmp);
+			close(data->fd_hd[i]);
 			store_or_free(NULL, NULL, false, true);
 			exit(130);
 		}
@@ -70,17 +72,17 @@ void	open_heredoc(t_exec *cmds_list)
 				cmds_list->files_info->infile_info->name);
 			break ;
 		}
-		if (ft_strncmp(str, cmds_list->files_info->infile_info->name,
-				ft_strlen(cmds_list->files_info->infile_info->name)) == 0
-			&& str[ft_strlen(cmds_list->files_info->infile_info->name)] == '\0')
+		if (ft_strncmp(str, cmds_list->files_info->infile_info->del,
+				ft_strlen(cmds_list->files_info->infile_info->del)) == 0
+			&& str[ft_strlen(cmds_list->files_info->infile_info->del)] == '\0')
 		{
 			free(str);
 			break ;
 		}
-		write_heredoc(str, tmp);
+		write_heredoc(str, data->fd_hd[i]);
 		free(str);
 	}
-	close(tmp);
-	tmp = open("tmp", O_RDONLY, 0644);
-	cmds_list->infile = tmp;
+	close(data->fd_hd[i]);
+	data->fd_hd[i] = open(data->hd_files[i], O_RDONLY, 0644);
+	cmds_list->infile = data->fd_hd[i];
 }

@@ -22,7 +22,7 @@ int	heredoc_count(t_exec *exec)
 	current = exec;
 	while (current)
 	{
-		if (current->files_info->infile_info->type == HEREDOC)
+		if (current->files_info->infile_info->is_heredoc)
 			count++;
 		current = current->next;
 	}
@@ -72,22 +72,21 @@ void	create_hd_files(t_exec *exec_list, t_data *data)
 
 	cur_list = exec_list;
 	(void)data;
-	while (cur_list)
-	{
-		// Check if cur_list->cmd_array is not NULL before accessing it
-		if (cur_list->cmd_array)
-		{
-			if (cur_list->cmd_array[0])
-				printf("CURRENT COMMAND CHECK %s\n", cur_list->cmd_array[0]);
-			else
-				printf("NO COMMAND\n");
-		}
-		else
-		{
-			printf("cmd_array is NULL\n");
-		}
-		cur_list = cur_list->next; // Move to the next command in the list
-	}
+	// while (cur_list)
+	// {
+	// 	if (cur_list->cmd_array)
+	// 	{
+	// 		if (cur_list->cmd_array[0])
+	// 			printf("CURRENT COMMAND CHECK %s\n", cur_list->cmd_array[0]);
+	// 		else
+	// 			printf("NO COMMAND\n");
+	// 	}
+	// 	else
+	// 	{
+	// 		printf("cmd_array is NULL\n");
+	// 	}
+	// 	cur_list = cur_list->next;
+	// }
 }
 
 void	launch_heredoc(t_exec **exec_list, t_data *data, char **env_copy,
@@ -99,26 +98,27 @@ void	launch_heredoc(t_exec **exec_list, t_data *data, char **env_copy,
 	(void)env_copy;
 	(void)env_list;
 	data->total_hd = heredoc_count(*exec_list);
+	printf("Total heredoc %d\n", data->total_hd);
 	i = 0;
 	if (data->total_hd == 0)
 		return ;
 	data->fd_hd = malloc(sizeof(int) * data->total_hd);
 	if (!data->fd_hd)
-		return ;
+		printf("HERE ? \n");
 	data->hd_files = init_hd_files(data);
 	if (!data->hd_files)
-		return ;
-	while (i < data->total_hd)
 	{
-		printf("Each file name %s\n", data->hd_files[i]);
-		i++;
+		printf("HERE ? \n");
+		return ;
 	}
 	// create_hd_files(*exec_list, data);
 	while (i < data->total_hd && *exec_list != NULL)
 	{
-		open_heredoc(*exec_list);
-		// printf("current heredoc infile %d\n", (*exec_list)->infile);
+		printf("Each file name %s\n", data->hd_files[i]);
+		open_heredoc(*exec_list, i, data);
 		exec_list = &(*exec_list)->next;
 		i++;
 	}
+	// if there is no more heredoc
+	printf("NO MORE HEREDOC\n");
 }

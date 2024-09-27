@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/27 21:02:09 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/27 21:25:41 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,7 @@ void		exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy,
 //				-->heredoc.c
 void		write_heredoc(char *str, int tmp);
 void		init_heredoc(t_exec *cmds_list);
-void		open_heredoc(t_exec *cmds_list);
+void		open_heredoc(t_exec *cmds_list, int i, t_data *data);
 void		call_heredoc(t_exec *cmds_list);
 
 //				-->pipe_init.c
