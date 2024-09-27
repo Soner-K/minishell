@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/26 19:52:16 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/27 20:53:58 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	p(t_exec *exec)
 {
 	while (exec)
 	{
-		printf("infile is %s\n", exec->files_info->infile_info->name);
+		printf("**infile is %s\n", exec->files_info->infile_info->name);
 		if (exec->cmd_array)
 			printf("cmd array 0 %s\n", exec->cmd_array[0]);
 		exec = exec->next;
@@ -74,18 +74,18 @@ int	main(int argc, char **argv, char **envp)
 		if (!data)
 		{
 			free_all(line, exec, env_list, false);
-			continue;
+			continue ;
 		}
 		p(exec);
 		store_or_free(line, exec, env_list, true);
 		if (data->num_pipe < 1)
 		{
-			printf("Exec shell called\n");
+			printf("@Exec shell called\n");
 			exec_shell(&exec, &env_list, envp, data);
 		}
 		else
 		{
-			printf("Runtime shell called\n");
+			printf("@@Runtime shell called\n");
 			runtime_shell(exec, envp, data, &env_list);
 		}
 		exit_status = data->exit_status;
