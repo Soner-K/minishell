@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:30:11 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/27 21:03:10 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/27 22:42:01 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	quit_child(t_exec **cmds_list)
 
 void	init_child(t_exec **cmds_list, char **env_copy)
 {
+	signal(SIGINT, sig_handler_forks);
+	signal(SIGQUIT, sig_handler_quit);
 	if (getfile(cmds_list))
 	{
 		only_redirection(cmds_list);
@@ -68,28 +70,26 @@ void	exec_shell_init(t_exec **exec_list)
 void	exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy,
 		t_data *data)
 {
-	int	builtin_check;
-	int	status;
+	int		builtin_check;
+	int		status;
+	pid_t	fork_id;
 
-	// pid_t	fork_id;
-	signal(SIGINT, sig_handler_forks);
-	signal(SIGQUIT, sig_handler_quit);
 	status = 0;
 	builtin_check = which_builtin(*exec_list);
-	launch_heredoc(exec_list, data, env_copy, env_list);
-	// if (builtin_check > 0)
-	// {
-	// 	(*exec_list)->old_stdin = dup(STDIN_FILENO);
-	// 	(*exec_list)->old_stdout = dup(STDOUT_FILENO);
-	// 	exec_shell_builtin(exec_list, builtin_check, env_list);
-	// 	exec_shell_init(exec_list);
-	// }
-	// else
-	// {
-	// 	fork_id = fork();
-	// 	if (fork_id == 0)
-	// 		init_child(exec_list, env_copy);
-	// 	else
-	// 		get_status(fork_id, status, data);
-	// }
+	launch_heredoc(exec_list, data);
+	if (builtin_check > 0)
+	{
+		(*exec_list)->old_stdin = dup(STDIN_FILENO);
+		(*exec_list)->old_stdout = dup(STDOUT_FILENO);
+		exec_shell_builtin(exec_list, builtin_check, env_list);
+		exec_shell_init(exec_list);
+	}
+	else
+	{
+		fork_id = fork();
+		if (fork_id == 0)
+			init_child(exec_list, env_copy);
+		else
+			get_status(fork_id, status, data);
+	}
 }

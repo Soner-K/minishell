@@ -88,15 +88,24 @@ void	create_hd_files(t_exec *exec_list, t_data *data)
 	// 	cur_list = cur_list->next;
 	// }
 }
-
-void	launch_heredoc(t_exec **exec_list, t_data *data, char **env_copy,
-		t_env **env_list)
+void	close_hd_files(t_data *data)
 {
 	int	i;
 
-	(void)exec_list;
-	(void)env_copy;
-	(void)env_list;
+	i = 0;
+	while (i < data->total_hd)
+	{
+		if (data->fd_hd[i] != -1)
+		{
+			close(data->fd_hd[i]);
+		}
+		i++;
+	}
+}
+void	launch_heredoc(t_exec **exec_list, t_data *data)
+{
+	int	i;
+
 	data->total_hd = heredoc_count(*exec_list);
 	printf("Total heredoc %d\n", data->total_hd);
 	i = 0;
@@ -111,14 +120,27 @@ void	launch_heredoc(t_exec **exec_list, t_data *data, char **env_copy,
 		printf("HERE ? \n");
 		return ;
 	}
-	// create_hd_files(*exec_list, data);
 	while (i < data->total_hd && *exec_list != NULL)
 	{
 		printf("Each file name %s\n", data->hd_files[i]);
 		open_heredoc(*exec_list, i, data);
+		if ((*exec_list)->next == NULL
+			&& (*exec_list)->files_info->infile_info->is_heredoc)
+		{
+			// (*exec_list)->files_info->infile_info->is_heredoc = 0;
+			// (*exec_list)->files_info->infile_info->name = (*exec_list)->files_info->infile_info->del;
+			// (*exec_list)->files_info->infile_info->del = NULL;
+			close_hd_files(data);
+			printf("HEREDOC FINISHED\n");
+		}
+		if ((*exec_list)->next == NULL
+			&& (*exec_list)->files_info->infile_info->type == INREDIR)
+		{
+			printf(" LAST INFILE\n");
+		}
 		exec_list = &(*exec_list)->next;
 		i++;
 	}
 	// if there is no more heredoc
-	printf("NO MORE HEREDOC\n");
+	// printf("NO MORE HEREDOC\n");
 }
