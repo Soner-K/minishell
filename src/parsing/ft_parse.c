@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 15:52:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/24 20:23:54 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/27 18:22:04 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,31 +26,31 @@ static void	free_env_and_quit(t_env *env_list);
  */
 t_exec	*ft_parse(char *line, __int8_t *error, t_env *env_list, int last_exit)
 {
-	t_tokens	*tokens;
-	t_exec		*exec;
+	t_tokens	*t;
+	t_exec		*e;
 
 	if (!line[0])
 		return (*error = 0, NULL);
-	tokens = create_tokens(line);
-	if (!tokens)
+	t = create_tokens(line);
+	if (!t)
 		return (free_env_and_quit(env_list), NULL);
-	if (quotes_handler(tokens, CLOSED_QUOTES_CHECK) == false)
-		return (*error = UNCLOSED_QUOTES, free_tokens(tokens, true), NULL);
-	quotes_handler(tokens, QUOTES_MARKING_MODE);
-	if (extract_all(tokens, env_list, last_exit) == ALLOCATION_FAILURE)
-		return (free_tokens(tokens, true), free_env_and_quit(env_list), NULL);
-	if (quotes_handler(tokens, QUOTES_REMOVING_MODE) == FAILURE)
-		return (free_tokens(tokens, true), free_env_and_quit(env_list), NULL);
-	if (full_check(&tokens) == false)
-		return (*error = SYNTAX_ERROR, free_tokens(tokens, true), NULL);
-	if (set_cmds_arrays(&tokens) == ALLOCATION_FAILURE)
-		return (free_tokens(tokens, true), free_env_and_quit(env_list), NULL);
-	exec = create_exec_lst(tokens, tokens, env_list);
-	if (!exec)
-		return (free_tokens(tokens, true), free_env_and_quit(env_list), NULL);
-	if (find_cmd_type(exec, env_list) == ALLOCATION_FAILURE)
-		return (free_tokens(tokens, true), free_env_and_quit(env_list), NULL);
-	return (free_tokens(tokens, false), *error = SUCCESS, exec);
+	if (quotes_handler(t, CLOSED_QUOTES_CHECK) == false)
+		return (*error = UNCLOSED_QUOTES, free_tokens(t, true, NULL), NULL);
+	quotes_handler(t, QUOTES_MARKING_MODE);
+	if (extract_all(t, env_list, last_exit) == ALLOCATION_FAILURE)
+		return (free_tokens(t, true, NULL), free_env_and_quit(env_list), NULL);
+	if (quotes_handler(t, QUOTES_REMOVING_MODE) == FAILURE)
+		return (free_tokens(t, true, NULL), free_env_and_quit(env_list), NULL);
+	if (full_check(&t) == false)
+		return (*error = SYNTAX_ERROR, free_tokens(t, true, NULL), NULL);
+	if (set_cmds_arrays(&t) == ALLOCATION_FAILURE)
+		return (free_tokens(t, true, NULL), free_env_and_quit(env_list), NULL);
+	e = create_exec_lst(t, t, env_list);
+	if (!e)
+		return (free_tokens(t, true, NULL), free_env_and_quit(env_list), NULL);
+	if (find_cmd_type(e, env_list) == ALLOCATION_FAILURE)
+		return (free_tokens(t, true, NULL), free_env_and_quit(env_list), NULL);
+	return (free_tokens(t, false, e), *error = SUCCESS, e);
 }
 
 static void	free_env_and_quit(t_env *env_list)

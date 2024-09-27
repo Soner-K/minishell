@@ -6,11 +6,13 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 15:34:03 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/26 18:34:37 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/27 18:12:18 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+
 
 /**
  * @brief Sets the names of the infile and outfile.
@@ -20,12 +22,12 @@
  */
 void	set_files_names(t_files *files, t_tokens *token)
 {
-	// if (token->type == HEREDOC)
-	// {
-	// 	files->infile_info->is_heredoc = true;
-	// 	files->infile_info->del = token->word;
-	// }
-	if (token->type == INREDIR || token->type == HEREDOC)
+	if (token->type == HEREDOC)
+	{
+		files->infile_info->is_heredoc = true;
+		files->infile_info->del = token->word;
+	}
+	if (token->type == INREDIR)
 	{
 		files->infile_info->name = token->word;
 		files->infile_info->type = token->type;

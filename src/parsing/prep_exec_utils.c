@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:16:08 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/26 14:53:20 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/27 18:25:51 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ t_data	*set_data_struct(t_tokens *tokens, t_exec *exec, t_env *env_list)
 
 	data = malloc(sizeof(t_data));
 	if (!data)
-		return (free_tokens(tokens, false), free_exec(exec, true),
+		return (free_tokens(tokens, false, exec), free_exec(exec, true),
 			free_env_list(env_list), exit(EXIT_FAILURE), NULL);
 	data->exit_status = 0;
 	data->pids = NULL;

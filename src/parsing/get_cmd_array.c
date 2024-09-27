@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:22:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/26 19:51:31 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/27 17:44:01 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 /**
  * @brief Assigns an id to each command in the linked list of tokens.
  * @param head The head of the linked list of tokens.
+ * @param met_heredoc Boolean being true if a heredoc is met.
+ * Set to false when a pipe is encountered.
  * @returns void.
  */
 static void	set_id(t_tokens *head, int id_cmd, bool met_heredoc)
