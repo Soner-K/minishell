@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:11:10 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/23 11:55:49 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/30 14:54:05 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	export_without_args(t_env **env)
 		printf("export %s\n", current->variable);
 		current = current->next;
 	}
+	free_env_list(env_copy);
 }
 
 int	check_variable(t_env **env, char *new_var, char *value)
@@ -95,8 +96,8 @@ void	func_export(t_exec **cmds, t_env **env)
 
 	if (!(*cmds)->cmd_array[1])
 		return (export_without_args(env));
-	i = 1;
-	while ((*cmds)->cmd_array[i])
+	i = -1;
+	while ((*cmds)->cmd_array[++i])
 	{
 		if ((*cmds)->cmd_array[i][0] == '_'
 			|| ft_isalpha((*cmds)->cmd_array[i][0]))
@@ -106,9 +107,11 @@ void	func_export(t_exec **cmds, t_env **env)
 			final_value = find_final_value(value, variable_join);
 			if (!check_variable(env, variable_join, value))
 				push_env_list(env, final_value, ft_strlen(final_value));
+			free(variable_join);
+			free(value);
+			free(final_value);
 		}
 		else
 			printf("not valid in this context %s\n", (*cmds)->cmd_array[i]);
-		i++;
 	}
 }

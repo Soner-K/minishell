@@ -5,7 +5,8 @@ OBJ_DIR				=	obj
 OBJ_DIRS			=	$(OBJ_DIR)/expand $(OBJ_DIR)/parsing $(OBJ_DIR)/utils $(OBJ_DIR)/builtin \
 						$(OBJ_DIR)/env $(OBJ_DIR)/pipe $(OBJ_DIR)/prompt $(OBJ_DIR)/signal \
 
-SRC_FILES			=	expand/expand_utils.c expand/expand.c expand/quotes.c expand/str_utils.c \
+SRC_FILES			=	expand/expand_utils.c expand/expand.c expand/quotes.c \
+						expand/str_utils.c expand/expand_tokenizer.c \
 						parsing/create_tokens.c parsing/syntax_checker.c parsing/get_cmd_array.c \
 						parsing/tokenization_utils.c parsing/tokenization_utils2.c \
 						utils/path_finding.c utils/utils.c utils/memory_handler.c \

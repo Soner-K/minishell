@@ -1,0 +1,11 @@
+EXEC ? 
+inc
+libft
+Makefile
+minishell
+obj
+outfile
+readline.supp
+README.md
+run_valgrind.sh
+src

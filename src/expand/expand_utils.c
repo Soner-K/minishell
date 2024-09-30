@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:03:00 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/22 17:13:46 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/29 18:26:14 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	reset_negative_characters(t_tokens *head)
 }
 
 bool	expand_inside_single_quotes(t_tokens *node)
-		// add that only when quotes is ' we do check
 {
 	char		*str;
 	int			i;
