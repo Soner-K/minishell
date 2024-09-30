@@ -1,3 +1,4 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -6,7 +7,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:03:52 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/26 18:12:54 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/27 20:57:19 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,45 +22,108 @@ int	heredoc_count(t_exec *exec)
 	current = exec;
 	while (current)
 	{
-		if (current->files_info->infile_info->type == HEREDOC)
+		if (current->files_info->infile_info->is_heredoc)
 			count++;
 		current = current->next;
 	}
-	printf("total count %d\n", count);
 	return (count);
 }
-void	launch_heredoc(t_exec **exec_list, t_data *data, char **env_copy,
-		t_env **env_list)
+
+char	*get_file_name(int i)
 {
-	int	total;
+	char	*name;
+	char	*index_str;
+
+	index_str = ft_itoa(i);
+	if (!index_str)
+		return (NULL);
+	name = ft_strjoin("hd_", index_str);
+	free(index_str);
+	return (name);
+}
+
+char	**init_hd_files(t_data *data)
+{
+	char	**hd_files;
+	int		i;
+
+	hd_files = malloc(sizeof(char *) * (data->total_hd + 1));
+	if (!hd_files)
+		return (NULL);
+	i = 0;
+	while (i < data->total_hd)
+	{
+		hd_files[i] = get_file_name(i);
+		if (!hd_files[i])
+		{
+			while (i-- > 0)
+				free(hd_files[i]);
+			free(hd_files);
+			return (NULL);
+		}
+		i++;
+	}
+	hd_files[i] = NULL;
+	return (hd_files);
+}
+void	free_hd_files(char **hd_files)
+{
 	int	i;
 
-	(void)data;
-	(void)exec_list;
-	(void)env_copy;
-	(void)env_list;
-	printf("HERE DOC LAUNCED\n");
-	total = heredoc_count(*exec_list);
 	i = 0;
-	while (i < total && *exec_list != NULL)
+	while (hd_files[i])
 	{
-		open_heredoc(*exec_list);
-		printf("current heredoc infile %d\n", (*exec_list)->infile);
-		if ((*exec_list)->next
-			&& (*exec_list)->next->files_info->infile_info->type != NONE)
+		free(hd_files[i]);
+		i++;
+	}
+	free(hd_files);
+}
+
+void	launch_heredoc(t_exec **exec_list, t_data *data)
+{
+	int	i;
+
+	data->total_hd = heredoc_count(*exec_list);
+	i = 0;
+	if (data->total_hd == 0)
+		return ;
+	data->fd_hd = malloc(sizeof(int) * data->total_hd);
+	if (!data->fd_hd)
+		return ;
+	data->hd_files = init_hd_files(data);
+	if (!data->hd_files)
+	{
+		free(data->fd_hd);
+		return ;
+	}
+	while (i < data->total_hd && *exec_list != NULL)
+	{
+		open_heredoc(*exec_list, i, data);
+		if ((*exec_list)->files_info->infile_info->is_heredoc)
 		{
-			if ((*exec_list)->prev)
+			if ((*exec_list)->next == NULL)
 			{
-				printf("CHECK INFILE NUM %d\n", (*exec_list)->infile);
-				(*exec_list)->infile = (*exec_list)->prev->infile;
-				(*exec_list)->files_info->infile_info->type = INREDIR;
+				printf("HERE DOC 1 \n");
+				(*exec_list)->files_info->infile_info->is_heredoc = 0;
+				(*exec_list)->files_info->infile_info->rights = 6;
+				printf("infile check name 1 %s\n",
+					(*exec_list)->files_info->infile_info->name);
+				(*exec_list)->files_info->infile_info->name = data->hd_files[i];
+				printf("infile check name 1 %s\n",
+					(*exec_list)->files_info->infile_info->name);
 			}
-			else
+			if ((*exec_list)->next != NULL
+				&& (*exec_list)->next->files_info->infile_info->is_heredoc)
 			{
-				printf("No previous node, cannot redirect infile.\n");
+				printf("HERE DOC 2 \n");
+				(*exec_list)->files_info->infile_info->is_heredoc = 0;
+				(*exec_list)->files_info->infile_info->rights = 6;
+				(*exec_list)->files_info->infile_info->name = data->hd_files[i];
 			}
 		}
 		exec_list = &(*exec_list)->next;
 		i++;
 	}
+	// free_hd_files(data->hd_files);
+	// free(data->fd_hd);
 }

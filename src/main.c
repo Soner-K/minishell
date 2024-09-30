@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/27 18:03:04 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/27 21:19:28 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,9 @@ int	main(int argc, char **argv, char **envp)
 		if (!data)
 		{
 			free_all(line, exec, env_list, false);
-			continue;
+			continue ;
 		}
-		p(exec);
+		// p(exec);
 		store_or_free(line, exec, env_list, true);
 		if (data->num_pipe < 1)
 		{

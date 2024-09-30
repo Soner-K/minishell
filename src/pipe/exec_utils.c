@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:30:11 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/26 18:07:15 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/30 14:53:43 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	quit_child(t_exec **cmds_list)
 
 void	init_child(t_exec **cmds_list, char **env_copy)
 {
+	signal(SIGINT, sig_handler_forks);
+	signal(SIGQUIT, sig_handler_quit);
 	if (getfile(cmds_list))
 	{
 		only_redirection(cmds_list);
@@ -32,7 +34,6 @@ void	init_child(t_exec **cmds_list, char **env_copy)
 		if ((*cmds_list)->cmd_array && parse_path((*cmds_list)->cmd_array,
 				(*cmds_list)->path))
 		{
-			printf("EXEC ? \n");
 			execve((*cmds_list)->path, (*cmds_list)->cmd_array, env_copy);
 		}
 		if (errno == EISDIR)
@@ -72,14 +73,9 @@ void	exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy,
 	int		status;
 	pid_t	fork_id;
 
-	signal(SIGINT, sig_handler_forks);
-	signal(SIGQUIT, sig_handler_quit);
 	status = 0;
 	builtin_check = which_builtin(*exec_list);
-	if ((*exec_list)->files_info->infile_info->type == HEREDOC)
-		launch_heredoc(exec_list, data, env_copy, env_list);
-	(*exec_list)->pipe_fdi = -1;
-	(*exec_list)->pipe_fdo = -1;
+	launch_heredoc(exec_list, data);
 	if (builtin_check > 0)
 	{
 		(*exec_list)->old_stdin = dup(STDIN_FILENO);

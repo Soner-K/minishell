@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prep_exec_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:16:08 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/27 18:25:51 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/27 21:02:42 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,9 @@ t_data	*set_data_struct(t_tokens *tokens, t_exec *exec, t_env *env_list)
 	data->total_cmds = 0;
 	data->counter = 0;
 	data->num_pipe = 0;
+	data->total_hd = 0;
+	data->fd_hd = NULL;
+	data->hd_files = NULL;
 	while (tokens)
 	{
 		if (tokens->type == PIPE)

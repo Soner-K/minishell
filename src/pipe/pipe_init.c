@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:59:43 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/26 17:25:12 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/30 15:28:50 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,17 @@ int	parse_path(char **cmds, char *path)
 
 int	getfile(t_exec **cmds_list)
 {
-	int		flags;
-	t_fdata	*infile_info;
+	int	flags;
 
-	infile_info = (*cmds_list)->files_info->infile_info;
-	if ((*cmds_list)->files_info->infile_info->type == INREDIR)
+	// t_fdata	*infile_info;
+	// infile_info = (*cmds_list)->files_info->infile_info;
+	printf("infile check name2  %s\n",
+		(*cmds_list)->files_info->infile_info->name);
+	if ((*cmds_list)->files_info->infile_info->name)
 	{
-		if (infile_info->rights == 6)
-			(*cmds_list)->infile = open(infile_info->name, O_RDONLY);
-		else
-			return (perror((*cmds_list)->files_info->infile_info->name), 0);
+		(*cmds_list)->infile = open((*cmds_list)->files_info->infile_info->name,
+				O_RDONLY);
+		printf("infile check %d\n", (*cmds_list)->infile);
 	}
 	if ((*cmds_list)->files_info->outfile_info->type == APPENDREDIR)
 		flags = O_RDWR | O_APPEND | O_CREAT;

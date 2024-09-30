@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:25 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/26 18:43:53 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/27 21:02:19 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ typedef struct t_env
  * @brief Structure containing essential informations for the execution.
  * @param exit_status Exit status of the parsed and executed input line.
  * @param total_cmds Number of commands inside the input line.
- * @param counter 
+ * @param counter
  * @param num_pipe Number of pipes in the input line.
  * @param pids Array of process IDs.
  * @param limiter The limiter of the heredoc.
@@ -130,6 +130,9 @@ typedef struct t_data
 	pid_t			*pids;
 	char			*limiter;
 	t_env			*env_list;
+	int				total_hd;
+	int				*fd_hd;
+	char			**hd_files;
 }					t_data;
 
 /**
