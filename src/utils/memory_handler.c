@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:02:58 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/30 14:11:37 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/30 16:15:41 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	free_exec(t_exec *exec_head, bool all)
 			if (tmp->files_info->infile_info->is_heredoc)
 				free(tmp->files_info->infile_info->del);
 			free(tmp->files_info->outfile_info->name);
-			free_arrs((void **)tmp->cmd_array);	
+			free_arrs((void **)tmp->cmd_array);
 		}
 		free(tmp->files_info->infile_info);
 		free(tmp->files_info->outfile_info);
@@ -138,7 +138,9 @@ void	free_all(char *line, t_exec *exec, t_env *env_list, bool free_env)
 	if (exec)
 	{
 		free(exec->data->pids);
-		free(exec->data);
+		free(exec->data->fd_hd);
+		// free_hd_files(exec->data->hd_files);
+		// free(exec->data);
 		free_exec(exec, true);
 	}
 	if (free_env)
