@@ -101,25 +101,23 @@ void	launch_heredoc(t_exec **exec_list, t_data *data)
 		if ((*exec_list)->next != NULL
 			&& (*exec_list)->next->files_info->infile_info->is_heredoc)
 		{
-			// There are more herdocs so I have to pass current infile to next infile
-			// (*exec_list)->next->infile = data->fd_hd[i - 1];
 			printf("NEXT IS HEREDOC ???? \n");
 			(*exec_list)->infile = data->fd_hd[i];
 		}
 		if ((*exec_list)->next == NULL
 			&& (*exec_list)->files_info->infile_info->is_heredoc)
-		{ // There are no more heredocs,
-			// so I have to change this heredoc input as normal input file
+		{
 			printf("LAST IS HEREDOC ???? \n");
-			printf("YO %d\n", data->fd_hd[i]);
-			(*exec_list)->infile = data->fd_hd[i];
+			// (*exec_list)->infile = data->fd_hd[i];
+			// printf("infile chec %d\n", (*exec_list)->infile);
 			(*exec_list)->files_info->infile_info->is_heredoc = 0;
-			(*exec_list)->files_info->infile_info->type = INREDIR;
-			(*exec_list)->files_info->infile_info->name = (*exec_list)->files_info->infile_info->del;
+			// (*exec_list)->files_info->infile_info->type = INREDIR;
+			(*exec_list)->files_info->infile_info->rights = 6;
+			(*exec_list)->files_info->infile_info->name = data->hd_files[i];
 		}
 		exec_list = &(*exec_list)->next;
 		i++;
 	}
-	free_hd_files(data->hd_files);
-	free(data->fd_hd);
+	// free_hd_files(data->hd_files);
+	// free(data->fd_hd);
 }
