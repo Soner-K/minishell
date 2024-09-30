@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 15:34:03 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/27 18:12:18 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/30 14:04:42 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	set_files_names(t_files *files, t_tokens *token)
 	}
 	if (token->type == INREDIR)
 	{
+		if (files->infile_info->name)
+			free(files->infile_info->name);
 		files->infile_info->name = token->word;
 		files->infile_info->type = token->type;
 	}

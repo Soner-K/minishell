@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 16:20:21 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/27 19:43:52 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/30 13:51:39 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,7 @@
 #define EXPAND_SYNTAX_NOT_VALID -2
 #define EXPAND_INSIDE_SINGLE_QUOTES -3
 
-// COME BACK think about quotes in expand var. single quotes are kept
-// and whitespaeces inside them too
-__int8_t	split_new_word(t_tokens *node, t_tokens *next, char *word)
-{
-	char		**split_word;
-	int			i;
-	t_tokens	*tmp;
 
-	i = -1;
-	while (word[++i])
-	{
-		if (word[i] == 32 || word[i] == '\t')
-			word[i] = -32;
-	}
-	split_word = ft_split(word, -32);
-	if (!split_word)
-		return (ALLOCATION_FAILURE);
-	i = find_len_strs(split_word);
-	if (i == 1)
-		return (reset(word), free_arrs((void **)split_word), SUCCESS);
-	while (i--)
-	{
-		
-	}
-}
 
 /**
  * @brief Stores inside the node's word the string var, replacing the
@@ -170,6 +146,6 @@ __int8_t	extract_all(t_tokens *head, t_env *env_list, int last_exit_status)
 		if (head)
 			n_expand = count_expands(head->word);
 	}
-	reset_negative_characters(first);
+	// reset_negative_characters(first); //COME BACK
 	return (SUCCESS);
 }

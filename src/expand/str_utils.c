@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:13:50 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/22 18:16:56 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/29 18:23:04 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*ft_strslice(char *str, int start, int end, bool *alloc_fail)
  * @param add The string to add in str.
  * @param start The beginning index at which to merge the new string.
  * @param end The end index at which the merge of the new string ends.
- * @returns The new string with
+ * @returns The new string with an added portion.
  */
 char	*ft_strreplace(char *str, char *add, int start, int end)
 {
@@ -75,7 +75,7 @@ char	*ft_strreplace(char *str, char *add, int start, int end)
 		new[j++] = str[i];
 	i = -1;
 	while (add && add[++i])
-		new[j++] = -add[i];
+		new[j++] = add[i];
 	i = end;
 	while (str[++i])
 		new[j++] = str[i];

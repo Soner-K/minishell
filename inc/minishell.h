@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/27 18:24:55 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/30 13:05:15 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "libs.h"
 
-// global vraibles for signal
+// global variable for signal
 extern int	g_signal;
 
 //							UTILS
@@ -86,6 +86,11 @@ char		is_separator(char c);
 short int	skip_tab_spaces(char *str);
 
 //							EXPAND
+
+//				-->expand_tokenizer.c
+
+__int8_t	split_new_word(t_tokens *node, t_tokens *next, char *word);
+
 //				-->expand_utils.c
 
 short int	count_expands(char *str);
