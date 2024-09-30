@@ -113,30 +113,28 @@ void	launch_heredoc(t_exec **exec_list, t_data *data)
 		return ;
 	data->fd_hd = malloc(sizeof(int) * data->total_hd);
 	if (!data->fd_hd)
-		printf("HERE ? \n");
+		return ;
 	data->hd_files = init_hd_files(data);
 	if (!data->hd_files)
-	{
-		printf("HERE ? \n");
 		return ;
-	}
 	while (i < data->total_hd && *exec_list != NULL)
 	{
 		printf("Each file name %s\n", data->hd_files[i]);
 		open_heredoc(*exec_list, i, data);
+		if ((*exec_list)->next != NULL
+			&& (*exec_list)->next->files_info->infile_info->is_heredoc)
+		{
+			printf("NEXT IS HEREDOC ???? \n");
+			(*exec_list)->infile = data->fd_hd[i];
+			// There are more herdocs so I have to pass current infile to next infile
+		}
 		if ((*exec_list)->next == NULL
 			&& (*exec_list)->files_info->infile_info->is_heredoc)
 		{
-			// (*exec_list)->files_info->infile_info->is_heredoc = 0;
-			// (*exec_list)->files_info->infile_info->name = (*exec_list)->files_info->infile_info->del;
-			// (*exec_list)->files_info->infile_info->del = NULL;
-			close_hd_files(data);
-			printf("HEREDOC FINISHED\n");
-		}
-		if ((*exec_list)->next == NULL
-			&& (*exec_list)->files_info->infile_info->type == INREDIR)
-		{
-			printf(" LAST INFILE\n");
+			printf("LAST HEREDOC ???? \n");
+			(*exec_list)->infile = data->fd_hd[i];
+			// There are no more heredocs,
+			// so I have to change this heredoc input as normal input file
 		}
 		exec_list = &(*exec_list)->next;
 		i++;
