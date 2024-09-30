@@ -1,4 +1,3 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -7,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:03:52 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/27 20:57:19 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/30 16:58:48 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +65,7 @@ char	**init_hd_files(t_data *data)
 	hd_files[i] = NULL;
 	return (hd_files);
 }
+
 void	free_hd_files(char **hd_files)
 {
 	int	i;
@@ -96,6 +96,7 @@ void	launch_heredoc(t_exec **exec_list, t_data *data)
 		free(data->fd_hd);
 		return ;
 	}
+	printf("Total heredoc %d\n", data->total_hd);
 	while (i < data->total_hd && *exec_list != NULL)
 	{
 		open_heredoc(*exec_list, i, data);
@@ -111,7 +112,7 @@ void	launch_heredoc(t_exec **exec_list, t_data *data)
 			}
 			else if ((*exec_list)->next == NULL)
 			{
-				printf("SECOND i :%d\n", i);
+				printf("LAST i :%d\n", i);
 				(*exec_list)->files_info->infile_info->is_heredoc = 0;
 				(*exec_list)->files_info->infile_info->rights = 6;
 				(*exec_list)->files_info->infile_info->name = data->hd_files[i];
@@ -120,8 +121,4 @@ void	launch_heredoc(t_exec **exec_list, t_data *data)
 		exec_list = &(*exec_list)->next;
 		i++;
 	}
-	// if (data->hd_files)
-	// 	free_hd_files(data->hd_files);
-	// if (data->fd_hd)
-	// 	free(data->fd_hd);
 }
