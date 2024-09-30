@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:03:52 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/30 17:29:51 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/30 17:37:04 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,17 +108,14 @@ void	launch_heredoc(t_exec **exec_list, t_data *data)
 				(*exec_list)->files_info->infile_info->is_heredoc = 0;
 				(*exec_list)->files_info->infile_info->rights = 6;
 				(*exec_list)->files_info->infile_info->name = data->hd_files[i];
-				exec_list = &(*exec_list)->next;
 			}
 			else if ((*exec_list)->next != NULL
 				&& (*exec_list)->next->files_info->infile_info->is_heredoc)
 			{
-				printf("YO %d\n", data->fd_hd[i]);
-				(*exec_list)->infile = data->fd_hd[i];
-				dup2((*exec_list)->infile, STDIN_FILENO);
-				exec_list = &(*exec_list)->next;
+				// exec_list = &(*exec_list)->next;
 			}
 		}
+		exec_list = &(*exec_list)->next;
 		i++;
 	}
 }
