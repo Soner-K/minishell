@@ -78,9 +78,10 @@ void	free_hd_files(char **hd_files)
 	}
 	free(hd_files);
 }
+
 void	launch_heredoc(t_exec **exec_list, t_data *data)
 {
-	int i;
+	int	i;
 
 	data->total_hd = heredoc_count(*exec_list);
 	i = 0;
@@ -98,22 +99,27 @@ void	launch_heredoc(t_exec **exec_list, t_data *data)
 	while (i < data->total_hd && *exec_list != NULL)
 	{
 		open_heredoc(*exec_list, i, data);
-		if ((*exec_list)->next != NULL
-			&& (*exec_list)->next->files_info->infile_info->is_heredoc)
+		if ((*exec_list)->files_info->infile_info->is_heredoc)
 		{
-			printf("NEXT IS HEREDOC ???? \n");
-			(*exec_list)->infile = data->fd_hd[i];
-		}
-		if ((*exec_list)->next == NULL
-			&& (*exec_list)->files_info->infile_info->is_heredoc)
-		{
-			printf("LAST IS HEREDOC ???? \n");
-			// (*exec_list)->infile = data->fd_hd[i];
-			// printf("infile chec %d\n", (*exec_list)->infile);
-			(*exec_list)->files_info->infile_info->is_heredoc = 0;
-			// (*exec_list)->files_info->infile_info->type = INREDIR;
-			(*exec_list)->files_info->infile_info->rights = 6;
-			(*exec_list)->files_info->infile_info->name = data->hd_files[i];
+			if ((*exec_list)->next == NULL)
+			{
+				printf("HERE DOC 1 \n");
+				(*exec_list)->files_info->infile_info->is_heredoc = 0;
+				(*exec_list)->files_info->infile_info->rights = 6;
+				printf("infile check name 1 %s\n",
+					(*exec_list)->files_info->infile_info->name);
+				(*exec_list)->files_info->infile_info->name = data->hd_files[i];
+				printf("infile check name 1 %s\n",
+					(*exec_list)->files_info->infile_info->name);
+			}
+			if ((*exec_list)->next != NULL
+				&& (*exec_list)->next->files_info->infile_info->is_heredoc)
+			{
+				printf("HERE DOC 2 \n");
+				(*exec_list)->files_info->infile_info->is_heredoc = 0;
+				(*exec_list)->files_info->infile_info->rights = 6;
+				(*exec_list)->files_info->infile_info->name = data->hd_files[i];
+			}
 		}
 		exec_list = &(*exec_list)->next;
 		i++;
