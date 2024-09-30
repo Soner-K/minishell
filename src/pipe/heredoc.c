@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 17:15:01 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/30 10:41:32 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/30 11:52:28 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,10 @@ void	open_heredoc(t_exec *cmds_list, int i, t_data *data)
 	}
 	close(data->fd_hd[i]);
 	data->fd_hd[i] = open(data->hd_files[i], O_RDONLY, 0644);
-	printf("HEREDOC FINISHED\n");
+	if (data->fd_hd[i] == -1)
+	{
+		perror("Error reopening heredoc file");
+		return ;
+	}
+	close(data->fd_hd[i]);
 }

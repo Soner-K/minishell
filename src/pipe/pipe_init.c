@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:59:43 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/27 21:52:05 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/30 11:08:18 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,20 @@ int	getfile(t_exec **cmds_list)
 	int		flags;
 	t_fdata	*infile_info;
 
+	printf("infile check name %s\n",
+		(*cmds_list)->files_info->infile_info->name);
+	printf("infile check %d\n", (*cmds_list)->infile);
+	printf("infile check type %d\n",
+		(*cmds_list)->files_info->infile_info->type);
 	infile_info = (*cmds_list)->files_info->infile_info;
-	if ((*cmds_list)->files_info->infile_info->type == INREDIR)
+	if ((*cmds_list)->files_info->infile_info->type == 0)
 	{
-		if (infile_info->rights == 6)
-			(*cmds_list)->infile = open(infile_info->name, O_RDONLY);
-		else
-			return (0);
+		// if (infile_info->rights == 6)
+		// {
+		// 	printf("YO \n %s\n", infile_info->name);
+		(*cmds_list)->infile = open(infile_info->name, O_RDONLY);
+		// }
+		// return (0);
 	}
 	if ((*cmds_list)->files_info->outfile_info->type == APPENDREDIR)
 		flags = O_RDWR | O_APPEND | O_CREAT;

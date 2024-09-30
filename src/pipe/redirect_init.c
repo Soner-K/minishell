@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:13:20 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/24 16:42:44 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/30 12:07:17 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,12 @@ void	only_redirection(t_exec **cmds_list)
 {
 	if ((*cmds_list)->files_info->infile_info->rights)
 	{
+		dup2((*cmds_list)->infile, STDIN_FILENO);
+		close((*cmds_list)->infile);
+	}
+	else if ((*cmds_list)->infile != -1)
+	{
+		printf("Infile exist\n");
 		dup2((*cmds_list)->infile, STDIN_FILENO);
 		close((*cmds_list)->infile);
 	}

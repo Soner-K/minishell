@@ -66,48 +66,23 @@ char	**init_hd_files(t_data *data)
 	hd_files[i] = NULL;
 	return (hd_files);
 }
-void	create_hd_files(t_exec *exec_list, t_data *data)
-{
-	t_exec	*cur_list;
-
-	cur_list = exec_list;
-	(void)data;
-	// while (cur_list)
-	// {
-	// 	if (cur_list->cmd_array)
-	// 	{
-	// 		if (cur_list->cmd_array[0])
-	// 			printf("CURRENT COMMAND CHECK %s\n", cur_list->cmd_array[0]);
-	// 		else
-	// 			printf("NO COMMAND\n");
-	// 	}
-	// 	else
-	// 	{
-	// 		printf("cmd_array is NULL\n");
-	// 	}
-	// 	cur_list = cur_list->next;
-	// }
-}
-void	close_hd_files(t_data *data)
+void	free_hd_files(char **hd_files)
 {
 	int	i;
 
 	i = 0;
-	while (i < data->total_hd)
+	while (hd_files[i])
 	{
-		if (data->fd_hd[i] != -1)
-		{
-			close(data->fd_hd[i]);
-		}
+		free(hd_files[i]);
 		i++;
 	}
+	free(hd_files);
 }
 void	launch_heredoc(t_exec **exec_list, t_data *data)
 {
-	int	i;
+	int i;
 
 	data->total_hd = heredoc_count(*exec_list);
-	printf("Total heredoc %d\n", data->total_hd);
 	i = 0;
 	if (data->total_hd == 0)
 		return ;
@@ -116,29 +91,35 @@ void	launch_heredoc(t_exec **exec_list, t_data *data)
 		return ;
 	data->hd_files = init_hd_files(data);
 	if (!data->hd_files)
+	{
+		free(data->fd_hd);
 		return ;
+	}
 	while (i < data->total_hd && *exec_list != NULL)
 	{
-		printf("Each file name %s\n", data->hd_files[i]);
 		open_heredoc(*exec_list, i, data);
 		if ((*exec_list)->next != NULL
 			&& (*exec_list)->next->files_info->infile_info->is_heredoc)
 		{
+			// There are more herdocs so I have to pass current infile to next infile
+			// (*exec_list)->next->infile = data->fd_hd[i - 1];
 			printf("NEXT IS HEREDOC ???? \n");
 			(*exec_list)->infile = data->fd_hd[i];
-			// There are more herdocs so I have to pass current infile to next infile
 		}
 		if ((*exec_list)->next == NULL
 			&& (*exec_list)->files_info->infile_info->is_heredoc)
-		{
-			printf("LAST HEREDOC ???? \n");
-			(*exec_list)->infile = data->fd_hd[i];
-			// There are no more heredocs,
+		{ // There are no more heredocs,
 			// so I have to change this heredoc input as normal input file
+			printf("LAST IS HEREDOC ???? \n");
+			printf("YO %d\n", data->fd_hd[i]);
+			(*exec_list)->infile = data->fd_hd[i];
+			(*exec_list)->files_info->infile_info->is_heredoc = 0;
+			(*exec_list)->files_info->infile_info->type = INREDIR;
+			(*exec_list)->files_info->infile_info->name = (*exec_list)->files_info->infile_info->del;
 		}
 		exec_list = &(*exec_list)->next;
 		i++;
 	}
-	// if there is no more heredoc
-	// printf("NO MORE HEREDOC\n");
+	free_hd_files(data->hd_files);
+	free(data->fd_hd);
 }

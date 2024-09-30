@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:30:11 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/27 22:42:01 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/30 11:53:57 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	init_child(t_exec **cmds_list, char **env_copy)
 		if ((*cmds_list)->cmd_array && parse_path((*cmds_list)->cmd_array,
 				(*cmds_list)->path))
 		{
-			printf("EXEC ? \n");
 			execve((*cmds_list)->path, (*cmds_list)->cmd_array, env_copy);
 		}
 		if (errno == EISDIR)
