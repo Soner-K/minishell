@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:02:58 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/27 18:36:15 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/30 14:11:37 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,6 @@ void	free_tokens(t_tokens *tokens_head, bool all, t_exec *exec)
 		tokens_head = tokens_head->next;
 		if (all)
 			free(tmp->word);
-		// else if (all == false)
-		// {
-		// 	if (exec && exec->files_info->infile_info->name != tmp->word)
-		// 		free(tmp->word);
-		// }
 		else if (all == false && tmp->type > APPENDREDIR)
 			free(tmp->word);
 		if (all && id_cmd == tmp->id_cmd)
@@ -114,8 +109,8 @@ void	free_exec(t_exec *exec_head, bool all)
 		if (all)
 		{
 			free(tmp->files_info->infile_info->name);
-			// if (tmp->files_info->infile_info->is_heredoc)
-			// 	free(tmp->files_info->infile_info->del);
+			if (tmp->files_info->infile_info->is_heredoc)
+				free(tmp->files_info->infile_info->del);
 			free(tmp->files_info->outfile_info->name);
 			free_arrs((void **)tmp->cmd_array);	
 		}

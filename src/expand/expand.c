@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 16:20:21 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/24 19:43:39 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/09/30 13:51:39 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 #define EXPAND_SYNTAX_NOT_VALID -2
 #define EXPAND_INSIDE_SINGLE_QUOTES -3
+
+
 
 /**
  * @brief Stores inside the node's word the string var, replacing the
@@ -144,6 +146,6 @@ __int8_t	extract_all(t_tokens *head, t_env *env_list, int last_exit_status)
 		if (head)
 			n_expand = count_expands(head->word);
 	}
-	reset_negative_characters(first);
+	// reset_negative_characters(first); //COME BACK
 	return (SUCCESS);
 }

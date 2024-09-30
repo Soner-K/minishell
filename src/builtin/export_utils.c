@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 18:49:28 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/10 10:27:07 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/09/30 15:32:11 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*func_variable(char *s)
 		return (NULL);
 	}
 	variable_join = ft_strjoin(variable, "=");
-	free(split_var);
+	free_arrs((void **)split_var);
 	if (variable_join == NULL)
 		return (NULL);
 	return (variable_join);
@@ -53,9 +53,9 @@ char	*func_value(char *s)
 	split_var = ft_split(s, '=');
 	if (split_var == NULL)
 		return (NULL);
-	value = split_var[1];
-	free(split_var);
-	if (value == NULL)
+	value = ft_strdup(split_var[1]);
+	free_arrs((void **)split_var);
+	if (!value)
 		return (NULL);
 	return (value);
 }
