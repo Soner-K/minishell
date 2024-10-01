@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/30 16:06:44 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/01 19:18:50 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,9 @@ char		*ft_strreplace(char *str, char *add, int start, int end);
 
 //				-->expand.c
 
-// char		*getenv_from_env_list(char *var, t_env *env_list, t_env *first);
+
+char		*get_new_word(t_tokens *node, char *var, short int s,
+				short int end);
 __int8_t	extract_all(t_tokens *head, t_env *env_list, int last_exit_status);
 
 //				-->quotes.c
