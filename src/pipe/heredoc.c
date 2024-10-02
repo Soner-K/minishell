@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 17:15:01 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/30 16:03:41 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/02 15:42:09 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	open_heredoc(t_exec *cmds_list, int i, t_data *data)
 {
 	char	*str;
 
-	printf("HEREdoc opend\n");
 	data->fd_hd[i] = open(data->hd_files[i], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (data->fd_hd[i] == -1)
 	{

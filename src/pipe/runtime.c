@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:07:40 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/27 22:59:39 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/02 15:55:40 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ void	runtime_shell(t_exec *cmds_list, char **env_copy, t_data *data,
 	head = cmds_list;
 	i = 0;
 	init_pid_array(data);
-	if (cmds_list->files_info->infile_info->type == HEREDOC)
-		launch_heredoc(&cmds_list, data);
+	launch_heredoc(&cmds_list, data);
 	while (i < data->total_cmds)
 	{
 		runtime_shell_init(data, cmds_list, i);

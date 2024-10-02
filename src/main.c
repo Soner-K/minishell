@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/30 16:09:37 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/02 15:56:03 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,18 +80,11 @@ int	main(int argc, char **argv, char **envp)
 			free_all(line, exec, env_list, false);
 			continue ;
 		}
-		// p(exec);
 		store_or_free(line, exec, env_list, true);
 		if (data->num_pipe < 1)
-		{
-			printf("Exec shell called\n");
 			exec_shell(&exec, &env_list, envp, data);
-		}
 		else
-		{
-			printf("Runtime shell called\n");
 			runtime_shell(exec, envp, data, &env_list);
-		}
 		exit_status = data->exit_status;
 		free_all(line, exec, env_list, false);
 	}
