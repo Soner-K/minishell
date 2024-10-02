@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/02 16:13:23 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/02 16:53:42 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		data = NULL;
 		exec = ft_parse(line, &error, env_list, exit_status);
+		p(exec);
 		if (!exec)
 		{
 			if (error == SYNTAX_ERROR)

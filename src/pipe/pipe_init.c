@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:59:43 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/30 17:29:14 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/02 16:53:57 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,16 @@ int	getfile(t_exec **cmds_list)
 
 	if ((*cmds_list)->files_info->infile_info->name)
 	{
+		printf("(*cmds_list)->files_info->infile_info->name %s\n",
+			(*cmds_list)->files_info->infile_info->name);
 		(*cmds_list)->infile = open((*cmds_list)->files_info->infile_info->name,
 				O_RDONLY);
 	}
 	else
 	{
+		(*cmds_list)->infile = -1;
 		return (1);
 		printf("no infile properly\n");
-		(*cmds_list)->infile = -1;
 	}
 	if ((*cmds_list)->files_info->outfile_info->type == APPENDREDIR)
 		flags = O_RDWR | O_APPEND | O_CREAT;
