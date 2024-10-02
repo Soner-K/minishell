@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:03:52 by sumseo            #+#    #+#             */
-/*   Updated: 2024/10/02 17:25:51 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/02 17:42:40 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	launch_heredoc(t_exec **exec_list, t_data *data)
 	t_exec	*cur_list;
 	int		last_heredoc_fd;
 	char	*temp_s;
+	int		j;
 
 	last_heredoc_fd = -1;
 	data->total_hd = heredoc_count(*exec_list);
@@ -117,22 +118,20 @@ void	launch_heredoc(t_exec **exec_list, t_data *data)
 		i++;
 	}
 	cur_list = *exec_list;
+	j = 0;
 	while (cur_list != NULL)
 	{
-		if (cur_list->next == NULL
-			&& cur_list->files_info->infile_info->type == INREDIR)
-		{
-			cur_list->files_info->infile_info->name = temp_s;
-		}
-		else if (last_heredoc_fd != -1
+		if (last_heredoc_fd != -1
 			&& cur_list->files_info->infile_info->type != INREDIR)
 		{
-			printf("THERE ? \n");
 			cur_list->infile = last_heredoc_fd;
 			cur_list->files_info->infile_info->name = data->hd_files[data->total_hd
 				- 1];
 		}
+		if (cur_list->files_info->infile_info->type == INREDIR)
+			cur_list->files_info->infile_info->name = temp_s;
 		cur_list = cur_list->next;
+		j++;
 	}
 	if (last_heredoc_fd != -1)
 		close(last_heredoc_fd);

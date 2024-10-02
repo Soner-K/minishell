@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:30:11 by sumseo            #+#    #+#             */
-/*   Updated: 2024/10/02 16:34:25 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/02 17:34:53 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	init_child(t_exec **cmds_list, char **env_copy)
 {
 	signal(SIGINT, sig_handler_forks);
 	signal(SIGQUIT, sig_handler_quit);
-	printf("Check !! %s\n", (*cmds_list)->cmd_array[0]);
 	if (getfile(cmds_list))
 	{
 		only_redirection(cmds_list);

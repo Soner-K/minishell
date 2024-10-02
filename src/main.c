@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/02 16:53:42 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/02 17:43:47 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	p(t_exec *exec)
 			printf("cmd array 0 %s\n", exec->cmd_array[0]);
 		if (exec->files_info->infile_info->is_heredoc)
 			printf("delimiter is %s\n", exec->files_info->infile_info->del);
+		if (exec->files_info->infile_info->type)
+			printf("TYPE is %u\n", exec->files_info->infile_info->type);
 		exec = exec->next;
 	}
 }
