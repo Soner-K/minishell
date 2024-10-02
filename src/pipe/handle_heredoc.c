@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:03:52 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/30 17:37:04 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/02 15:40:53 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,13 @@ void	free_hd_files(char **hd_files)
 	}
 	free(hd_files);
 }
-
 void	launch_heredoc(t_exec **exec_list, t_data *data)
 {
-	int	i;
+	int		i;
+	t_exec	*cur_list;
+	int		last_heredoc_fd;
 
+	last_heredoc_fd = -1;
 	data->total_hd = heredoc_count(*exec_list);
 	i = 0;
 	if (data->total_hd == 0)
@@ -96,26 +98,34 @@ void	launch_heredoc(t_exec **exec_list, t_data *data)
 		free(data->fd_hd);
 		return ;
 	}
-	printf("Total heredoc %d\n", data->total_hd);
-	while (i < data->total_hd && *exec_list != NULL)
+	cur_list = *exec_list;
+	printf("Total heredocs: %d\n", data->total_hd);
+	while (i < data->total_hd && cur_list != NULL)
 	{
-		open_heredoc(*exec_list, i, data);
-		if ((*exec_list)->files_info->infile_info->is_heredoc)
+		if (cur_list->files_info->infile_info->is_heredoc)
 		{
-			if ((*exec_list)->next == NULL)
-			{
-				printf("LAST i :%d\n", i);
-				(*exec_list)->files_info->infile_info->is_heredoc = 0;
-				(*exec_list)->files_info->infile_info->rights = 6;
-				(*exec_list)->files_info->infile_info->name = data->hd_files[i];
-			}
-			else if ((*exec_list)->next != NULL
-				&& (*exec_list)->next->files_info->infile_info->is_heredoc)
-			{
-				// exec_list = &(*exec_list)->next;
-			}
+			open_heredoc(cur_list, i, data);
+			last_heredoc_fd = data->fd_hd[i];
+			cur_list->files_info->infile_info->name = data->hd_files[i];
+			cur_list->files_info->infile_info->rights = 6;
+			if (i > 0 && data->fd_hd[i - 1] != -1)
+				close(data->fd_hd[i - 1]);
 		}
-		exec_list = &(*exec_list)->next;
+		cur_list = cur_list->next;
 		i++;
 	}
+	cur_list = *exec_list;
+	while (cur_list != NULL)
+	{
+		if (last_heredoc_fd != -1
+			&& cur_list->files_info->infile_info->type != INREDIR)
+		{
+			cur_list->infile = last_heredoc_fd;
+			cur_list->files_info->infile_info->name = data->hd_files[data->total_hd
+				- 1];
+		}
+		cur_list = cur_list->next;
+	}
+	if (last_heredoc_fd != -1)
+		close(last_heredoc_fd);
 }
