@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:02:58 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/30 16:15:41 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/02 16:23:17 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ void	free_all(char *line, t_exec *exec, t_env *env_list, bool free_env)
 		free(exec->data->fd_hd);
 		// free_hd_files(exec->data->hd_files);
 		// free(exec->data);
-		free_exec(exec, true);
+		// free_exec(exec, true);
 	}
 	if (free_env)
 		free_env_list(env_list);
