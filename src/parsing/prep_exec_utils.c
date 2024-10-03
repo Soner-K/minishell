@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:16:08 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/03 11:51:31 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/03 14:48:00 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ t_exec	*new_node_exec(void)
 	if (!files)
 		return (free(exec), free(infile_info), free(outfile_info), NULL);
 	exec->files_info = files;
+	infile_info->final_name = NULL;
+	outfile_info->final_name = NULL;
 	files->infile_info = infile_info;
 	files->outfile_info = outfile_info;
 	initialize_node(&exec, NULL);

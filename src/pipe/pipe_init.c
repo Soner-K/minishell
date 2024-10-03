@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:59:43 by sumseo            #+#    #+#             */
-/*   Updated: 2024/10/03 14:36:05 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/03 14:47:06 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,12 @@ int	getfile(t_exec **cmds_list)
 
 	printf("(*cmds_list)->files_info->infile_info->name %s\n",
 		(*cmds_list)->files_info->infile_info->name);
-	if ((*cmds_list)->files_info->infile_info->name)
-	{
+	if ((*cmds_list)->files_info->infile_info->final_name)
+		(*cmds_list)->infile = open((*cmds_list)->files_info->infile_info->final_name,
+				O_RDONLY);
+	else if ((*cmds_list)->files_info->infile_info->name)
 		(*cmds_list)->infile = open((*cmds_list)->files_info->infile_info->name,
 				O_RDONLY);
-	}
 	else
 	{
 		(*cmds_list)->infile = -1;
