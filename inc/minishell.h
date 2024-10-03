@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/03 13:21:16 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/03 13:44:40 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,6 @@ void		exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy,
 
 //				-->heredoc.c
 void		write_heredoc(char *str, int tmp);
-void		init_heredoc(t_exec *cmds_list);
 void		open_heredoc(t_exec *cmds_list, int i, t_data *data);
 void		call_heredoc(t_exec *cmds_list);
 
@@ -246,6 +245,5 @@ void		launch_heredoc(t_exec **exec_list, t_data *data);
 char		*get_file_name(int i);
 int			heredoc_count(t_exec *exec);
 char		**init_hd_files(t_data *data);
-void		create_hd_files(t_exec *exec_list, t_data *data);
-void		free_hd_files(char **hd_files);
+void		init_heredoc(t_exec **exec_list, t_data *data);
 #endif

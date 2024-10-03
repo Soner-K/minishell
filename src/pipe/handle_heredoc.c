@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:03:52 by sumseo            #+#    #+#             */
-/*   Updated: 2024/10/03 12:58:11 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/03 13:50:11 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,30 +66,9 @@ char	**init_hd_files(t_data *data)
 	return (hd_files);
 }
 
-void	free_hd_files(char **hd_files)
+void	init_heredoc(t_exec **exec_list, t_data *data)
 {
-	int	i;
-
-	i = 0;
-	while (hd_files[i])
-	{
-		free(hd_files[i]);
-		i++;
-	}
-	free(hd_files);
-}
-//need to add exit and call to store_or_free when allocation failure
-void	launch_heredoc(t_exec **exec_list, t_data *data) 
-{
-	int		i;
-	t_exec	*cur_list;
-	int		last_heredoc_fd;
-	char	*temp_s;
-	int		j;
-
-	last_heredoc_fd = -1;
 	data->total_hd = heredoc_count(*exec_list);
-	i = 0;
 	if (data->total_hd == 0)
 		return ;
 	data->fd_hd = malloc(sizeof(int) * data->total_hd);
@@ -101,6 +80,35 @@ void	launch_heredoc(t_exec **exec_list, t_data *data)
 		free(data->fd_hd);
 		return ;
 	}
+}
+
+void	redirect_heredoc(t_exec *cur_list, int last_heredoc_fd, t_data *data,
+		char *temp_s)
+{
+	while (cur_list != NULL)
+	{
+		if (last_heredoc_fd != -1
+			&& cur_list->files_info->infile_info->type != INREDIR)
+		{
+			cur_list->infile = last_heredoc_fd;
+			cur_list->files_info->infile_info->name = data->hd_files[data->total_hd
+				- 1];
+		}
+		if (cur_list->files_info->infile_info->type == INREDIR)
+			cur_list->files_info->infile_info->name = temp_s;
+		cur_list = cur_list->next;
+	}
+}
+void	launch_heredoc(t_exec **exec_list, t_data *data)
+{
+	int		i;
+	t_exec	*cur_list;
+	int		last_heredoc_fd;
+	char	*temp_s;
+
+	last_heredoc_fd = -1;
+	i = 0;
+	init_heredoc(exec_list, data);
 	cur_list = *exec_list;
 	while (i < data->total_hd && cur_list != NULL)
 	{
@@ -120,7 +128,6 @@ void	launch_heredoc(t_exec **exec_list, t_data *data)
 		i++;
 	}
 	cur_list = *exec_list;
-	j = 0;
 	while (cur_list != NULL)
 	{
 		if (last_heredoc_fd != -1
@@ -133,8 +140,8 @@ void	launch_heredoc(t_exec **exec_list, t_data *data)
 		if (cur_list->files_info->infile_info->type == INREDIR)
 			cur_list->files_info->infile_info->name = temp_s;
 		cur_list = cur_list->next;
-		j++;
 	}
+	// redirect_heredoc(cur_list, last_heredoc_fd, data, temp_s);
 	if (last_heredoc_fd != -1)
 		close(last_heredoc_fd);
 }
