@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:03:52 by sumseo            #+#    #+#             */
-/*   Updated: 2024/10/03 14:31:42 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/03 14:37:56 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void	launch_heredoc(t_exec **exec_list, t_data *data)
 	int		last_heredoc_fd;
 	char	*temp_s;
 
+	print("heredoc called\n");
 	last_heredoc_fd = -1;
 	i = 0;
 	init_heredoc(exec_list, data);
