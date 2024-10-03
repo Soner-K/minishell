@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/30 16:09:37 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/02 17:43:47 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	p(t_exec *exec)
 			printf("cmd array 0 %s\n", exec->cmd_array[0]);
 		if (exec->files_info->infile_info->is_heredoc)
 			printf("delimiter is %s\n", exec->files_info->infile_info->del);
+		if (exec->files_info->infile_info->type)
+			printf("TYPE is %u\n", exec->files_info->infile_info->type);
 		exec = exec->next;
 	}
 }
@@ -68,6 +70,7 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		data = NULL;
 		exec = ft_parse(line, &error, env_list, exit_status);
+		p(exec);
 		if (!exec)
 		{
 			if (error == SYNTAX_ERROR)
@@ -80,18 +83,11 @@ int	main(int argc, char **argv, char **envp)
 			free_all(line, exec, env_list, false);
 			continue ;
 		}
-		// p(exec);
 		store_or_free(line, exec, env_list, true);
 		if (data->num_pipe < 1)
-		{
-			printf("Exec shell called\n");
 			exec_shell(&exec, &env_list, envp, data);
-		}
 		else
-		{
-			printf("Runtime shell called\n");
 			runtime_shell(exec, envp, data, &env_list);
-		}
 		exit_status = data->exit_status;
 		free_all(line, exec, env_list, false);
 	}
