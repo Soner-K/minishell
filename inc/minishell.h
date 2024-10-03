@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/30 16:06:44 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/03 13:21:16 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ extern int	g_signal;
 
 bool		is_builtin(char *cmd);
 short int	count_char(char *str, char c);
-t_tokens	*new_node_token(char *word, bool is_head);
 char		*merge_strings(char *s1, char *s2, char c);
-
+bool		is_diff(char *s1, char **strs);
+void		free_multiple_pointers(int size, ...);
 //				-->cmd_finding.c
 
 // char		*find_path(char *cmd, char **env, bool *alloc_fail);
@@ -74,6 +74,7 @@ bool		full_check(t_tokens **head);
 
 //				-->tokenization_utils.c
 
+t_tokens	*new_node_token(char *word, bool is_head);
 void		free_one_token(t_tokens *node);
 t_tokens	*last_token(t_tokens *lst);
 __int8_t	add_token(t_tokens **lst, t_tokens *to_add);

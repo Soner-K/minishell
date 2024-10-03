@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:25:38 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/23 12:15:11 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/03 13:21:39 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,42 @@ bool	is_builtin(char *cmd)
 		i++;
 	}
 	return (false);
+}
+
+/**
+ * @brief Frees multiple pointers using variadic arguments.
+ * @param size The number of pointers to free.
+ * @param ... The pointer(s).
+ * @returns void.
+ */
+void	free_multiple_pointers(int size, ...)
+{
+	va_list	arg;
+
+	va_start(arg, size);
+	while (size--)
+		free(va_arg(arg, void *));
+	va_end(arg);
+}
+
+/**
+ * @brief Used for handling memory. Checks if a malloc'd string can be freed
+ * without generting a double free in the allocated array of strings strs.
+ * @param s1 The malloc'd string.
+ * @param strs An array of malloc'd strings, which possibly contains s1.
+ * @returns true if s1 isn't stored in strs, and false otherwise.
+ */
+bool	is_diff(char *s1, char **strs)
+{
+	unsigned short int	i;
+
+	if (!strs)
+		return (true);
+	i = -1;
+	while (strs[++i])
+	{
+		if (s1 == strs[i])
+			return (false);
+	}
+	return (true);
 }
