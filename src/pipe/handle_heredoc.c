@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:03:52 by sumseo            #+#    #+#             */
-/*   Updated: 2024/10/03 13:50:11 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/03 14:31:42 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,22 +66,6 @@ char	**init_hd_files(t_data *data)
 	return (hd_files);
 }
 
-void	init_heredoc(t_exec **exec_list, t_data *data)
-{
-	data->total_hd = heredoc_count(*exec_list);
-	if (data->total_hd == 0)
-		return ;
-	data->fd_hd = malloc(sizeof(int) * data->total_hd);
-	if (!data->fd_hd)
-		return ;
-	data->hd_files = init_hd_files(data);
-	if (!data->hd_files)
-	{
-		free(data->fd_hd);
-		return ;
-	}
-}
-
 void	redirect_heredoc(t_exec *cur_list, int last_heredoc_fd, t_data *data,
 		char *temp_s)
 {
@@ -98,7 +82,10 @@ void	redirect_heredoc(t_exec *cur_list, int last_heredoc_fd, t_data *data,
 			cur_list->files_info->infile_info->name = temp_s;
 		cur_list = cur_list->next;
 	}
+	if (last_heredoc_fd != -1)
+		close(last_heredoc_fd);
 }
+
 void	launch_heredoc(t_exec **exec_list, t_data *data)
 {
 	int		i;
@@ -128,20 +115,5 @@ void	launch_heredoc(t_exec **exec_list, t_data *data)
 		i++;
 	}
 	cur_list = *exec_list;
-	while (cur_list != NULL)
-	{
-		if (last_heredoc_fd != -1
-			&& cur_list->files_info->infile_info->type != INREDIR)
-		{
-			cur_list->infile = last_heredoc_fd;
-			cur_list->files_info->infile_info->name = data->hd_files[data->total_hd
-				- 1];
-		}
-		if (cur_list->files_info->infile_info->type == INREDIR)
-			cur_list->files_info->infile_info->name = temp_s;
-		cur_list = cur_list->next;
-	}
-	// redirect_heredoc(cur_list, last_heredoc_fd, data, temp_s);
-	if (last_heredoc_fd != -1)
-		close(last_heredoc_fd);
+	redirect_heredoc(cur_list, last_heredoc_fd, data, temp_s);
 }

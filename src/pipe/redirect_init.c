@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:13:20 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/30 14:56:03 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/03 14:27:33 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,20 @@ void	middle_cmd(t_exec *cmds_list)
 	close(cmds_list->pipe_fdo);
 	close(cmds_list->prev->pipe_fdi);
 	close(cmds_list->prev->pipe_fdo);
+}
+
+void	init_heredoc(t_exec **exec_list, t_data *data)
+{
+	data->total_hd = heredoc_count(*exec_list);
+	if (data->total_hd == 0)
+		return ;
+	data->fd_hd = malloc(sizeof(int) * data->total_hd);
+	if (!data->fd_hd)
+		return ;
+	data->hd_files = init_hd_files(data);
+	if (!data->hd_files)
+	{
+		free(data->fd_hd);
+		return ;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/03 13:44:40 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/03 14:27:07 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,9 @@ void		exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy,
 void		write_heredoc(char *str, int tmp);
 void		open_heredoc(t_exec *cmds_list, int i, t_data *data);
 void		call_heredoc(t_exec *cmds_list);
+void		close_heredoc(t_exec *cmds_list, t_data *data, int i);
+void		close_heredoc_signal(t_exec *cmds_list, t_data *data, int i);
+void		heredoc_open_check(t_data *data, int i);
 
 //				-->pipe_init.c
 int			getfile(t_exec **cmds_list);
@@ -246,4 +249,6 @@ char		*get_file_name(int i);
 int			heredoc_count(t_exec *exec);
 char		**init_hd_files(t_data *data);
 void		init_heredoc(t_exec **exec_list, t_data *data);
+void		redirect_heredoc(t_exec *cur_list, int last_heredoc_fd,
+				t_data *data, char *temp_s);
 #endif

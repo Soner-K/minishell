@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:59:43 by sumseo            #+#    #+#             */
-/*   Updated: 2024/10/02 17:36:22 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/03 14:31:32 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ int	getfile(t_exec **cmds_list)
 {
 	int	flags;
 
-	printf("(*cmds_list)->files_info->infile_info->name %s\n",
-		(*cmds_list)->files_info->infile_info->name);
 	if ((*cmds_list)->files_info->infile_info->name)
 	{
 		(*cmds_list)->infile = open((*cmds_list)->files_info->infile_info->name,
