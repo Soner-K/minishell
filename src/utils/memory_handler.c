@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:02:58 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/02 16:23:17 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/03 13:22:13 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	store_or_free(char *line, t_exec *exec, bool store, bool free_env)
 	static char		*line_store = NULL;
 	static t_exec	*exec_store = NULL;
 	static t_env	*env_list_store = NULL;
+	static t_data	*data_store = NULL;
 
 	if (store)
 	{
@@ -52,9 +53,14 @@ void	store_or_free(char *line, t_exec *exec, bool store, bool free_env)
 		exec_store = exec;
 		// if (exec && exec->data) COME BACK
 		env_list_store = exec->data->env_list;
+		data_store = exec->data;
 		return ;
 	}
 	free_all(line_store, exec_store, env_list_store, free_env);
+	// free(data_store->fd_hd);
+	// free(data_store->pids);
+	// free_arrs((void **)data_store->hd_files);
+	// free(data_store);
 }
 
 /**
@@ -101,25 +107,30 @@ void	free_tokens(t_tokens *tokens_head, bool all, t_exec *exec)
 void	free_exec(t_exec *exec_head, bool all)
 {
 	t_exec	*tmp;
+	t_data	*data;
+	t_files	*files;
 
+	data = exec_head->data;
 	while (exec_head)
 	{
 		tmp = exec_head;
 		exec_head = exec_head->next;
+		files = tmp->files_info;
 		if (all)
 		{
-			free(tmp->files_info->infile_info->name);
+			if (is_diff(tmp->files_info->infile_info->name, data->hd_files))
+				free(tmp->files_info->infile_info->name);
 			if (tmp->files_info->infile_info->is_heredoc)
 				free(tmp->files_info->infile_info->del);
 			free(tmp->files_info->outfile_info->name);
 			free_arrs((void **)tmp->cmd_array);
 		}
-		free(tmp->files_info->infile_info);
-		free(tmp->files_info->outfile_info);
-		free(tmp->files_info);
-		free(tmp->path);
-		free(tmp);
+		free_multiple_pointers(5, files->infile_info, files->outfile_info,
+			files, tmp->path, tmp);
 	}
+	free_multiple_pointers(2, data->fd_hd, data->pids);
+	free_arrs((void **)data->hd_files);
+	free(data);
 }
 
 /**
@@ -136,13 +147,7 @@ void	free_all(char *line, t_exec *exec, t_env *env_list, bool free_env)
 	if (line)
 		free(line);
 	if (exec)
-	{
-		free(exec->data->pids);
-		free(exec->data->fd_hd);
-		// free_hd_files(exec->data->hd_files);
-		// free(exec->data);
-		// free_exec(exec, true);
-	}
+		free_exec(exec, true);
 	if (free_env)
 		free_env_list(env_list);
 }

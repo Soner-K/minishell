@@ -6,13 +6,11 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 15:34:03 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/30 14:04:42 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/03 13:33:43 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
 
 /**
  * @brief Sets the names of the infile and outfile.

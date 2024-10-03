@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:03:52 by sumseo            #+#    #+#             */
-/*   Updated: 2024/10/02 17:42:40 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/03 12:58:11 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ void	free_hd_files(char **hd_files)
 	}
 	free(hd_files);
 }
-void	launch_heredoc(t_exec **exec_list, t_data *data)
+//need to add exit and call to store_or_free when allocation failure
+void	launch_heredoc(t_exec **exec_list, t_data *data) 
 {
 	int		i;
 	t_exec	*cur_list;
@@ -109,6 +110,7 @@ void	launch_heredoc(t_exec **exec_list, t_data *data)
 		{
 			open_heredoc(cur_list, i, data);
 			last_heredoc_fd = data->fd_hd[i];
+			free(cur_list->files_info->infile_info->name);
 			cur_list->files_info->infile_info->name = data->hd_files[i];
 			cur_list->files_info->infile_info->rights = 6;
 			if (i > 0 && data->fd_hd[i - 1] != -1)
