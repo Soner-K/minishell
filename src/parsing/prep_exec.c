@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 15:34:03 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/03 13:33:43 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/03 13:41:38 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,14 @@ __int8_t	set_node_exec(t_exec *exec, t_tokens *token, int id_cmd)
 		return (FAILURE);
 	tmp = exec->files_info;
 	exec->builtin = (token->type == BUILTIN);
-	if (token->type == INREDIR || token->type == HEREDOC)
-		tmp->infile_info->name = token->word;
-	if (token->type == OUTREDIR || token->type == APPENDREDIR)
-		tmp->outfile_info->name = token->word;
+	// if (token->type == INREDIR)
+	// 	tmp->infile_info->name = token->word;
+	// if (token->type == HEREDOC)
+	// {
+		
+	// }
+	// if (token->type == OUTREDIR || token->type == APPENDREDIR)
+	// 	tmp->outfile_info->name = token->word;
 	exec->infile = -1;
 	exec->outfile = -1;
 	while (token && token->id_cmd != id_cmd)

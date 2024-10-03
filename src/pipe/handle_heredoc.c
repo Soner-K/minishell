@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:03:52 by sumseo            #+#    #+#             */
-/*   Updated: 2024/10/03 12:58:11 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/03 14:15:15 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,8 @@ void	launch_heredoc(t_exec **exec_list, t_data *data)
 		{
 			open_heredoc(cur_list, i, data);
 			last_heredoc_fd = data->fd_hd[i];
-			free(cur_list->files_info->infile_info->name);
-			cur_list->files_info->infile_info->name = data->hd_files[i];
+			// free(cur_list->files_info->infile_info->name); 
+			cur_list->files_info->infile_info->final_name = data->hd_files[i];
 			cur_list->files_info->infile_info->rights = 6;
 			if (i > 0 && data->fd_hd[i - 1] != -1)
 				close(data->fd_hd[i - 1]);
