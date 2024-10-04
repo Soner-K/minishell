@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:02:58 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/03 14:42:12 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 18:58:27 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	store_or_free(char *line, t_exec *exec, bool store, bool free_env)
  * @param head The head of the tokens' list.
  * @returns void.
  */
-void	free_tokens(t_tokens *tokens_head, bool all, t_exec *exec)
+void	free_tokens(t_tokens *tokens_head, bool all)
 {
 	t_tokens	*tmp;
 	__int8_t	id_cmd;
@@ -72,7 +72,6 @@ void	free_tokens(t_tokens *tokens_head, bool all, t_exec *exec)
 	if (!tokens_head)
 		return ;
 	id_cmd = 0;
-	exec = NULL;
 	while (tokens_head)
 	{
 		tmp = tokens_head;

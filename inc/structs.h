@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:25 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/04 18:31:12 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/04 19:47:38 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef enum e_type
 typedef struct t_tokens
 {
 	__int8_t		quotes;
+	bool			is_directory;	
 	int				id_cmd;
 	t_type			type;
 	char			*word;
@@ -96,7 +97,7 @@ typedef struct s_files
 {
 	t_fdata			*infile_info;
 	t_fdata			*outfile_info;
-
+	bool			opening_failure;
 }					t_files;
 
 /**

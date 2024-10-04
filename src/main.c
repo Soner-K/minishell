@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/04 17:05:24 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 18:57:15 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int	main(int argc, char **argv, char **envp)
 			free_env_list(env_list);
 			exit(EXIT_FAILURE);
 		}
+		if (!line[0])
+			continue ;
 		if (g_signal)
 			exit_status = 128 + g_signal;
 		g_signal = 0;
@@ -59,6 +61,11 @@ int	main(int argc, char **argv, char **envp)
 		{
 			if (error == SYNTAX_ERROR)
 				exit_status = 2;
+			continue ;
+		}
+		if (!exec->cmd_array[0])
+		{
+			free_all(line, exec, env_list, false);
 			continue ;
 		}
 		data = exec->data;

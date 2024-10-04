@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:11:30 by sumseo            #+#    #+#             */
-/*   Updated: 2024/10/04 17:01:56 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 18:15:33 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	control_alpha(t_exec *cmds_list)
 {
 	ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
 	ft_putstr_fd(cmds_list->cmd_array[1], STDERR_FILENO);
-	ft_putstr_fd(" numeric argument required", STDERR_FILENO);
+	ft_putstr_fd(" numeric argument required\n", STDERR_FILENO);
 	if (cmds_list->old_stdin != -1)
 		close(cmds_list->old_stdout);
 	if (cmds_list->old_stdout != -1)
@@ -48,7 +48,7 @@ void	control_alpha(t_exec *cmds_list)
 
 void	normal_exit(t_exec *cmds_list)
 {
-	int	exit_status;
+	long	exit_status;
 
 	printf("exit\n");
 	if (cmds_list->old_stdin != -1)
@@ -61,7 +61,8 @@ void	normal_exit(t_exec *cmds_list)
 		exit(0);
 	}
 	exit_status = ft_atol(cmds_list->cmd_array[1]);
-	exit((unsigned char) exit_status);
+	store_or_free(NULL, NULL, false, true);
+	exit((unsigned char)exit_status);
 }
 
 void	func_exit(t_exec **cmds)
@@ -79,15 +80,10 @@ void	func_exit(t_exec **cmds)
 		(*cmds)->data->exit_status = 1;
 		return ;
 	}
-	while (tmp[++i])
-	{
-		if (ft_isalpha(tmp[i]))
-			control_alpha(*cmds);
-	}
 	i = -1;
 	while (tmp[++i])
 	{
-		if (!ft_isdigit(tmp[i]) && tmp[i] != '-' && tmp[i] != '+')
+		if (!ft_isdigit(tmp[i]) && i != 0)
 			control_alpha(*cmds);
 	}
 	normal_exit(*cmds);

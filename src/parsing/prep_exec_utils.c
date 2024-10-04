@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prep_exec_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:16:08 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/04 18:36:37 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/04 19:47:51 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ t_exec	*new_node_exec(void)
 	outfile_info->final_name = NULL;
 	files->infile_info = infile_info;
 	files->outfile_info = outfile_info;
+	files->opening_failure = false;
 	initialize_node(&exec, NULL);
 	return (exec);
 }
@@ -108,7 +109,7 @@ t_data	*set_data_struct(t_tokens *tokens, t_exec *exec, t_env *env_list)
 
 	data = malloc(sizeof(t_data));
 	if (!data)
-		return (free_tokens(tokens, false, exec), free_exec(exec, true),
+		return (free_tokens(tokens, false), free_exec(exec, true),
 			free_env_list(env_list), exit(EXIT_FAILURE), NULL);
 	data->exit_status = 0;
 	data->pids = NULL;
@@ -138,16 +139,23 @@ t_data	*set_data_struct(t_tokens *tokens, t_exec *exec, t_env *env_list)
 /**
  * @brief Fucking norm
  */
-void	all_my_homies_hate_the_norm(t_tokens **head, t_exec *itr, int id_cmd)
+bool	all_my_homies_hate_the_norm(t_tokens **head, t_exec *itr, int id_cmd)
 {
 	while (*head && (*head)->id_cmd == -1)
 		*head = (*head)->next;
 	while (*head && (*head)->id_cmd == id_cmd)
 	{
 		if ((*head)->type >= INREDIR && (*head)->type <= APPENDREDIR)
-			set_files_info(itr->files_info, *head);
+		{
+			if (set_files_info(itr->files_info, *head) == FAILURE)
+			{
+				itr->files_info->opening_failure = true;
+				return (FAILURE);
+			}
+		}
 		else
 			set_node_exec(itr, *head, id_cmd);
 		*head = (*head)->next;
 	}
+	return (SUCCESS);
 }

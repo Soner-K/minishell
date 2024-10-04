@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/04 18:33:28 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/04 19:47:26 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ __int8_t	find_cmd_type(t_exec *head, t_env *env_list);
 //				-->memory_handler.c
 void		free_exec(t_exec *exec_head, bool all);
 void		free_all(char *line, t_exec *exec, t_env *env_list, bool free_env);
-void		free_tokens(t_tokens *head, bool all, t_exec *exec);
+void		free_tokens(t_tokens *tokens_head, bool all);
 void		store_or_free(char *line, t_exec *exec, bool store, bool free_env);
 void		free_env_list(t_env *env_list);
 
@@ -50,7 +50,8 @@ t_exec		*ft_parse(char *line, __int8_t *error, t_env *env_list,
 //				-->prep_exec.c
 
 __int8_t	set_node_exec(t_exec *exec, t_tokens *token, int id_cmd);
-void		set_files_info(t_files *files, t_tokens *token);
+bool		set_files_info(t_files *files, t_tokens *token);
+// bool		set_files_names(t_files *files, t_tokens *token);
 t_exec		*create_exec_lst(t_tokens *head, t_tokens *first, t_env *env_list);
 
 //				-->prep_exec_utils.c
@@ -58,8 +59,9 @@ t_exec		*create_exec_lst(t_tokens *head, t_tokens *first, t_env *env_list);
 t_exec		*new_node_exec(void);
 void		lst_addback_exec(t_exec **head, t_exec *add);
 t_data		*set_data_struct(t_tokens *tokens, t_exec *exec, t_env *env_list);
-void		all_my_homies_hate_the_norm(t_tokens **head, t_exec *itr,
+bool		all_my_homies_hate_the_norm(t_tokens **head, t_exec *itr,
 				int id_cmd);
+
 //				-->redirections_setting.c
 
 void		set_redirections_type(t_tokens **head);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   macros.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:47:58 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/18 14:01:23 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/04 19:15:13 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # define ALLOCATION_FAILURE -1
 # define UNCLOSED_QUOTES -2
 # define SYNTAX_ERROR -3
+# define OPENING_FAILURE -4
 
 # define SUCCESS 1
 # define FAILURE 0
