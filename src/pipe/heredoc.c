@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 17:15:01 by sumseo            #+#    #+#             */
-/*   Updated: 2024/10/03 14:28:53 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/04 15:39:21 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	close_heredoc(t_exec *cmds_list, t_data *data, int i)
 	cmds_list->infile = data->fd_hd[i];
 	close(data->fd_hd[i]);
 }
+
 void	close_heredoc_signal(t_exec *cmds_list, t_data *data, int i)
 {
 	if (cmds_list->pipe_fdi != -1)

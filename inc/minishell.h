@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/04 15:25:39 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 15:42:23 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ char		*func_join_words(char *variable, char *value);
 
 // 				-->pwd.c
 int			is_pwd(char *str);
-void		func_pwd(void); //modified
+void	func_pwd(void); // modified
 int			count_arr_length(char **argv);
 
 // 				-->env_utils.c
@@ -197,8 +197,7 @@ void		redirection(t_exec *cmds_list, t_data *pipe_info, int i);
 
 //				-->pipe_utils.c
 int			count_cmds(t_exec *cmds_list);
-void		close_no_file(t_exec *cmds_list);
-void		close_parent(t_exec *head, t_data *pipe_info);
+void		heredoc_init_name(t_exec *cur_list, t_data *data, int i);
 
 //				-->redirect_init.c
 void		only_redirection(t_exec **cmds_list);

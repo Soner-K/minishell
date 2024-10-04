@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:03:52 by sumseo            #+#    #+#             */
-/*   Updated: 2024/10/04 09:56:28 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 15:43:42 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	**init_hd_files(t_data *data)
 	return (hd_files);
 }
 
-void	redirect_heredoc(t_exec *cur_list, int last_heredoc_fd, t_data *data, //COME BACK
+void	redirect_heredoc(t_exec *cur_list, int last_heredoc_fd, t_data *data,
 		char *temp_s)
 {
 	while (cur_list != NULL)
@@ -105,10 +105,7 @@ void	launch_heredoc(t_exec **exec_list, t_data *data)
 		{
 			open_heredoc(cur_list, i, data);
 			last_heredoc_fd = data->fd_hd[i];
-			cur_list->files_info->infile_info->final_name = data->hd_files[i];
-			cur_list->files_info->infile_info->rights = 6;
-			if (i > 0 && data->fd_hd[i - 1] != -1)
-				close(data->fd_hd[i - 1]);
+			heredoc_init_name(cur_list, data, i);
 		}
 		cur_list = cur_list->next;
 		i++;
