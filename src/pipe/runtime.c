@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:07:40 by sumseo            #+#    #+#             */
-/*   Updated: 2024/10/02 15:55:40 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/04 18:39:24 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	runtime_shell(t_exec *cmds_list, char **env_copy, t_data *data,
 		if (fork_id == 0)
 		{
 			runtime_signal();
-			if (getfile(&cmds_list))
+			if (getfile(&cmds_list, data))
 				exec_pipe(cmds_list, env_copy, i, env_list);
 			else
 				runtime_free(cmds_list);
