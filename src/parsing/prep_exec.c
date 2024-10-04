@@ -6,18 +6,11 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 15:34:03 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/04 19:39:22 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 20:44:22 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// bool	check_file(char *filename, __int8_t mode)
-// {
-// 	int	fd;
-
-// 	// fd = open(filename)
-// }
 
 /**
  * @brief Sets the names of the infile and outfile.
@@ -25,13 +18,12 @@
  * @param token A pointer to the current token.
  * @returns void.
  */
-bool	set_files_names(t_files *files, t_tokens *token) // err_message
+void	set_files_names(t_files *files, t_tokens *token) // err_message
 {
 	if (token->type == HEREDOC)
 	{
 		files->infile_info->is_heredoc = true;
 		files->infile_info->del = token->word;
-		return (SUCCESS);
 	}
 	if (token->type == INREDIR)
 	{
@@ -39,16 +31,14 @@ bool	set_files_names(t_files *files, t_tokens *token) // err_message
 			free(files->infile_info->name);
 		files->infile_info->name = token->word;
 		files->infile_info->type = token->type;
-		// return (check_file(files->infile_info->name, INREDIR));
 	}
 	if (token->type == OUTREDIR || token->type == APPENDREDIR)
 	{
+		if (files->outfile_info->name)
+			free(files->outfile_info->name);
 		files->outfile_info->name = token->word;
 		files->outfile_info->type = token->type;
-		// return (check_file(files->outfile_info->name,
-		// 		files->outfile_info->type));
 	}
-	return (SUCCESS);
 }
 
 /**
@@ -92,22 +82,14 @@ void	set_files_rights(t_files *fls, __int8_t r, __int8_t w, __int8_t ex)
  * @param token A pointer to the current token.
  * @returns void.
  */
-bool	set_files_info(t_files *files, t_tokens *token)
+void	set_files_info(t_files *files, t_tokens *token)
 {
-	__int8_t	error;
-
-	error = set_files_names(files, token);
-	// if (error)
-	// {
-	// 	perror(token->word);
-	// 	return (FAILURE);
-	// }
+	set_files_names(files, token);
 	set_files_rights(files, 0, 0, 0);
 	if (!files->infile_info)
 		files->infile_info->rights = NO_FILE_FOUND;
 	if (!files->outfile_info)
 		files->outfile_info->rights = NO_FILE_FOUND;
-	return (SUCCESS);
 }
 
 /**

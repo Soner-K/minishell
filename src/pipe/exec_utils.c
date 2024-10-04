@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:30:11 by sumseo            #+#    #+#             */
-/*   Updated: 2024/10/04 19:48:00 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 20:53:32 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	quit_child(t_exec **cmds_list)
 {
-	ft_putstr_fd("CALLED", 2);
 	if (errno == EACCES)
 	{
 		ft_putstr_fd("minishell: ", STDERR_FILENO);

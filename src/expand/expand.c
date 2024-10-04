@@ -144,6 +144,5 @@ __int8_t	extract_all(t_tokens *head, t_env *env_list, int last_exit_status)
 		if (head)
 			n_expand = count_expands(head->word);
 	}
-	// reset_negative_characters(first); //COME BACK
 	return (SUCCESS);
 }

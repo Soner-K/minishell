@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 15:52:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/04 19:16:42 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 20:45:56 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ t_exec	*ft_parse(char *line, __int8_t *error, t_env *env_list, int last_exit)
 	e = create_exec_lst(t, t, env_list);
 	if (!e)
 		return (free_tokens(t, true), free_env_and_quit(env_list), NULL);
-	else if (e->files_info->opening_failure)
-		return (free_tokens(t, true), *error = OPENING_FAILURE, NULL); //test for leaks
 	if (find_cmd_type(e, env_list) == ALLOCATION_FAILURE)
 		return (free_tokens(t, true), free_env_and_quit(env_list), NULL);
 	return (free_tokens(t, false), *error = SUCCESS, e);
