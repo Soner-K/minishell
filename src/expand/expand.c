@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 16:20:21 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/30 13:51:39 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 11:04:15 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 #define EXPAND_SYNTAX_NOT_VALID -2
 #define EXPAND_INSIDE_SINGLE_QUOTES -3
-
-
 
 /**
  * @brief Stores inside the node's word the string var, replacing the
@@ -39,10 +37,11 @@ char	*get_new_word(t_tokens *node, char *var, short int s, short int end)
 			return (NULL);
 		return (str);
 	}
-	str = ft_strreplace(node->word, var, s - (s != 0), end);
-	if (!str)
-		return (NULL);
-	return (str);
+
+		str = ft_strreplace(node->word, var, s - (s != 0), end);
+		if (!str)
+			return (NULL);
+		return (str);
 }
 
 static char	*getenv_from_env_list(char *var, t_env *env, t_env *first)
@@ -108,6 +107,8 @@ static __int8_t	extract_variable(t_tokens *node, t_env *env_list, int last_exit)
 	else
 		var_content = getenv_from_env_list(str, env_list, env_list);
 	free(str);
+	if (count_char(var_content, ' '))
+		return (split_new_word(node, node->next, var_content));
 	str = get_new_word(node, var_content, start, end);
 	if (!str)
 		return (free(var_content), ALLOCATION_FAILURE);

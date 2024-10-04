@@ -6,19 +6,43 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 17:45:50 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/30 13:52:06 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 10:58:56 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void mark_str(char *str);
+static void	mark_str(char *str);
 
-// COME BACK think about quotes in expand var. quotes are handled like
-// usual
+// NOTE what happens when alloc failure for the added nodes?
+// they're added to curr so should be freed
+__int8_t	retokenize(char **split_word, t_tokens *curr, t_tokens *next)
+{
+	char	*str;
+	int		i;
+	int		start;
+	int		end;
+
+	i = 0;
+	check_expand_syntax(curr->word, &start, &end);
+	printf("split word is %s\n", split_word[0]);
+	curr->word = get_new_word(curr, split_word[0], start, end);
+	while (split_word[++i])
+	{
+		str = ft_strdup(split_word[i]);
+		if (!str)
+			return (ALLOCATION_FAILURE);
+		curr->next = new_node_token(str, false);
+		curr->next->type = find_token_type(str);
+		curr = curr->next;
+	}
+	curr->next = next;
+	return (SUCCESS);
+}
+
 __int8_t	split_new_word(t_tokens *node, t_tokens *next, char *word)
 {
-	char		**split_word;
+	char	**split_word;
 
 	(void)node;
 	(void)next;
@@ -26,18 +50,11 @@ __int8_t	split_new_word(t_tokens *node, t_tokens *next, char *word)
 	split_word = ft_split(word, -32);
 	if (!split_word)
 		return (ALLOCATION_FAILURE);
-	print_strs(split_word);
-	
+	retokenize(split_word, node, next);
+	free_arrs((void **)split_word);
 	return (SUCCESS);
 }
 
-// static __int8_t	retokenize(char **split_word, t_tokens *curr, t_tokens *next)
-// {
-// 	char	*str;
-// 	int		i;
-
-// 	i = 0;
-// }
 
 static void	mark_str(char *str)
 {

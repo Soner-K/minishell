@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/03 14:27:07 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/04 10:59:46 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ short int	skip_tab_spaces(char *str);
 //				-->expand_tokenizer.c
 
 __int8_t	split_new_word(t_tokens *node, t_tokens *next, char *word);
+__int8_t	retokenize(char **split_word, t_tokens *curr, t_tokens *next);
 
 //				-->expand_utils.c
 
@@ -107,7 +108,8 @@ char		*ft_strreplace(char *str, char *add, int start, int end);
 
 //				-->expand.c
 
-// char		*getenv_from_env_list(char *var, t_env *env_list, t_env *first);
+char		*get_new_word(t_tokens *node, char *var, short int s,
+				short int end);
 __int8_t	extract_all(t_tokens *head, t_env *env_list, int last_exit_status);
 
 //				-->quotes.c

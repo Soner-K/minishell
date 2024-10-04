@@ -82,3 +82,8 @@ COLOR_END			=	\033[0m
 
 FACE_ESCUZME		=	🤓
 BYE					=	🙋
+
+
+tester: re
+	@if [ ! -d minishell_tester ]; then git clone https://github.com/LucasKuhn/minishell_tester.git; fi
+	@cd minishell_tester && ./tester #| grep -v "✅"
