@@ -1,0 +1,21 @@
+total 184
+drwxr-xr-x  9 sumseo 2023_paris    278 Oct  4 17:05 .
+drwxr-xr-x  7 sumseo 2023_paris     86 Sep 20 15:16 ..
+drwxr-xr-x  8 sumseo 2023_paris    220 Oct  4 16:14 .git
+-rw-r--r--  1 sumseo 2023_paris     16 Oct  4 15:32 .gitignore
+-rw-r--r--  1 sumseo 2023_paris      3 Oct  4 16:14 .hd_0
+-rw-r--r--  1 sumseo 2023_paris      6 Oct  4 15:32 .hd_1
+-rw-r--r--  1 sumseo 2023_paris      0 Oct  3 13:35 .hd_2
+-rw-r--r--  1 sumseo 2023_paris      0 Oct  3 13:35 .hd_3
+drwxr-xr-x  2 sumseo 2023_paris     72 Oct  4 16:14 inc
+drwxr-xr-x  7 sumseo 2023_paris    117 Oct  4 17:05 libft
+-rw-r--r--  1 sumseo 2023_paris   2559 Oct  4 15:32 Makefile
+-rwxr-xr-x  1 sumseo 2023_paris 152104 Oct  4 17:05 minishell
+drwxr-xr-x  6 sumseo 2023_paris   4096 Oct  4 17:05 minishell_tester
+drwxr-xr-x 10 sumseo 2023_paris    128 Oct  4 17:05 obj
+-rw-r--r--  1 sumseo 2023_paris      0 Oct  4 17:06 out
+-rw-r--r--  1 sumseo 2023_paris    177 Sep 25 11:41 readline.supp
+-rw-r--r--  1 sumseo 2023_paris   3605 Sep 19 11:26 README.md
+-rw-r--r--  1 sumseo 2023_paris    141 Sep 25 11:41 run_valgrind.sh
+drwxr-xr-x 10 sumseo 2023_paris    128 Oct  4 15:32 src
+drwxr-xr-x  2 sumseo 2023_paris     27 Sep 19 16:56 .vscode

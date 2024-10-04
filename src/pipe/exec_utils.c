@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:30:11 by sumseo            #+#    #+#             */
-/*   Updated: 2024/10/03 15:07:10 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 17:06:20 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 void	quit_child(t_exec **cmds_list)
 {
-	printf("%s: Command not found\n", (*cmds_list)->cmd_array[0]);
+	(void)cmds_list;
+	// printf("%s: Command not found\n", (*cmds_list)->cmd_array[0]);
+	ft_putstr_fd("Command not found", 2);
 	store_or_free(NULL, NULL, false, true);
 	exit(127);
 }

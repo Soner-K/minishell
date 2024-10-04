@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:59:43 by sumseo            #+#    #+#             */
-/*   Updated: 2024/10/04 15:38:33 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/04 17:07:56 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,34 @@ int	parse_path(char **cmds, char *path)
 int	getfile(t_exec **cmds_list)
 {
 	int	flags;
+	int	infile_exist;
+	int	outfile_exist;
 
 	if ((*cmds_list)->files_info->infile_info->final_name)
-		(*cmds_list)->infile = open((*cmds_list)->files_info->infile_info->final_name,
-				O_RDONLY);
-	else if ((*cmds_list)->files_info->infile_info->name)
-		(*cmds_list)->infile = open((*cmds_list)->files_info->infile_info->name,
-				O_RDONLY);
-	else
 	{
-		(*cmds_list)->infile = -1;
-		return (1);
+		infile_exist = open((*cmds_list)->files_info->infile_info->final_name,
+				O_RDONLY);
+		if (infile_exist < 0)
+		{
+			perror((*cmds_list)->files_info->infile_info->final_name);
+			store_or_free(NULL, NULL, false, true);
+			exit(1);
+		}
+		else
+			(*cmds_list)->infile = infile_exist;
+	}
+	if ((*cmds_list)->files_info->infile_info->name)
+	{
+		infile_exist = open((*cmds_list)->files_info->infile_info->name,
+				O_RDONLY);
+		if (infile_exist < 0)
+		{
+			perror((*cmds_list)->files_info->infile_info->final_name);
+			store_or_free(NULL, NULL, false, true);
+			exit(1);
+		}
+		else
+			(*cmds_list)->infile = infile_exist;
 	}
 	if ((*cmds_list)->files_info->outfile_info->type == APPENDREDIR)
 		flags = O_RDWR | O_APPEND | O_CREAT;
@@ -42,8 +59,16 @@ int	getfile(t_exec **cmds_list)
 		flags = O_WRONLY | O_TRUNC | O_CREAT;
 	else
 		return (1);
-	(*cmds_list)->outfile = open((*cmds_list)->files_info->outfile_info->name,
-			flags, 0644);
+	outfile_exist = open((*cmds_list)->files_info->outfile_info->name, flags,
+			0644);
+	if (outfile_exist < 0)
+	{
+		perror((*cmds_list)->files_info->outfile_info->final_name);
+		store_or_free(NULL, NULL, false, true);
+		exit(1);
+	}
+	else
+		(*cmds_list)->outfile = outfile_exist;
 	return (1);
 }
 
