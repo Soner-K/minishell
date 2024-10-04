@@ -250,4 +250,11 @@ char		**init_hd_files(t_data *data);
 void		init_heredoc(t_exec **exec_list, t_data *data);
 void		redirect_heredoc(t_exec *cur_list, int last_heredoc_fd,
 				t_data *data, char *temp_s);
+
+// 				-->getfile_utils.c
+void		final_infile_problem(t_data *data, t_exec **cmds_list);
+void		infile_problem(t_data *data, t_exec **cmds_list);
+void		outfile_problem(t_exec **cmds_list);
+void		control_outfile(t_exec **cmds_list, int flags);
+void		control_normal_infile(t_data *data, t_exec **cmds_list);
 #endif

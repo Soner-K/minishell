@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:03:52 by sumseo            #+#    #+#             */
-/*   Updated: 2024/10/04 18:48:06 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/04 20:05:58 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ char	**init_hd_files(t_data *data)
 void	redirect_heredoc(t_exec *cur_list, int last_heredoc_fd, t_data *data,
 		char *temp_s)
 {
+	char	*s;
+
 	(void)last_heredoc_fd;
 	while (cur_list != NULL)
 	{
@@ -76,8 +78,8 @@ void	redirect_heredoc(t_exec *cur_list, int last_heredoc_fd, t_data *data,
 			&& cur_list->files_info->infile_info->type != INREDIR)
 		{
 			cur_list->infile = data->last_heredoc_fd;
-			cur_list->files_info->infile_info->name = data->hd_files[data->total_hd
-				- 1];
+			s = data->hd_files[data->total_hd - 1];
+			cur_list->files_info->infile_info->name = s;
 		}
 		else if (cur_list->files_info->infile_info->type == INREDIR)
 			cur_list->files_info->infile_info->name = temp_s;

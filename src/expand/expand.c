@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 16:20:21 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/04 20:25:08 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 20:59:54 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,10 @@ char	*get_new_word(t_tokens *node, char *var, short int s, short int end)
 			return (NULL);
 		return (str);
 	}
-
-		str = ft_strreplace(node->word, var, s - (s != 0), end);
-		if (!str)
-			return (NULL);
-		return (str);
+	str = ft_strreplace(node->word, var, s - (s != 0), end);
+	if (!str)
+		return (NULL);
+	return (str);
 }
 
 static char	*getenv_from_env_list(char *var, t_env *env, t_env *first)
