@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:25 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/03 14:43:19 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 18:31:12 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct s_fdata
 	char			*name;
 	char			*final_name;
 	char			*del;
+
 }					t_fdata;
 
 /**
@@ -134,6 +135,7 @@ typedef struct t_data
 	int				total_hd;
 	int				*fd_hd;
 	char			**hd_files;
+	int				last_heredoc_fd;
 }					t_data;
 
 /**

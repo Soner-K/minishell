@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:03:52 by sumseo            #+#    #+#             */
-/*   Updated: 2024/10/04 15:43:42 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/04 18:48:06 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,31 +69,30 @@ char	**init_hd_files(t_data *data)
 void	redirect_heredoc(t_exec *cur_list, int last_heredoc_fd, t_data *data,
 		char *temp_s)
 {
+	(void)last_heredoc_fd;
 	while (cur_list != NULL)
 	{
-		if (last_heredoc_fd != -1
+		if (data->last_heredoc_fd != -1
 			&& cur_list->files_info->infile_info->type != INREDIR)
 		{
-			cur_list->infile = last_heredoc_fd;
+			cur_list->infile = data->last_heredoc_fd;
 			cur_list->files_info->infile_info->name = data->hd_files[data->total_hd
 				- 1];
 		}
-		if (cur_list->files_info->infile_info->type == INREDIR)
+		else if (cur_list->files_info->infile_info->type == INREDIR)
 			cur_list->files_info->infile_info->name = temp_s;
 		cur_list = cur_list->next;
 	}
-	if (last_heredoc_fd != -1)
-		close(last_heredoc_fd);
+	if (data->last_heredoc_fd != -1)
+		close(data->last_heredoc_fd);
 }
 
 void	launch_heredoc(t_exec **exec_list, t_data *data)
 {
 	int		i;
 	t_exec	*cur_list;
-	int		last_heredoc_fd;
 	char	*temp_s;
 
-	last_heredoc_fd = -1;
 	i = 0;
 	init_heredoc(exec_list, data);
 	cur_list = *exec_list;
@@ -104,7 +103,7 @@ void	launch_heredoc(t_exec **exec_list, t_data *data)
 		if (cur_list->files_info->infile_info->is_heredoc)
 		{
 			open_heredoc(cur_list, i, data);
-			last_heredoc_fd = data->fd_hd[i];
+			data->last_heredoc_fd = data->fd_hd[i];
 			heredoc_init_name(cur_list, data, i);
 		}
 		cur_list = cur_list->next;
@@ -112,5 +111,5 @@ void	launch_heredoc(t_exec **exec_list, t_data *data)
 	}
 	cur_list = *exec_list;
 	if (data->total_hd)
-		redirect_heredoc(cur_list, last_heredoc_fd, data, temp_s);
+		redirect_heredoc(cur_list, data->last_heredoc_fd, data, temp_s);
 }
