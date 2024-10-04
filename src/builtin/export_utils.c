@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 18:49:28 by sumseo            #+#    #+#             */
-/*   Updated: 2024/10/04 12:11:35 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 15:29:22 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ bool	is_invalid_char(char c)
 	return (false);
 }
 
-int	check_export_variable(char *s) // MODIFIED
+int	check_export_variable(char *s)
 {
-	int i;
-	int count;
+	int	i;
+	int	count;
 
 	i = -1;
 	while (s[++i])
@@ -43,10 +43,7 @@ int	check_export_variable(char *s) // MODIFIED
 	while (s[++i] && i < count)
 	{
 		if (is_invalid_char(s[i]))
-		{
-			// printf("minishell: export: `%c' : not a valid identifier\n", s[i]);
 			return (FAILURE);
-		}
 	}
 	return (SUCCESS);
 }

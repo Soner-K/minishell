@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:11:30 by sumseo            #+#    #+#             */
-/*   Updated: 2024/10/04 15:05:07 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 15:28:57 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ int	is_exit(char *str)
 	return (0);
 }
 
-void	control_alpha(char *s, t_exec *cmds_list)
+void	control_alpha(t_exec *cmds_list)
 {
 	ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
 	ft_putstr_fd(cmds_list->cmd_array[1], STDERR_FILENO);
-	printf("exit : %s: numeric argument required\n", s);
+	ft_putstr_fd(" numeric argument required", STDERR_FILENO);
 	if (cmds_list->old_stdin != -1)
 		close(cmds_list->old_stdout);
 	if (cmds_list->old_stdout != -1)
@@ -44,78 +44,9 @@ void	control_alpha(char *s, t_exec *cmds_list)
 	exit(2);
 }
 
-// void	control_many_args(t_exec *cmds_list)
-// {
-// 	int		i;
-// 	long	exit_status;
-// 	char	*tmp;
-
-// 	tmp = cmds_list->cmd_array[1];
-// 	i = -1;
-// 	if (cmds_list->old_stdin != -1)
-// 		close(cmds_list->old_stdout);
-// 	if (cmds_list->old_stdout != -1)
-// 		close(cmds_list->old_stdin);
-// 	while (tmp[++i])
-// 	{
-// 		if (!ft_isdigit(tmp[i]) && tmp[i] != '-' && tmp[i] != '+')
-// 		{
-// 			ft_putstr_fd("minishell: exit: ", 2);
-// 			ft_putstr_fd(cmds_list->cmd_array[1], 2);
-// 			ft_putstr_fd("numeric argument required", 2);
-// 			break ;
-// 		}
-// 	}
-// 	exit_status =  ft_atol(cmds_list->cmd_array[1]);
-// 	store_or_free(NULL, NULL, false, true);
-// 	exit((unsigned char) exit_status);
-// 	// if (ft_isalpha(cmds_list->cmd_array[1][0]))
-// 	// {
-// 	// 	printf("exit : too many arugments\n");
-// 	// 	store_or_free(NULL, NULL, false, true);
-// 	// 	exit(1);
-// 	// }
-// 	// else
-// 	// 	printf("exit : too many arugments\n");
-// }
-
-// void	normal_exit(t_exec *cmds_list)
-// {
-// 	long	exit_num;
-// 	int		i;
-// 	char	*tmp;
-
-// 	printf("exit\n");
-// 	i = -1;
-// 	if (cmds_list->old_stdin != -1)
-// 		close(cmds_list->old_stdout);
-// 	if (cmds_list->old_stdout != -1)
-// 		close(cmds_list->old_stdin);
-// 	if (cmds_list->cmd_array[1] == NULL)
-// 	{
-// 		store_or_free(NULL, NULL, false, true);
-// 		exit(0);
-// 	}
-// 	tmp = cmds_list->cmd_array[1];
-// 	while (tmp[++i])
-// 	{
-// 		if (!ft_isdigit(tmp[i]) && tmp[i] != '-' && tmp[i] != '+')
-// 		{
-// 			ft_putstr_fd("minishell: exit: ", 2);
-// 			ft_putstr_fd(cmds_list->cmd_array[1], 2);
-// 			ft_putstr_fd("numeric argument required", 2);
-// 			break ;
-// 		}
-// 	}
-// 	exit_num =  ft_atol(cmds_list->cmd_array[1]);
-// 	store_or_free(NULL, NULL, false, true);
-// 	exit((unsigned char) exit_num);
-// 	// check if error mess given numeric arg
-// }
-
-void	normal_exit(t_exec *cmds_list) // see with Sumi COME BACK
+void	normal_exit(t_exec *cmds_list)
 {
-	int exit_status;
+	int	exit_status;
 
 	printf("exit\n");
 	if (cmds_list->old_stdin != -1)
@@ -149,13 +80,13 @@ void	func_exit(t_exec **cmds)
 	while (tmp[++i])
 	{
 		if (ft_isalpha(tmp[i]))
-			control_alpha(tmp, *cmds);
+			control_alpha(*cmds);
 	}
 	i = -1;
 	while (tmp[++i])
 	{
 		if (!ft_isdigit(tmp[i]) && tmp[i] != '-' && tmp[i] != '+')
-			control_alpha(tmp, *cmds);
+			control_alpha(*cmds);
 	}
 	normal_exit(*cmds);
 }

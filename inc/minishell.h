@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/04 12:40:59 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 15:25:39 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,8 +143,7 @@ void		display_env_list(t_env *env_list);
 
 // 				-->exit.c
 int			is_exit(char *str);
-void		control_alpha(char *s, t_exec *cmds_list);
-void		control_many_args(t_exec *cmds_list);
+void		control_alpha(t_exec *cmds_list);
 void		normal_exit(t_exec *cmds_list);
 void		func_exit(t_exec **cmds);
 

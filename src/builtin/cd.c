@@ -6,13 +6,13 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:11:01 by sumseo            #+#    #+#             */
-/*   Updated: 2024/10/04 12:40:09 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 15:28:19 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-#define ERR_MESS "minishell: cd: too many arguments\n"
+#define ERR_M "minishell: cd: too many arguments\n"
 
 int	is_cd(char *str)
 {
@@ -33,7 +33,7 @@ int	is_cd(char *str)
 	return (0);
 }
 
-void	func_cd(t_exec *cmds) //MODIFIED
+void	func_cd(t_exec *cmds)
 {
 	char	*rel_paths[2];
 	int		path_int;
@@ -46,7 +46,7 @@ void	func_cd(t_exec *cmds) //MODIFIED
 	if (!cmds->cmd_array[1])
 		return ;
 	else if (cmds->cmd_array[2])
-		return (cmds->data->exit_status = 1, ft_putstr_fd(ERR_MESS, 2), (void)i);
+		return (cmds->data->exit_status = 1, ft_putstr_fd(ERR_M, 2), (void)i);
 	else
 	{
 		while (i < 2)
@@ -62,7 +62,7 @@ void	func_cd(t_exec *cmds) //MODIFIED
 	func_path(path_int, cmds->cmd_array[1], cmds);
 }
 
-void	func_path(int path_int, char *path, t_exec *cmds) //MODIFIED
+void	func_path(int path_int, char *path, t_exec *cmds)
 {
 	if (path_int > 0)
 		func_relative_cd(path_int);
@@ -78,7 +78,7 @@ void	func_relative_cd(int path_int)
 		chdir(".");
 }
 
-void	func_absolute_cd(char *dir, t_exec *cmds) //MODIFIED
+void	func_absolute_cd(char *dir, t_exec *cmds)
 {
 	DIR	*dir_info;
 
