@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 16:20:21 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/04 11:04:15 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 11:20:04 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,6 @@ static __int8_t	extract_variable(t_tokens *node, t_env *env_list, int last_exit)
 	else
 		var_content = getenv_from_env_list(str, env_list, env_list);
 	free(str);
-	if (count_char(var_content, ' '))
-		return (split_new_word(node, node->next, var_content));
 	str = get_new_word(node, var_content, start, end);
 	if (!str)
 		return (free(var_content), ALLOCATION_FAILURE);

@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/04 10:59:46 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 15:25:39 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,9 +127,9 @@ void		func_unset(t_exec **cmds, t_env **env);
 // 				-->cd.c
 int			is_cd(char *str);
 void		func_cd(t_exec *cmds);
-void		func_path(int path_int, char *path);
+void		func_path(int path_int, char *path, t_exec *cmds);
 void		func_relative_cd(int path_int);
-void		func_absolute_cd(char *dir);
+void		func_absolute_cd(char *dir, t_exec *cmds);
 
 // 				-->echo.c
 int			is_echo(char *str);
@@ -143,8 +143,7 @@ void		display_env_list(t_env *env_list);
 
 // 				-->exit.c
 int			is_exit(char *str);
-void		control_alpha(char *s, t_exec *cmds_list);
-void		control_many_args(t_exec *cmds_list);
+void		control_alpha(t_exec *cmds_list);
 void		normal_exit(t_exec *cmds_list);
 void		func_exit(t_exec **cmds);
 
@@ -156,14 +155,14 @@ int			check_variable(t_env **env, char *new_var, char *value);
 void		func_export(t_exec **cmds, t_env **env);
 
 //				-->export_utils.c
-int			check_export_variable(char s);
+int			check_export_variable(char *s);
 char		*func_variable(char *s);
 char		*func_value(char *s);
 char		*func_join_words(char *variable, char *value);
 
 // 				-->pwd.c
 int			is_pwd(char *str);
-void		func_pwd(t_exec *cmds);
+void		func_pwd(void); //modified
 int			count_arr_length(char **argv);
 
 // 				-->env_utils.c
@@ -172,9 +171,6 @@ void		store_env_list(char **envp, t_env **env_list);
 void		delete_one_env(t_env **env_list, char *new_var);
 void		replace_one_env(t_env **env_list, char *env_val, char *variable,
 				char *value);
-
-//				-->error.c
-void		free_lists(t_tokens *first);
 
 // 				-->exec_utils.c
 int			parse_path(char **cmds, char *path);

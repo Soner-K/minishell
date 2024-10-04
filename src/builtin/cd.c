@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:11:01 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/14 17:02:43 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/04 15:28:19 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+#define ERR_M "minishell: cd: too many arguments\n"
 
 int	is_cd(char *str)
 {
@@ -43,6 +45,8 @@ void	func_cd(t_exec *cmds)
 	i = 0;
 	if (!cmds->cmd_array[1])
 		return ;
+	else if (cmds->cmd_array[2])
+		return (cmds->data->exit_status = 1, ft_putstr_fd(ERR_M, 2), (void)i);
 	else
 	{
 		while (i < 2)
@@ -55,15 +59,15 @@ void	func_cd(t_exec *cmds)
 			i++;
 		}
 	}
-	func_path(path_int, cmds->cmd_array[1]);
+	func_path(path_int, cmds->cmd_array[1], cmds);
 }
 
-void	func_path(int path_int, char *path)
+void	func_path(int path_int, char *path, t_exec *cmds)
 {
 	if (path_int > 0)
 		func_relative_cd(path_int);
 	else
-		func_absolute_cd(path);
+		func_absolute_cd(path, cmds);
 }
 
 void	func_relative_cd(int path_int)
@@ -74,13 +78,18 @@ void	func_relative_cd(int path_int)
 		chdir(".");
 }
 
-void	func_absolute_cd(char *dir)
+void	func_absolute_cd(char *dir, t_exec *cmds)
 {
 	DIR	*dir_info;
 
 	dir_info = opendir(dir);
 	if (!dir_info)
-		printf("cd: %s: No such file or directory\n", dir);
+	{
+		ft_putstr_fd("cd: ", STDERR_FILENO);
+		ft_putstr_fd(dir, STDERR_FILENO);
+		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+		cmds->data->exit_status = 1;
+	}
 	else
 		chdir(dir);
 }

@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:11:10 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/30 14:54:05 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 12:19:34 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ void	func_export(t_exec **cmds, t_env **env)
 
 	if (!(*cmds)->cmd_array[1])
 		return (export_without_args(env));
+	if (!check_export_variable((*cmds)->cmd_array[1]))
+		return ((*cmds)->data->exit_status = 1, (void)i);
 	i = -1;
 	while ((*cmds)->cmd_array[++i])
 	{
@@ -107,11 +109,9 @@ void	func_export(t_exec **cmds, t_env **env)
 			final_value = find_final_value(value, variable_join);
 			if (!check_variable(env, variable_join, value))
 				push_env_list(env, final_value, ft_strlen(final_value));
-			free(variable_join);
-			free(value);
-			free(final_value);
+			free_multiple_pointers(3, variable_join, value, final_value);
 		}
 		else
-			printf("not valid in this context %s\n", (*cmds)->cmd_array[i]);
+			(*cmds)->data->exit_status = 1;
 	}
 }

@@ -6,21 +6,46 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 18:49:28 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/30 15:32:11 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 15:29:22 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_export_variable(char s)
+#define INVALID_IDENTIFIER "!@#%^&*()-+{}[]|:;'\",<>./? \t\n\v\f\r"
+
+bool	is_invalid_char(char c)
 {
-	if (s == '_' || ft_isalpha(s))
-		return (1);
-	else
+	__int8_t	i;
+
+	i = -1;
+	while (INVALID_IDENTIFIER[++i])
 	{
-		printf("export : '%c' : not a valid identifier\n", s);
-		return (0);
+		if (INVALID_IDENTIFIER[i] == c)
+			return (true);
 	}
+	return (false);
+}
+
+int	check_export_variable(char *s)
+{
+	int	i;
+	int	count;
+
+	i = -1;
+	while (s[++i])
+	{
+		if (s[i] == '=')
+			break ;
+	}
+	count = i;
+	i = -1;
+	while (s[++i] && i < count)
+	{
+		if (is_invalid_char(s[i]))
+			return (FAILURE);
+	}
+	return (SUCCESS);
 }
 
 char	*func_variable(char *s)
