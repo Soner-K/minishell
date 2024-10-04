@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:41:15 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/19 17:13:27 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 12:42:10 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	exec_builtin(int func, t_exec **cmds, t_env **env)
 	if (func == 1)
 		func_echo(*cmds);
 	else if (func == 2)
-		func_pwd(*cmds);
+		func_pwd();
 	else if (func == 3)
 		func_cd(*cmds);
 	else if (func == 4)

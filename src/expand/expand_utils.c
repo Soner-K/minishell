@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:03:00 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/29 18:26:14 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 11:34:05 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ bool	check_if_edge_characters(char c, bool first_char)
 			return (true);
 		return (false);
 	}
-	if ((!ft_isalnum(c) && c != '_') || (c == '?'))
+	if (!ft_isalnum(c) && c != '_')
 		return (true);
 	return (false);
 }
@@ -152,6 +152,8 @@ bool	check_expand_syntax(char *str, int *start, int *end)
 	*start = i;
 	if (!check_if_edge_characters(str[i], true))
 		return (false);
+	if (str[i] == '?')
+		return (*end = *start, true);
 	while (str[++i])
 	{
 		if (check_if_edge_characters(str[i], false))
