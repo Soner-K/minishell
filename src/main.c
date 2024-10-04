@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/04 20:15:57 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/04 21:04:10 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,27 @@ int	arg_check(int argc, char **argv, char **envp)
 		return (1);
 	return (0);
 }
+
 void	clean_all(t_env *env_list)
 {
 	free_env_list(env_list);
 	rl_clear_history();
 }
 
-void	init_args(void)
+void	run_minishell(t_data *data, t_env *env_list, char **envp, t_exec *exec)
 {
+	if (data->num_pipe < 1)
+		exec_shell(&exec, &env_list, envp, data);
+	else
+		runtime_shell(exec, envp, data, &env_list);
 }
+
+void	no_line_exit(t_env *env_list)
+{
+	free_env_list(env_list);
+	exit(EXIT_FAILURE);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char		*line;
@@ -52,15 +64,10 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = read_prompt(env_list);
 		if (!line)
-		{
-			free_env_list(env_list);
-			exit(EXIT_FAILURE);
-		}
+			no_line_exit(env_list);
 		if (g_signal)
 			exit_status = 128 + g_signal;
 		g_signal = 0;
-		if (line == NULL)
-			break ;
 		data = NULL;
 		exec = ft_parse(line, &error, env_list, exit_status);
 		if (!exec)
@@ -76,10 +83,7 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		store_or_free(line, exec, true, false);
-		if (data->num_pipe < 1)
-			exec_shell(&exec, &env_list, envp, data);
-		else
-			runtime_shell(exec, envp, data, &env_list);
+		run_minishell(data, env_list, envp, exec);
 		exit_status = data->exit_status;
 		free_all(line, exec, env_list, false);
 	}
