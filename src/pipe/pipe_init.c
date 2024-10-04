@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:59:43 by sumseo            #+#    #+#             */
-/*   Updated: 2024/10/04 17:07:56 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/04 17:39:33 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,11 @@ int	getfile(t_exec **cmds_list)
 				O_RDONLY);
 		if (infile_exist < 0)
 		{
-			perror((*cmds_list)->files_info->infile_info->final_name);
+			perror((*cmds_list)->files_info->infile_info->name);
+			if ((*cmds_list)->old_stdout)
+				close((*cmds_list)->old_stdout);
+			if ((*cmds_list)->old_stdin)
+				close((*cmds_list)->old_stdin);
 			store_or_free(NULL, NULL, false, true);
 			exit(1);
 		}
@@ -63,7 +67,11 @@ int	getfile(t_exec **cmds_list)
 			0644);
 	if (outfile_exist < 0)
 	{
-		perror((*cmds_list)->files_info->outfile_info->final_name);
+		perror((*cmds_list)->files_info->outfile_info->name);
+		if ((*cmds_list)->old_stdout)
+			close((*cmds_list)->old_stdout);
+		if ((*cmds_list)->old_stdin)
+			close((*cmds_list)->old_stdin);
 		store_or_free(NULL, NULL, false, true);
 		exit(1);
 	}
