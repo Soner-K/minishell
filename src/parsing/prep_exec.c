@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 15:34:03 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/04 20:44:22 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 21:46:31 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * @param token A pointer to the current token.
  * @returns void.
  */
-void	set_files_names(t_files *files, t_tokens *token) // err_message
+void	set_files_names(t_files *files, t_tokens *token)
 {
 	if (token->type == HEREDOC)
 	{

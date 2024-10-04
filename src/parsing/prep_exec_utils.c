@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:16:08 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/04 20:46:09 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 21:45:28 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,14 +110,9 @@ t_data	*set_data_struct(t_tokens *tokens, t_exec *exec, t_env *env_list)
 	if (!data)
 		return (free_tokens(tokens, false), free_exec(exec, true),
 			free_env_list(env_list), exit(EXIT_FAILURE), NULL);
-	data->exit_status = 0;
-	data->pids = NULL;
 	data->limiter = NULL;
 	data->total_cmds = 0;
-	data->counter = 0;
 	data->num_pipe = 0;
-	data->total_hd = 0;
-	data->fd_hd = NULL;
 	data->hd_files = NULL;
 	data->last_heredoc_fd = -1;
 	while (tokens)
@@ -132,7 +127,8 @@ t_data	*set_data_struct(t_tokens *tokens, t_exec *exec, t_env *env_list)
 		exec->data = data;
 		exec = exec->next;
 	}
-	return (data->env_list = env_list, data);
+	return (data->env_list = env_list, data->fd_hd = 0, data->total_hd = 0,
+		data->counter = 0, data->pids = NULL, data->exit_status = 0, data);
 }
 
 /**
