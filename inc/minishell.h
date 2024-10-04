@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/04 15:42:23 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/04 17:15:13 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,6 +235,7 @@ void		close_no_file(t_exec *cmds_list);
 void		init_pid_array(t_data *pipe_info);
 void		store_pid(t_data *pipe_info, pid_t fork_id);
 void		wait_pipe_files(t_data *data);
+void		close_parent(t_exec *head, t_data *data);
 
 // 				-->runtime_utils.c
 void		runtime_signal(void);
