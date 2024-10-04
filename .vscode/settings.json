@@ -3,6 +3,7 @@
 		"compare": "c",
 		"type_traits": "c",
 		"typeinfo": "c",
-		"minishell.h": "c"
+		"minishell.h": "c",
+		"features-time64.h": "c"
 	}
 }
