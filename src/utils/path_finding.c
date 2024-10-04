@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 14:24:41 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/09/24 15:14:45 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 16:56:43 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static char	*find_path(char *cmd, t_env *env_list, bool *alloc_fail)
 	short int	i;
 
 	if (!cmd || ft_strlen(cmd) == 0)
-		return (NULL);
+		return (*alloc_fail = false, NULL);
 	all_paths = split_path(env_list);
 	if (!all_paths)
 		return (*alloc_fail = 1, NULL);

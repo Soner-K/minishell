@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/03 13:48:23 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/04 17:05:24 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,6 @@ int	arg_check(int argc, char **argv)
 	if (argv[1] != NULL)
 		return (1);
 	return (0);
-}
-
-void	p(t_exec *exec)
-{
-	while (exec)
-	{
-		printf("infile is %s\n", exec->files_info->infile_info->name);
-		if (exec->cmd_array)
-			printf("cmd array 0 %s\n", exec->cmd_array[0]);
-		if (exec->files_info->infile_info->is_heredoc)
-			printf("delimiter is %s\n", exec->files_info->infile_info->del);
-		if (exec->files_info->infile_info->type)
-			printf("TYPE is %u\n", exec->files_info->infile_info->type);
-		exec = exec->next;
-	}
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -70,7 +55,6 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		data = NULL;
 		exec = ft_parse(line, &error, env_list, exit_status);
-		// p(exec);
 		if (!exec)
 		{
 			if (error == SYNTAX_ERROR)
