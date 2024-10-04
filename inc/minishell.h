@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/04 16:15:20 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/04 17:15:13 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ int			is_env(char *str);
 void		func_env(t_exec *cmds, t_env **env);
 void		display_env_list(t_env *env_list);
 
-// 				-->exit.c
+// 				-->https://github.com/Soner-K/minishell/pull/48/conflict?name=src%252Fpipe%252Fexec_utils.c&ancestor_oid=f46c01773f6afdd70d12c4858db6b0cad2b78152&base_oid=c5b1198c2764f4f6c798edae0f297086ba87dc2a&head_oid=2748c21a0069cc81b8c50c06214efdd716222198exit.c
 int			is_exit(char *str);
 void		control_alpha(t_exec *cmds_list);
 void		normal_exit(t_exec *cmds_list);
@@ -235,6 +235,7 @@ void		close_no_file(t_exec *cmds_list);
 void		init_pid_array(t_data *pipe_info);
 void		store_pid(t_data *pipe_info, pid_t fork_id);
 void		wait_pipe_files(t_data *data);
+void		close_parent(t_exec *head, t_data *data);
 
 // 				-->runtime_utils.c
 void		runtime_signal(void);

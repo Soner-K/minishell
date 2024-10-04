@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:11:21 by sumseo            #+#    #+#             */
-/*   Updated: 2024/09/19 17:42:31 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/04 17:01:33 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	is_env(char *str)
 	char	*echo;
 	int		i;
 
+	if (!str)
+		return (0);
 	i = 0;
 	echo = "env";
 	while (str[i] && echo[i])

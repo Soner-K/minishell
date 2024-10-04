@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:11:10 by sumseo            #+#    #+#             */
-/*   Updated: 2024/10/04 12:19:34 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 17:01:50 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	is_export(char *str)
 	char	*echo;
 	int		i;
 
+	if (!str)
+		return (0);
 	i = 0;
 	echo = "export";
 	while (str[i] && echo[i])

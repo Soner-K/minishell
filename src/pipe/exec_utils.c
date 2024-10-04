@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:30:11 by sumseo            #+#    #+#             */
-/*   Updated: 2024/10/04 17:06:20 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/04 16:42:37 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,25 @@
 
 void	quit_child(t_exec **cmds_list)
 {
-	(void)cmds_list;
-	// printf("%s: Command not found\n", (*cmds_list)->cmd_array[0]);
-	ft_putstr_fd("Command not found", 2);
+	if (errno == EACCES)
+	{
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putstr_fd((*cmds_list)->cmd_array[0], STDERR_FILENO);
+		ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
+		store_or_free(NULL, NULL, false, true);
+		exit(126);
+	}
+	if (errno == ENOENT)
+	{
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putstr_fd((*cmds_list)->cmd_array[0], STDERR_FILENO);
+		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+		store_or_free(NULL, NULL, false, true);
+		exit(127);
+	}
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd((*cmds_list)->cmd_array[0], STDERR_FILENO);
+	ft_putstr_fd(": Is a directory\n", STDERR_FILENO);
 	store_or_free(NULL, NULL, false, true);
 	exit(127);
 }

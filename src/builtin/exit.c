@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:11:30 by sumseo            #+#    #+#             */
-/*   Updated: 2024/10/04 15:28:57 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 17:01:56 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	is_exit(char *str)
 	char	*echo;
 	int		i;
 
+	if (!str)
+		return (0);
 	i = 0;
 	echo = "exit";
 	while (str[i] && echo[i])
