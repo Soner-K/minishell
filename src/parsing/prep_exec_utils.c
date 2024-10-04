@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:16:08 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/04 19:40:13 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 19:47:51 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ t_data	*set_data_struct(t_tokens *tokens, t_exec *exec, t_env *env_list)
 	data->total_hd = 0;
 	data->fd_hd = NULL;
 	data->hd_files = NULL;
+	data->last_heredoc_fd = -1;
 	while (tokens)
 	{
 		if (tokens->type == PIPE)

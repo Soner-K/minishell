@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/04 18:58:44 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 19:47:26 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,9 +176,9 @@ void		replace_one_env(t_env **env_list, char *env_val, char *variable,
 
 // 				-->exec_utils.c
 int			parse_path(char **cmds, char *path);
-void		init_child(t_exec **cmds_list, char **env_copy);
+void		init_child(t_exec **cmds_list, char **env_copy, t_data *data);
 void		exec_shell_builtin(t_exec **cmds_list, int builtin_check,
-				t_env **env_list);
+				t_env **env_list, t_data *data);
 void		exec_shell(t_exec **exec_list, t_env **env_list, char **env_copy,
 				t_data *data);
 
@@ -191,7 +191,7 @@ void		close_heredoc_signal(t_exec *cmds_list, t_data *data, int i);
 void		heredoc_open_check(t_data *data, int i);
 
 //				-->pipe_init.c
-int			getfile(t_exec **cmds_list);
+int			getfile(t_exec **cmds_list, t_data *data);
 void		close_pipe_files(t_exec *cmds_list);
 void		wait_pipe_files(t_data *pipe_info);
 void		pipe_init(t_data *pipe_info, t_exec *cmds_list, int i);
