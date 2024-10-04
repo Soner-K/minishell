@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/04 21:04:10 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/04 18:57:15 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ int	main(int argc, char **argv, char **envp)
 		line = read_prompt(env_list);
 		if (!line)
 			no_line_exit(env_list);
+		if (!line[0])
+			continue ;
 		if (g_signal)
 			exit_status = 128 + g_signal;
 		g_signal = 0;
@@ -74,6 +76,11 @@ int	main(int argc, char **argv, char **envp)
 		{
 			if (error == SYNTAX_ERROR)
 				exit_status = 2;
+			continue ;
+		}
+		if (!exec->cmd_array[0])
+		{
+			free_all(line, exec, env_list, false);
 			continue ;
 		}
 		data = exec->data;

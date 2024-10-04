@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 13:05:05 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/04 15:37:37 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/04 17:47:43 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ long	ft_atol(const char *nptr)
 	while (nptr[i] >= '0' && nptr[i] <= '9')
 	{
 		num *= 10;
-		num += (int)(nptr[i] - '0');
+		num += (long)(nptr[i] - '0');
 		i++;
 	}
 	if (sign == 1)
