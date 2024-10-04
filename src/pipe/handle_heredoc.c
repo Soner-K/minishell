@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:03:52 by sumseo            #+#    #+#             */
-/*   Updated: 2024/10/03 15:06:03 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 09:56:28 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,5 +114,6 @@ void	launch_heredoc(t_exec **exec_list, t_data *data)
 		i++;
 	}
 	cur_list = *exec_list;
-	redirect_heredoc(cur_list, last_heredoc_fd, data, temp_s);
+	if (data->total_hd)
+		redirect_heredoc(cur_list, last_heredoc_fd, data, temp_s);
 }
