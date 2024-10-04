@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:59:43 by sumseo            #+#    #+#             */
-/*   Updated: 2024/10/04 18:47:54 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/04 20:46:46 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,52 +25,25 @@ int	getfile(t_exec **cmds_list, t_data *data)
 {
 	int	flags;
 	int	infile_exist;
-	int	outfile_exist;
 
 	if ((*cmds_list)->files_info->infile_info->final_name)
 	{
 		infile_exist = open((*cmds_list)->files_info->infile_info->final_name,
 				O_RDONLY);
 		if (infile_exist < 0)
-		{
-			close(data->last_heredoc_fd);
-			perror((*cmds_list)->files_info->infile_info->final_name);
-			store_or_free(NULL, NULL, false, true);
-			exit(1);
-		}
+			final_infile_problem(data, cmds_list);
 		else
 			(*cmds_list)->infile = infile_exist;
 	}
 	if ((*cmds_list)->files_info->infile_info->name)
-	{
-		infile_exist = open((*cmds_list)->files_info->infile_info->name,
-				O_RDONLY);
-		if (infile_exist < 0)
-		{
-			close(data->last_heredoc_fd);
-			perror((*cmds_list)->files_info->infile_info->name);
-			store_or_free(NULL, NULL, false, true);
-			exit(1);
-		}
-		else
-			(*cmds_list)->infile = infile_exist;
-	}
+		control_normal_infile(data, cmds_list);
 	if ((*cmds_list)->files_info->outfile_info->type == APPENDREDIR)
 		flags = O_RDWR | O_APPEND | O_CREAT;
 	else if ((*cmds_list)->files_info->outfile_info->type == OUTREDIR)
 		flags = O_WRONLY | O_TRUNC | O_CREAT;
 	else
 		return (1);
-	outfile_exist = open((*cmds_list)->files_info->outfile_info->name, flags,
-			0644);
-	if (outfile_exist < 0)
-	{
-		perror((*cmds_list)->files_info->outfile_info->name);
-		store_or_free(NULL, NULL, false, true);
-		exit(1);
-	}
-	else
-		(*cmds_list)->outfile = outfile_exist;
+	control_outfile(cmds_list, flags);
 	return (1);
 }
 

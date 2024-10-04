@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/04 17:05:24 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 20:15:57 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,25 @@
 
 int		g_signal;
 
-int	arg_check(int argc, char **argv)
+int	arg_check(int argc, char **argv, char **envp)
 {
 	if (argc > 1)
 		return (1);
 	if (argv[1] != NULL)
 		return (1);
+	if (!envp)
+		return (1);
 	return (0);
 }
+void	clean_all(t_env *env_list)
+{
+	free_env_list(env_list);
+	rl_clear_history();
+}
 
+void	init_args(void)
+{
+}
 int	main(int argc, char **argv, char **envp)
 {
 	char		*line;
@@ -32,10 +42,8 @@ int	main(int argc, char **argv, char **envp)
 	__int8_t	error;
 	t_data		*data;
 
-	if (arg_check(argc, argv) > 0)
+	if (arg_check(argc, argv, envp) > 0)
 		return (FAILURE);
-	if (!envp)
-		exit(EXIT_FAILURE);
 	env_list = NULL;
 	store_env_list(envp, &env_list);
 	init_signal();
@@ -75,7 +83,6 @@ int	main(int argc, char **argv, char **envp)
 		exit_status = data->exit_status;
 		free_all(line, exec, env_list, false);
 	}
-	free_env_list(env_list);
-	rl_clear_history();
+	clean_all(env_list);
 	return (exit_status);
 }
