@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 15:52:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/04 20:45:56 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 21:51:19 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ t_exec	*ft_parse(char *line, __int8_t *error, t_env *env_list, int last_exit)
 	t_tokens	*t;
 	t_exec		*e;
 
+	if (!line[0])
+		return (*error = 0, NULL);
 	t = create_tokens(line);
 	if (!t)
 		return (free_env_and_quit(env_list), NULL);

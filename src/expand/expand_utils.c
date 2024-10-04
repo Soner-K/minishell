@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:03:00 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/04 11:34:05 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 21:48:28 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,5 @@ bool	check_expand_syntax(char *str, int *start, int *end)
 		if (check_if_edge_characters(str[i], false))
 			break ;
 	}
-	*end = --i;
-	return (true);
+	return (*end = --i, true);
 }
