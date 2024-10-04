@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 17:45:50 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/04 10:58:56 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 20:23:41 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ __int8_t	split_new_word(t_tokens *node, t_tokens *next, char *word)
 	free_arrs((void **)split_word);
 	return (SUCCESS);
 }
-
 
 static void	mark_str(char *str)
 {

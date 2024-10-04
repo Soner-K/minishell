@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 18:49:28 by sumseo            #+#    #+#             */
-/*   Updated: 2024/10/04 15:29:22 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 21:06:38 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,12 @@ int	check_export_variable(char *s)
 	while (s[++i] && i < count)
 	{
 		if (is_invalid_char(s[i]))
+		{
+			ft_putstr_fd("minishell: export: ", STDERR_FILENO);
+			ft_putstr_fd(&(s[i]), STDERR_FILENO);
+			ft_putstr_fd(" not a valid identifier\n", STDERR_FILENO);
 			return (FAILURE);
+		}
 	}
 	return (SUCCESS);
 }

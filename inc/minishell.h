@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/04 19:47:26 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/04 20:46:16 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ t_exec		*ft_parse(char *line, __int8_t *error, t_env *env_list,
 //				-->prep_exec.c
 
 __int8_t	set_node_exec(t_exec *exec, t_tokens *token, int id_cmd);
-bool		set_files_info(t_files *files, t_tokens *token);
-// bool		set_files_names(t_files *files, t_tokens *token);
+void		set_files_info(t_files *files, t_tokens *token);
 t_exec		*create_exec_lst(t_tokens *head, t_tokens *first, t_env *env_list);
 
 //				-->prep_exec_utils.c
@@ -59,7 +58,7 @@ t_exec		*create_exec_lst(t_tokens *head, t_tokens *first, t_env *env_list);
 t_exec		*new_node_exec(void);
 void		lst_addback_exec(t_exec **head, t_exec *add);
 t_data		*set_data_struct(t_tokens *tokens, t_exec *exec, t_env *env_list);
-bool		all_my_homies_hate_the_norm(t_tokens **head, t_exec *itr,
+void		all_my_homies_hate_the_norm(t_tokens **head, t_exec *itr,
 				int id_cmd);
 
 //				-->redirections_setting.c
@@ -143,7 +142,6 @@ int			is_env(char *str);
 void		func_env(t_exec *cmds, t_env **env);
 void		display_env_list(t_env *env_list);
 
-// 				-->https://github.com/Soner-K/minishell/pull/48/conflict?name=src%252Fpipe%252Fexec_utils.c&ancestor_oid=f46c01773f6afdd70d12c4858db6b0cad2b78152&base_oid=c5b1198c2764f4f6c798edae0f297086ba87dc2a&head_oid=2748c21a0069cc81b8c50c06214efdd716222198exit.c
 int			is_exit(char *str);
 void		control_alpha(t_exec *cmds_list);
 void		normal_exit(t_exec *cmds_list);
