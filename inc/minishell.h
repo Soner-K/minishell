@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/04 20:46:16 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/05 16:57:14 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,6 +255,7 @@ void		redirect_heredoc(t_exec *cur_list, int last_heredoc_fd,
 void		final_infile_problem(t_data *data, t_exec **cmds_list);
 void		infile_problem(t_data *data, t_exec **cmds_list);
 void		outfile_problem(t_exec **cmds_list);
-void		control_outfile(t_exec **cmds_list, int flags);
-void		control_normal_infile(t_data *data, t_exec **cmds_list);
+int			control_outfile(t_exec **cmds_list, int flags);
+int			control_normal_infile(t_data *data, t_exec **cmds_list);
+void		exec_shell_init(t_exec **exec_list);
 #endif

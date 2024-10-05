@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:59:43 by sumseo            #+#    #+#             */
-/*   Updated: 2024/10/04 20:46:46 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/05 16:59:22 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,18 @@ int	getfile(t_exec **cmds_list, t_data *data)
 		else
 			(*cmds_list)->infile = infile_exist;
 	}
-	if ((*cmds_list)->files_info->infile_info->name)
-		control_normal_infile(data, cmds_list);
+	if ((*cmds_list)->files_info->infile_info->final_name == NULL
+		&& (*cmds_list)->files_info->infile_info->name)
+	{
+		return (control_normal_infile(data, cmds_list));
+	}
 	if ((*cmds_list)->files_info->outfile_info->type == APPENDREDIR)
 		flags = O_RDWR | O_APPEND | O_CREAT;
 	else if ((*cmds_list)->files_info->outfile_info->type == OUTREDIR)
 		flags = O_WRONLY | O_TRUNC | O_CREAT;
 	else
 		return (1);
-	control_outfile(cmds_list, flags);
+	return (control_outfile(cmds_list, flags));
 	return (1);
 }
 
