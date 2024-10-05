@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/04 18:57:15 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/05 17:02:46 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,6 @@ int	main(int argc, char **argv, char **envp)
 		{
 			if (error == SYNTAX_ERROR)
 				exit_status = 2;
-			continue ;
-		}
-		if (!exec->cmd_array[0])
-		{
-			free_all(line, exec, env_list, false);
 			continue ;
 		}
 		data = exec->data;
