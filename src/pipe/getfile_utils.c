@@ -6,7 +6,7 @@
 /*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 20:39:12 by sumseo            #+#    #+#             */
-/*   Updated: 2024/10/05 16:58:35 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/05 19:37:13 by sumseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int	control_outfile(t_exec **cmds_list, int flags)
 		close((*cmds_list)->old_stdin);
 		close((*cmds_list)->old_stdout);
 		perror((*cmds_list)->files_info->outfile_info->name);
-		// exit(1);
 		return (0);
 	}
 	else
