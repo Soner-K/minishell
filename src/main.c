@@ -3,56 +3,98 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:34:04 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/05 17:02:46 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/05 19:23:06 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		g_signal;
+int			g_signal;
+static int	arg_check(int argc, char **argv, char **envp);
+static bool	do_next_iter(char *line, t_exec *exec, __int8_t err, int *exit);
+static void	run_input(t_env *env_list, char **envp, t_exec *exec);
+static void	run_minishell(t_env *env_list, int exit_status, char **envp);
 
-int	arg_check(int argc, char **argv, char **envp)
+static int	arg_check(int argc, char **argv, char **envp)
 {
 	if (argc > 1)
+	{
+		ft_putstr_fd("Error: ", STDERR_FILENO);
+		ft_putstr_fd("Minishell doesn't take any arguments\n", STDERR_FILENO);
 		return (1);
+	}
 	if (argv[1] != NULL)
 		return (1);
 	if (!envp)
+	{
+		ft_putstr_fd("Error: ", STDERR_FILENO);
+		ft_putstr_fd("Environment not found\n", STDERR_FILENO);
 		return (1);
+	}
 	return (0);
 }
 
-void	clean_all(t_env *env_list)
+static bool	do_next_iter(char *line, t_exec *exec, __int8_t err, int *exit)
 {
-	free_env_list(env_list);
-	rl_clear_history();
+	if (!exec)
+	{
+		if (err == SYNTAX_ERROR)
+			*exit = 2;
+		return (true);
+	}
+	if (exec->cmd_array && !exec->cmd_array[0]
+		&& !exec->files_info->infile_info->name
+		&& !exec->files_info->outfile_info->name
+		&& exec->files_info->infile_info->is_heredoc == false)
+	{
+		free_all(line, exec, NULL, false);
+		return (true);
+	}
+	return (false);
 }
 
-void	run_minishell(t_data *data, t_env *env_list, char **envp, t_exec *exec)
+static void	run_input(t_env *env_list, char **envp, t_exec *exec)
 {
-	if (data->num_pipe < 1)
-		exec_shell(&exec, &env_list, envp, data);
+	if (exec->data->num_pipe < 1)
+		exec_shell(&exec, &env_list, envp, exec->data);
 	else
-		runtime_shell(exec, envp, data, &env_list);
+		runtime_shell(exec, envp, exec->data, &env_list);
 }
 
-void	no_line_exit(t_env *env_list)
+static void	run_minishell(t_env *env_list, int exit_status, char **envp)
 {
-	free_env_list(env_list);
-	exit(EXIT_FAILURE);
+	char		*line;
+	t_exec		*exec;
+	__int8_t	error;
+
+	while (42)
+	{
+		line = read_prompt(env_list);
+		if (g_signal)
+			exit_status = 128 + g_signal;
+		g_signal = 0;
+		exec = ft_parse(line, &error, env_list, exit_status);
+		if (do_next_iter(line, exec, error, &exit_status))
+			continue ;
+		if (!exec->data)
+		{
+			free_all(line, exec, env_list, false);
+			continue ;
+		}
+		store_or_free(line, exec, true, false);
+		run_input(env_list, envp, exec);
+		exit_status = exec->data->exit_status;
+		free_all(line, exec, env_list, false);
+	}
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	char		*line;
-	int			exit_status;
-	t_env		*env_list;
-	t_exec		*exec;
-	__int8_t	error;
-	t_data		*data;
+	int		exit_status;
+	t_env	*env_list;
 
 	if (arg_check(argc, argv, envp) > 0)
 		return (FAILURE);
@@ -60,35 +102,8 @@ int	main(int argc, char **argv, char **envp)
 	store_env_list(envp, &env_list);
 	init_signal();
 	exit_status = 0;
-	while (42)
-	{
-		line = read_prompt(env_list);
-		if (!line)
-			no_line_exit(env_list);
-		if (!line[0])
-			continue ;
-		if (g_signal)
-			exit_status = 128 + g_signal;
-		g_signal = 0;
-		data = NULL;
-		exec = ft_parse(line, &error, env_list, exit_status);
-		if (!exec)
-		{
-			if (error == SYNTAX_ERROR)
-				exit_status = 2;
-			continue ;
-		}
-		data = exec->data;
-		if (!data)
-		{
-			free_all(line, exec, env_list, false);
-			continue ;
-		}
-		store_or_free(line, exec, true, false);
-		run_minishell(data, env_list, envp, exec);
-		exit_status = data->exit_status;
-		free_all(line, exec, env_list, false);
-	}
-	clean_all(env_list);
+	run_minishell(env_list, exit_status, envp);
+	free_env_list(env_list);
+	rl_clear_history();
 	return (exit_status);
 }

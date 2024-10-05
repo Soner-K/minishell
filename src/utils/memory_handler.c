@@ -6,11 +6,26 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:02:58 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/04 18:58:27 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/05 19:28:42 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/**
+ * @brief Frees the t_data structure.
+ * @param data A pointer to the data structure.
+ * @returns void.
+ */
+static void	free_data_ptr(t_data *data)
+{
+	if (data)
+	{
+		free_multiple_pointers(2, data->fd_hd, data->pids);
+		free_arrs((void **)data->hd_files);
+		free(data);
+	}
+}
 
 /**
  * @brief Frees the environment list.
@@ -51,7 +66,6 @@ void	store_or_free(char *line, t_exec *exec, bool store, bool free_env)
 	{
 		line_store = line;
 		exec_store = exec;
-		// if (exec && exec->data) COME BACK
 		env_list_store = exec->data->env_list;
 		data_store = exec->data;
 		return ;
@@ -113,36 +127,15 @@ void	free_exec(t_exec *exec_head, bool all)
 		files = tmp->files_info;
 		if (all)
 		{
-			if (is_diff(tmp->files_info->infile_info->name, data->hd_files))
-				free(tmp->files_info->infile_info->name);
-			if (tmp->files_info->infile_info->is_heredoc)
-				free(tmp->files_info->infile_info->del);
-			free(tmp->files_info->outfile_info->name);
+			if (data && is_diff(files->infile_info->name, data->hd_files))
+				free(files->infile_info->name);
+			if (files->infile_info->is_heredoc)
+				free(files->infile_info->del);
+			free(files->outfile_info->name);
 			free_arrs((void **)tmp->cmd_array);
 		}
 		free_multiple_pointers(5, files->infile_info, files->outfile_info,
 			files, tmp->path, tmp);
 	}
-	free_multiple_pointers(2, data->fd_hd, data->pids);
-	free_arrs((void **)data->hd_files);
-	free(data);
-}
-
-/**
- * @brief Frees all the memory allocated for the shell.
- * @param line The line to free.
- * @param exec The head of the execution list.
- * @param env_list The head of the environment list.
- * @param free_env A boolean being true (1) if the environment list must be
- * freed and false (0) otherwise.
- * @returns void.
- */
-void	free_all(char *line, t_exec *exec, t_env *env_list, bool free_env)
-{
-	if (line)
-		free(line);
-	if (exec)
-		free_exec(exec, true);
-	if (free_env)
-		free_env_list(env_list);
+	free_data_ptr(data);
 }

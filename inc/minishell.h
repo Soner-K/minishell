@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumseo <sumseo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:48:11 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/05 16:57:14 by sumseo           ###   ########.fr       */
+/*   Updated: 2024/10/05 19:29:38 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,19 @@ void		free_multiple_pointers(int size, ...);
 //				-->cmd_finding.c
 
 // char		*find_path(char *cmd, char **env, bool *alloc_fail);
+
 __int8_t	find_cmd_type(t_exec *head, t_env *env_list);
 
 //				-->memory_handler.c
+
 void		free_exec(t_exec *exec_head, bool all);
-void		free_all(char *line, t_exec *exec, t_env *env_list, bool free_env);
 void		free_tokens(t_tokens *tokens_head, bool all);
 void		store_or_free(char *line, t_exec *exec, bool store, bool free_env);
 void		free_env_list(t_env *env_list);
+
+//				-->free_all.c
+
+void		free_all(char *line, t_exec *exec, t_env *env_list, bool free_env);
 
 //							PARSING
 //				-->create_tokens.c
@@ -88,11 +93,6 @@ char		is_separator(char c);
 short int	skip_tab_spaces(char *str);
 
 //							EXPAND
-
-//				-->expand_tokenizer.c
-
-__int8_t	split_new_word(t_tokens *node, t_tokens *next, char *word);
-__int8_t	retokenize(char **split_word, t_tokens *curr, t_tokens *next);
 
 //				-->expand_utils.c
 
@@ -162,7 +162,7 @@ char		*func_join_words(char *variable, char *value);
 
 // 				-->pwd.c
 int			is_pwd(char *str);
-void	func_pwd(void); // modified
+void		func_pwd(void);
 int			count_arr_length(char **argv);
 
 // 				-->env_utils.c
