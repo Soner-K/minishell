@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 14:24:41 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/04 16:56:43 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/10/17 22:00:56 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,12 @@ static char	*full_path(char *dir, char *cmd)
  * @brief Finds the PATH variable inside the environment variable,
 	and splits it.
  * @param env_list A pointer to an array of environment strings.
+ * @param alloc_fail Boolean taking the value 1 if an allocation failure
+ * occured and 0 otherwise.
  * @returns The splitted path, with the separator being ':'. Returns NULL
  * if the allocation failed or if the PATH variable isn't found.
  */
-static char	**split_path(t_env *env_list)
+static char	**split_path(t_env *env_list, bool *alloc_fail)
 {
 	char		**all_paths;
 
@@ -62,10 +64,10 @@ static char	**split_path(t_env *env_list)
 		env_list = env_list->next;
 	}
 	if (!env_list)
-		return (NULL);
+		return (*alloc_fail = false, NULL);
 	all_paths = ft_split(env_list->variable, ':');
 	if (!all_paths)
-		return (NULL);
+		return (*alloc_fail = true, NULL);
 	return (all_paths);
 }
 
@@ -85,11 +87,11 @@ static char	*find_path(char *cmd, t_env *env_list, bool *alloc_fail)
 
 	if (!cmd || ft_strlen(cmd) == 0)
 		return (*alloc_fail = false, NULL);
-	all_paths = split_path(env_list);
-	if (!all_paths)
-		return (*alloc_fail = 1, NULL);
+	all_paths = split_path(env_list, alloc_fail);
+	if (!all_paths && *alloc_fail)
+		return (NULL);
 	i = 0;
-	while (all_paths[i])
+	while (all_paths && all_paths[i])
 	{
 		cmd_path = full_path(all_paths[i], cmd);
 		if (!cmd_path)
@@ -132,7 +134,7 @@ __int8_t	find_cmd_type(t_exec *head, t_env *env_list)
 	char	*str;
 	bool	allocation_fail;
 
-	allocation_fail = 1;
+	allocation_fail = 0;
 	while (head)
 	{
 		if (check_if_builtin(head) || !head->cmd_array)
