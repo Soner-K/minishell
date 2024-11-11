@@ -6,7 +6,7 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:02:58 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/05 19:28:42 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/11/11 10:45:21 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ void	store_or_free(char *line, t_exec *exec, bool store, bool free_env)
 /**
  * @brief Frees a list of tokens.
  * @param head The head of the tokens' list.
+ * @param all A boolean being true if all variables inside each node
+ * need to be freed.
  * @returns void.
  */
 void	free_tokens(t_tokens *tokens_head, bool all)

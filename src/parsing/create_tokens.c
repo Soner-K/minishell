@@ -6,13 +6,12 @@
 /*   By: sokaraku <sokaraku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:34:13 by sokaraku          #+#    #+#             */
-/*   Updated: 2024/10/04 19:40:03 by sokaraku         ###   ########.fr       */
+/*   Updated: 2024/11/11 10:44:36 by sokaraku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*redo the function by just creating a new pointer instead of malloc ?*/
 /**
  * @brief Receives the tokenized list with whitespaces, and creates another
  * one without whitespaces.
