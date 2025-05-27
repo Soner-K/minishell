@@ -60,7 +60,6 @@ void	store_or_free(char *line, t_exec *exec, bool store, bool free_env)
 	static char		*line_store = NULL;
 	static t_exec	*exec_store = NULL;
 	static t_env	*env_list_store = NULL;
-	static t_data	*data_store = NULL;
 
 	if (store)
 	{
