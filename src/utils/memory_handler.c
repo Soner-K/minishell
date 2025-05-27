@@ -66,7 +66,6 @@ void	store_or_free(char *line, t_exec *exec, bool store, bool free_env)
 		line_store = line;
 		exec_store = exec;
 		env_list_store = exec->data->env_list;
-		data_store = exec->data;
 		return ;
 	}
 	free_all(line_store, exec_store, env_list_store, free_env);
