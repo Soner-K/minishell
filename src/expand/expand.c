@@ -124,13 +124,11 @@ static __int8_t	extract_variable(t_tokens *node, t_env *env_list, int last_exit)
 __int8_t	extract_all(t_tokens *head, t_env *env_list, int last_exit_status)
 {
 	__int8_t	ret;
-	t_tokens	*first;
 	short int	n_expand;
 
 	if (!head)
 		return (0);
 	n_expand = count_expands(head->word);
-	first = head;
 	while (head)
 	{
 		while (n_expand > 0)
