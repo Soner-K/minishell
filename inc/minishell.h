@@ -28,8 +28,6 @@ bool		is_diff(char *s1, char **strs);
 void		free_multiple_pointers(int size, ...);
 //				-->cmd_finding.c
 
-// char		*find_path(char *cmd, char **env, bool *alloc_fail);
-
 __int8_t	find_cmd_type(t_exec *head, t_env *env_list);
 
 //				-->memory_handler.c
